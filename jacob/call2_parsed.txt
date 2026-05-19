@@ -1,0 +1,20 @@
+=== METADATA ===
+title: Amory Q Dudley - 2315 Ridgeview rd, Anniston, Alabama 36207
+date: 2026-05-05 17:39:59
+duration: 3933s (65 min 33 sec)
+call_id: CAd58240a68fa089c77976552c6bd22c85
+rep: Jacob Adams
+
+=== DIALOGUE (361 turns) ===
+Amory Q Dudley (00:00:00): Hello, Maureen.
+Amory Q Dudley (00:00:01): Hey, this is Stedley.
+Amory Q Dudley (00:00:04): How's it going?
+Jacob Adams (00:00:04): I'm Stedley.  Doing good.  How are you, sir?
+Amory Q Dudley (00:00:08): Yeah, I'm doing all right.
+Amory Q Dudley (00:00:12): I just called you.  Let's go on Saturday.
+Amory Q Dudley (00:00:15): Go ahead and let's do it.
+Jacob Adams (00:00:17): All right, got it.  Give me two seconds.  We only hold the offers for a day, so I'm just going to have to refill that out.  And it did, if I'm not mistaken, there was a second person on title?
+Jacob Adams (00:00:30): Did you buy the house  with somebody else?
+Amory Q Dudley (00:00:35): Probably my ex-wife  might be on there, but  the mortgage is in my name.
+
+... (351 more turns)

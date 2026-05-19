@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Jacob Adams / Richard Nichols</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item.partial .icon { color: #f59e0b; }
+        .checklist-item.na .icon { color: #3b82f6; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Jacob Adams<br>
+                <strong>Call Date:</strong> May 8, 2026 (Single Process Call)<br>
+                <strong>Seller:</strong> Richard Nichols (goes by Patrick)<br>
+                <strong>Property:</strong> 27 Bonanza, Yarrington, NV — rural house + land + adjacent vacant lot. Needs significant work (old wiring, old plumbing, 12 classic cars on property, old roof).<br>
+                <strong>Call Type:</strong> Process Call — Steps 1-3<br>
+                <strong>Seller Anchor:</strong> $250-260k for both parcels (realtor estimate) / $300k would be "stoked" [01:09:52]<br>
+                <strong>Total Duration:</strong> ~170 minutes (2hr 50min)<br>
+                <strong>Outcome:</strong> ⏳ <strong>IN PROGRESS — Process call complete, no offer yet. Next: underwrite and call back ~4pm.</strong><br>
+                <strong>Overall Grade:</strong> <strong>2.5/10 — Weak (Seller Controlled Entire Call, Zero Price Sequence, No Urgency Created, No Next Steps Confirmed)</strong>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary — Single Process Call</h2>
+                <p><strong>Verdict:</strong> This 170-minute call is a textbook example of what happens when a rep loses control in the first 60 seconds and never recovers. Richard (who goes by Patrick) opened the call with a 7-minute monologue about his life, property, custody battle, 12 classic cars, cannabis business ambitions, and a neighbor he dislikes. Jacob's response was to join the conversation — talking about his own life, mutual friends, dirt biking, motorcycles, Las Vegas real estate, and interest rates — for the next 2 hours. The call became a therapy session and a friendly hangout. Positives: Jacob did get property condition data (buried in the conversation), captured a rough price expectation ($250-300k for both parcels), and mentioned sending company information. But: ZERO Step 1 framework executed, zero consequence questions, zero influencer identification, zero mortgage check, zero urgency anchoring, no confirmed next step with a specific time. Richard ended the call saying "I feel like I made a new friend" — which is the wrong outcome. The outcome should be a seller ready to hear an offer. This file cannot be prioritized or underwritten without Step 2C completion (NEED number never established — only a want range).</p>
+                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Estimated 75% Richard / 25% Jacob — but most of Richard's talking was off-topic (cannabis business, custody battle, neighbor stories, classic cars). Jacob was a willing participant. Framework-relevant content was maybe 20 minutes of the 170.</p>
+                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Built genuine rapport (Richard explicitly said "I feel like I made a new friend"). Got property condition data organically. Stayed patient across 170 minutes without losing composure. Did eventually steer toward next steps at the end.</p>
+                <p style="margin-top: 10px;"><strong>Critical Failures:</strong> No Step 1 framework. No consequence questions — zero urgency built despite seller having multiple real motivators (stress, family court costs, need to relocate). Price sequence incomplete — never asked what Richard NEEDS vs. WANTS. No mortgage/lien check. No influencer check. 170 minutes with no confirmed follow-up time or structure.</p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations (Call 1)</div>
+                            <div class="score-reason">Company identity never stated. No time check, no agenda, no permission to say no, no reverse to seller. Richard opened the call and Jacob followed his lead for 170 minutes.</div>
+                        </div>
+                        <div class="score-badge low">0</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Company identity stated clearly</strong> — Jacob answered "Hello, this is Jake" [00:00:00] but never said "Jake with Fast Home Cash Offers." Richard literally said "I'm not even sure exactly which company you are at this point." [00:00:35] — Should have said: <em>"Hey, this is Jake with Fast Home Cash Offers — you submitted your property info and I'm following up."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Time check and agenda</strong> — Should have said: <em>"Do you have about 10-15 minutes so I can ask you a few questions about the property?"</em> — Instead Richard launched into a 7-minute monologue and Jacob never redirected.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Permission to say no</strong> — Should have said: <em>"If this isn't a fit for you, just tell me — I'm not here to pressure you into anything."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Reverse conversation back to seller (on topic)</strong> — Should have said: <em>"Tell me — what's going on with the property? What made you reach out?"</em> — Richard told Jacob unprompted, but Jacob never structured the conversation from that point forward.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery (Call 1)</div>
+                            <div class="score-reason">Motivation surfaced organically — stress, family court, property is an albatross, needs to relocate. But Jacob never deepened it. Zero consequence questions. Real pain was available and untouched.</div>
+                        </div>
+                        <div class="score-badge low">2</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Problem/motivation surfaced</strong> — Richard volunteered: "It's just kind of an albatross for me... I've got family court and an ex... I'm just stressed out as shit... having one less thing off of my plate might be worth losing some money." [00:00:42 / 00:08:57] — Motivation is real and abundant.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Multiple pain points identified (seller-volunteered)</strong> — Stress from property (hour and a half away, needs work, can't manage it), custody battle needing lawyer money, need to relocate, carrying costs. [Throughout Call 1]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence Q1: Clarify the block</strong> — Should have said: <em>"So right now, what's the main thing keeping you from just getting this done?"</em> — Jacob heard all the pain but never isolated the specific blocker.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence Q2: Short-term consequence</strong> — Should have said: <em>"If this property is still on your plate 6 months from now, what does that look like for you financially — with the custody battle and the move you're trying to make?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence Q3: Personal impact</strong> — Should have said: <em>"You mentioned this stresses you out every time you even think about it — how is that affecting everything else you're trying to deal with right now?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence Q4: Close with label</strong> — Should have said: <em>"So it sounds like getting rid of this property isn't just about the money — it's about clearing your head so you can focus on what actually matters right now. Is that fair?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Timeline urgency anchored to problem</strong> — Richard said "I'm going to try to talk to as many people as I can" [00:07:09] — zero urgency response from Jacob. Should have said: <em>"With the custody situation and the move you're trying to make — how soon do you need to have this figured out?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Future state question</strong> — Should have said: <em>"Once this property is sold and you've got the cash — what does that make possible for you?"</em> Richard was clearly trying to fund a move, a cannabis business, and a lawyer. Never asked.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks (Call 1)</div>
+                            <div class="score-reason">Mortgage never asked. Influencer never identified — Richard has a wife (Casey) who is involved in the move decision. No hidden roadblocks probed.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item partial">
+                            <div class="icon">🟡</div>
+                            <div class="text"><strong>Timeline urgency</strong> — Richard mentioned "two and a half years" on the Oregon property [02:03:24] and needing to move. Jacob discussed it tangentially. Never formally anchored Richard to a sell timeline for this property.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Mortgage/lien check</strong> — Should have said: <em>"Do you have a mortgage on the property or is it free and clear?"</em> — Richard mentioned he was making payments to the previous owner [00:02:47] but the mortgage situation was never confirmed. Cannot underwrite without this.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Influencer identification</strong> — Should have said: <em>"Is it just you on title, or is there anyone else involved in this decision?"</em> — Richard mentioned his wife Casey multiple times [00:44:45, 01:19:04, etc.] as someone who needs to approve the move decision. Never identified as a required influencer.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>How influencer feels / confirm availability</strong> — Casey is clearly a decision-maker in the move ("my wife likes it" [01:19:04]). Should have asked: <em>"Would Casey need to be on the offer call with you?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Uncover hidden roadblocks</strong> — Should have said: <em>"Before we move forward — is there anything about the property or your situation that could complicate a sale? Liens, title issues, back taxes, anything like that?"</em> — With 12 cars on the property, a previous payments-to-seller arrangement, and squatter history, this is a high-risk file for title complications. Never probed.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price (Call 1)</div>
+                            <div class="score-reason">Realtor range captured ($250-260k both parcels). Richard said $300k would be "stoked." But NEED never identified. No flexibility probed. No expectation reset on cash offer being lower. Cannot prioritize this file.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Price range captured (seller-volunteered)</strong> — Richard: "For both pieces of land, like $250, $260 if I did a package." [00:06:49] / "If I got $300,000 out of both I would be stoked." [01:09:52] — Anchor captured organically.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>What do they NEED the cash for (future state)</strong> — Should have said: <em>"Once you sell and have the cash — what's that money going to do for you specifically?"</em> Richard mentioned cannabis dispensary ($250k), lawyer fees, Oregon property down payment, and relocating — but Jacob never formally tied the price to one of these. Never established which one drives urgency.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>How much do they NEED (not want)</strong> — Should have said: <em>"I hear you want $300k. But what do you actually NEED to walk away with — what's the number that makes your situation work?"</em> — Richard hinted at $250k clearing the dispensary deal [00:59:06]. Never pinned down.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Want vs. need breakdown</strong> — Should have said: <em>"So there's what you want and what you need — are those different numbers for you?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Are you flexible on price?</strong> — Should have said: <em>"If we came back with a number that worked for your situation but was lower than $260k — is there a number where you'd still move forward?"</em> — Never asked. Jacob is going in blind to underwriting.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Reset expectations: cash offer will be lower than retail</strong> — Should have said: <em>"Just want to be upfront — companies like ours aren't going to match what a realtor can get you. We buy as-is, close fast, no repairs or commissions. The tradeoff is the price won't be the highest you could get."</em> — Never said. Richard currently expects $250-300k. Our offer will be significantly lower.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition (Call 1)</div>
+                            <div class="score-reason">Condition data gathered organically across 170 minutes — buried in conversation, not structured. Roof age unclear, wiring bad, plumbing old, 12 cars on property, needs full update. Post-condition closing sequence completely missed.</div>
+                        </div>
+                        <div class="score-badge low">2</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Interior condition</strong> — Richard: "It needs work... old wiring... sketchy... full update needed... old plastic plumbing... back bathroom issues." [02:31:43 / 02:35:45] — Honest disclosure of condition.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Roof age (partial)</strong> — Richard: "I want to say it was re-roofed in the last 10 years, but I don't know that for sure." [02:31:14] — Captured but uncertain.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Unique complication: 12 classic cars on property</strong> — Captured. Seller is arranging Hollywood Motors to take them. [00:02:03] — Important for underwriting (clear title to land).</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Structured condition sweep (roof, HVAC, plumbing, electrical, foundation)</strong> — Should have run through the standard checklist in a 5-minute sequence instead of picking up fragments across 170 minutes. HVAC status never confirmed.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Qualify property for offer</strong> — Should have said: <em>"Based on what you've told me, this is something our team would want to take a look at."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Send credibility info (ALWAYS MANDATORY)</strong> — Jacob mentioned texting company info [02:14:38] but it was casual, not the formal credibility sequence. Should have said: <em>"I'm sending you our Google reviews and BBB page right now — take a look before our next call."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Scorch the earth (ALWAYS MANDATORY)</strong> — Should have said: <em>"There are a lot of companies out there that will tie up your property and never close. That's not us — we close what we say we're going to close."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Ask for photos (ALWAYS MANDATORY)</strong> — Jacob asked at end of call [02:30:28] but framed it as "not necessary." Should have been assertive: <em>"Before our next call, can you text me 5-6 photos — exterior front and back, and any areas that need work? Helps us get you an accurate number."</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEPS 4-6 NA -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Steps 4-6: Commitment, Offer, Contract — N/A (Not Yet Reached)</div>
+                            <div class="score-reason">Process call only. Steps 4-6 will be scored when those calls occur.</div>
+                        </div>
+                        <div class="score-badge" style="background:#9ca3af;color:white;">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item na">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Steps 4-6 not yet executed</strong> — Next call should be Step 4 (Commitment for Offer) once underwriting is complete. Jacob said he'd call back ~4pm. No specific date confirmed.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOP 3 COACHING PRIORITIES -->
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li>
+                        <strong>1. TAKE CONTROL IN THE FIRST 2 MINUTES OR LOSE THE CALL.</strong> Richard opened with a 7-minute monologue. Jacob joined the conversation instead of steering it. The framework exists for exactly this scenario — a seller who will talk forever if you let him. At minute 2, Jacob needed to say: <em>"I hear you — sounds like there's a lot going on. Let me ask you a few quick questions so I can figure out if we can actually help, and then you can tell me more. Does that work?"</em> That's it. One sentence redirects the call. Instead, the call ran 170 minutes and produced zero confirmable next steps.
+                    </li>
+                    <li>
+                        <strong>2. NEVER LEAVE A CALL WITHOUT A CONFIRMED PRICE NEED AND A MORTGAGE CHECK.</strong> Jacob ended this call not knowing: (1) what Richard NEEDS (vs. wants), (2) whether there's a mortgage on the property, (3) whether the payments-to-seller arrangement from the original purchase created a lien. The underwriting team is going in blind. Always ask: <em>"Do you have a mortgage on it, or is it free and clear?"</em> and <em>"What's the minimum number you'd need to walk away with to make this work?"</em> before ending any process call. No exceptions.
+                    </li>
+                    <li>
+                        <strong>3. CONSEQUENCE QUESTIONS TURN A STORY INTO A DEAL.</strong> Richard gave Jacob the most motivated seller monologue possible — stress, family court, can't manage the property, needs to relocate, it's an albatross, his dad just died, he's overwhelmed. That is a GIFT. Consequence questions would have compressed all of that emotion into urgency and a price conversation in 15 minutes. Instead, Jacob joined Richard's story for 170 minutes and left with no leverage. Use the 4-part sequence: <em>clarify the block → short-term consequence → personal impact → label it.</em> Richard was ready to be motivated. Jacob just had to ask.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- WHAT WORKED -->
+            <div class="strengths-section">
+                <h2>✅ What Worked — Replicate This</h2>
+                <ul>
+                    <li><strong>Genuine rapport building</strong> — Richard said "I feel like I made a new friend" [02:45:25]. That level of trust is real and can be leveraged on the offer call. Don't waste it.</li>
+                    <li><strong>Patience under a rambling seller</strong> — 170 minutes without losing composure or getting frustrated is a real skill. Richard is the kind of seller who can derail reps. Jacob stayed warm throughout.</li>
+                    <li><strong>Honest condition disclosure achieved</strong> — By staying non-judgmental, Jacob got Richard to admit the property needs significant work (old wiring, plumbing, roof uncertain, 12 cars). Sellers who feel comfortable tend to disclose more — that honesty protects the deal later.</li>
+                    <li><strong>Expectation reset started at end of call</strong> — "Businesses like ours, we're not going to pay you as much as if you fixed up the house..." [02:44:00] — Good instinct, too late in the call, but the seed was planted for the offer call.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            Generated by Hermes Sales Coach AI &nbsp;|&nbsp;
+            Source Transcript: (2026-05-08, CA18257cabee...)
+            &nbsp;|&nbsp; Rebuilt 2026-05-17 to match OFFICIAL-AUDIT-FORMAT.md
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-badge.low').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>

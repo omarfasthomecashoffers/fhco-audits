@@ -1,0 +1,20 @@
+=== METADATA ===
+title: Elizabeth Toon - 29 W York St, Biglerville, Pennsylvania 17307
+date: 2026-05-07 20:41:43
+duration: 3408s (56 min 48 sec)
+call_id: CA67cb7fbe61952d67cbb0a4e2edb2e5fe
+rep: Jacob Adams
+
+=== DIALOGUE (372 turns) ===
+Elizabeth Toon (00:00:00): Hello?
+Jacob Adams (00:00:11): Hello, Elizabeth?
+Elizabeth Toon (00:00:13): Yes.
+Jacob Adams (00:00:14): This is Jay with Fast Home Cash Office.  How are you doing?
+Elizabeth Toon (00:00:17): Good.  How are you?
+Jacob Adams (00:00:19): I'm doing very well.  You have a couple minutes to talk?  I saw you just submitted a web form on our site.
+Elizabeth Toon (00:00:25): Yeah, no, that's fine.
+Jacob Adams (00:00:27): All right.  Good.  So the way I'd like to do things is to have a brief open conversation with homeowners.  That way you can tell me a little bit about the property and what you're hoping to accomplish with it.  Really, that's just to see if we're even the right buyer for you at the end of the day.
+Elizabeth Toon (00:00:43): Right.  No, no, I appreciate that.
+Jacob Adams (00:00:46): No problem.
+
+... (362 more turns)

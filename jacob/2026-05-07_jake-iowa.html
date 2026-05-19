@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Jacob Adams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .header .meta strong {
+            opacity: 1;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .verdict {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+        
+        .verdict h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #991b1b;
+        }
+        
+        .verdict p {
+            font-size: 16px;
+            color: #7f1d1d;
+            line-height: 1.6;
+        }
+        
+        .scores {
+            margin-bottom: 40px;
+        }
+        
+        .scores h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .score-item {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        
+        .score-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .score-left {
+            flex: 1;
+        }
+        
+        .score-label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .score-reason {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+        
+        .score-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 16px;
+            margin-left: 15px;
+        }
+        
+        .score-badge.high {
+            background: #10b981;
+            color: white;
+        }
+        
+        .score-badge.medium {
+            background: #f59e0b;
+            color: white;
+        }
+        
+        .score-badge.low {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 10px;
+        }
+        
+        .timestamp-block {
+            background: #f9fafb;
+            border-left: 4px solid #9ca3af;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+        
+        .timestamp-block.critical {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        
+        .timestamp-block.good {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+        
+        .timestamp-header {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+        
+        .timestamp-header .time {
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .label {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+        
+        .label.problem {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .label.critical {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .label.good {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .quote-box {
+            background: #f3f4f6;
+            border-left: 3px solid #6b7280;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-style: italic;
+            font-size: 14px;
+            color: #374151;
+        }
+        
+        .quote-box strong {
+            font-style: normal;
+            color: #1f2937;
+        }
+        
+        .fix-box {
+            background: #ecfdf5;
+            border-left: 3px solid #10b981;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #065f46;
+        }
+        
+        .fix-box.problem {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+            color: #92400e;
+        }
+        
+        .fix-box strong {
+            color: #064e3b;
+        }
+        
+        .fix-box.problem strong {
+            color: #78350f;
+        }
+        
+        .principle {
+            background: #eff6ff;
+            border-left: 3px solid #3b82f6;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #1e40af;
+        }
+        
+        .principle strong {
+            color: #1e3a8a;
+        }
+        
+        .impact {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #4b5563;
+        }
+        
+        .impact strong {
+            color: #1f2937;
+        }
+        
+        .fixes {
+            list-style: none;
+        }
+        
+        .fixes li {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .fixes li strong {
+            color: #92400e;
+        }
+        
+        .coaching-section {
+            background: #fef3c7;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+        
+        .coaching-section h2 {
+            font-size: 22px;
+            color: #92400e;
+            border-bottom: 2px solid #fbbf24;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .coaching-section h3 {
+            font-size: 18px;
+            color: #92400e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .coaching-section ul {
+            margin-left: 20px;
+        }
+        
+        .coaching-section li {
+            margin-bottom: 8px;
+            color: #78350f;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .strengths-section {
+            background: #d1fae5;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+        
+        .strengths-section h2 {
+            font-size: 22px;
+            color: #065f46;
+            border-bottom: 2px solid #10b981;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .strengths-section ul {
+            margin-left: 20px;
+        }
+        
+        .strengths-section li {
+            margin-bottom: 8px;
+            color: #064e3b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Jacob Adams<br>
+                <strong>Call Date:</strong> May 7, 2026<br>
+                <strong>Seller:</strong> Jake (Iowa property)<br>
+                <strong>Property:</strong> 2400 sq ft, 3BR/1BA, potential 5BR/2BA with basement conversion<br>
+                <strong>Call Type:</strong> Call 1 of 3 (Steps 1-3)<br>
+                <strong>Seller Anchor:</strong> $200k minimum<br>
+                <strong>Call Duration:</strong> 30 minutes<br>
+                <strong>Overall Grade:</strong> <strong>6/10</strong> — Above Average
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Weak Step 1 foundation, killed seller urgency in Step 2, solid Step 3 execution but no formal transition or photo request. Missing consequence questions and urgency kill left money on the table. Call 1 objectives mostly met, but foundation issues will hurt Call 2.</p>
+                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Estimated 45% Jacob / 55% Jake (target is 30/70 — Jacob over-talked)</p>
+                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Future state question executed correctly, validated seller stress well, thorough condition checklist coverage, handled scam situation professionally.</p>
+                <p style="margin-top: 10px;"><strong>Critical Failures:</strong> No company identity at call open, no permission to say no, killed urgency with leading question at 00:04:20, never ran consequence questions, influencer confirmed but not probed for concerns, never asked mortgage balance.</p>
+            </div>
+            
+            <div class="scores">
+                <h2>FHCO Framework Scores (1-5)</h2>
+                
+                <div class="score-item">
+                    <div class="score-left">
+                        <div class="score-label">Step 1: Intro & Expectations</div>
+                        <div class="score-reason">No company identity stated. Weak expectations set. No permission to say no. Did not flip conversation back to seller.</div>
+                    </div>
+                    <span class="score-badge low">2</span>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-left">
+                        <div class="score-label">Step 2: Discovery & Roadblocks</div>
+                        <div class="score-reason">Got timeline & renovation context, strong future state question. Killed urgency with leading question. Missed consequence questions, budget probe, mortgage balance.</div>
+                    </div>
+                    <span class="score-badge medium">3</span>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-left">
+                        <div class="score-label">Step 3: Property Condition</div>
+                        <div class="score-reason">Thorough checklist coverage (all systems + interior/exterior). No formal transition. Photos mentioned but not requested.</div>
+                    </div>
+                    <span class="score-badge high">4</span>
+                </div>
+                
+                <div class="score-item" style="opacity: 0.5;">
+                    <div class="score-left">
+                        <div class="score-label">Step 4: Commitment for Offer</div>
+                        <div class="score-reason">N/A — Step 4 happens on Call 2 (not applicable to this audit).</div>
+                    </div>
+                    <span class="score-badge" style="background: #9ca3af;">N/A</span>
+                </div>
+                
+                <div class="score-item" style="opacity: 0.5;">
+                    <div class="score-left">
+                        <div class="score-label">Step 5: Delivering the Offer & Objection Handling</div>
+                        <div class="score-reason">N/A — Step 5 happens on Call 3 (not applicable to this audit).</div>
+                    </div>
+                    <span class="score-badge" style="background: #9ca3af;">N/A</span>
+                </div>
+                
+                <div class="score-item" style="opacity: 0.5;">
+                    <div class="score-left">
+                        <div class="score-label">Step 6: Contract Reading</div>
+                        <div class="score-reason">N/A — Step 6 happens on Call 3 (not applicable to this audit).</div>
+                    </div>
+                    <span class="score-badge" style="background: #9ca3af;">N/A</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Timestamp-by-Timestamp Breakdown</h2>
+                
+                <div class="timestamp-block critical">
+                    <div class="timestamp-header">
+                        <span class="time">(00:00:00)</span> — Step 1: Missing Company Identity
+                        <span class="label critical">Critical Failure</span>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jacob:</strong> "hello yeah jake yep yep this is mac yep nice to meet you man so may gave me a real brief rundown of what's going on you're out there renovating your family home trying to get rid of it fairly quickly but way i like to do things still just have a brief open conversation with homeowners that way i can figure out some more about the property and see if we're even the right buyer for you. We're a good fit for each other."
+                    </div>
+                    
+                    <div class="fix-box problem">
+                        <strong>Problem:</strong> No clear "This is Jacob with Fast Home Cash Offers". Seller has no anchor for who he's talking to. This is a <strong>Step 1 non-negotiable per framework</strong>.
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle Violated:</strong> Identity must be stated immediately — especially after a transfer or when following up on a lead.
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What should have been said:</strong><br>
+                        "Hey Jake, this is Jacob with Fast Home Cash Offers. May gave me a brief rundown — sounds like you're out there renovating and looking to sell fairly quickly. Here's how I like to do these calls..."
+                    </div>
+                    
+                    <div class="impact">
+                        <strong>Impact:</strong> Weak trust foundation from the start. Seller doesn't know if this is the same company or a different one.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block critical">
+                    <div class="timestamp-header">
+                        <span class="time">(00:00:34-00:01:05)</span> — Step 1: Set Expectations (Partial)
+                        <span class="label critical">Incomplete</span>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jacob:</strong> "way i like to do things still just have a brief open conversation with homeowners that way i can figure out some more about the property and see if we're even the right buyer for you"
+                    </div>
+                    
+                    <div class="fix-box problem">
+                        <strong>Problem:</strong>
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Did NOT give permission to say no (required per Step 1)</li>
+                            <li>Did NOT flip the conversation back to the seller with "How are you hoping we can help?"</li>
+                            <li>Jumped straight into discovery questions (Step 2) without completing Step 1</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle Violated:</strong> Step 1 sequence: Identity → Expectations → Permission to say no → Flip back to seller
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What should have been said:</strong><br>
+                        "...And really, that's just to see if we might even be the right buyer for you. Towards the end of the call, if I feel like we can help, I'll speak to our underwriters and they'll let me know if it can get approved for a cash offer. We've been told our questions can sound personal sometimes — that's never our intention, just want to give you a heads up. Lastly, if at any point you feel we're not a good fit, feel free to let me know. It's okay to say no. Does that sound fair?"<br><br>
+                        "So Jake, I always like to start by asking — how are you hoping we can help with your property there?"
+                    </div>
+                    
+                    <div class="impact">
+                        <strong>Impact:</strong> Seller never got permission to say no, and Jacob didn't flip the conversation back to let the seller lead. This sets a rep-led tone instead of a seller-led discovery.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block">
+                    <div class="timestamp-header">
+                        <span class="time">(00:02:17-00:03:17)</span> — Step 2: Motivation / Trigger Event
+                        <span class="label problem">Missed Depth</span>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jacob:</strong> "And what has you looking to sell now?"
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jake (seller):</strong> "our kids are getting the well they graduate one's this year one's the next year one's probably going to play college football somewhere so we're debating if we want to be here there's nothing here for us um we kind of just want a fresh start after all this and we have a place that we can rent for a while until we find out what we're going to do so that's kind of the situation we're in and <strong>I'm just overwhelmed with trying to remodel it all myself</strong> and then thinking, okay, we remodeled it all. We want to sell it. Then we can sit on it for two years and no one, you know, <strong>I just don't want to deal with a realtor. I don't want to deal with all that bullshit</strong> of paying a realtor and closing costs and inspections. I just don't want to deal with all that. So I'm kind of just seeing what my options are."
+                    </div>
+                    
+                    <div class="fix-box problem">
+                        <strong>Problem:</strong> Seller just gave massive pain signals: "Overwhelmed with trying to remodel it all myself" and "I just don't want to deal with a realtor. I don't want to deal with all that bullshit." Jacob acknowledged it lightly, then shifted to football small talk (00:03:17-00:04:15) for a full minute.
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle Violated:</strong> When the seller shares emotional language ("overwhelmed," "I just don't want to deal with"), acknowledge it and dig deeper. Do not shift to rapport-building small talk.
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What should have been said:</strong><br>
+                        "I hear you — it sounds like you've been carrying a lot between the renovations and figuring out the next chapter with the kids. When you say you're overwhelmed with it, what's been the hardest part for you day-to-day?"<br><br>
+                        Then after that answer:<br>
+                        "And you mentioned not wanting to deal with a realtor — what is it about that route that doesn't feel like the right fit for you?"
+                    </div>
+                    
+                    <div class="impact">
+                        <strong>Impact:</strong> Missed opportunity to deepen the pain and build urgency. Seller gave it freely, Jacob didn't capitalize.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block critical">
+                    <div class="timestamp-header">
+                        <span class="time">(00:04:20)</span> — Step 2: URGENCY KILL
+                        <span class="label critical">Critical Failure</span>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jacob:</strong> "All right. And so, I mean, it doesn't sound like there's like a big, big rush or anything right now, right? I mean, if you guys didn't sell within like the next 36 days, it's not a huge deal."
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jake (seller):</strong> "Yeah, this ain't something that needs to be done tomorrow."
+                    </div>
+                    
+                    <div class="fix-box problem">
+                        <strong>Problem:</strong> This is a leading, closed question that deflates urgency. Jacob gave the seller permission to say "no rush" right after the seller said he's overwhelmed. <strong>This is one of the worst mistakes a rep can make in Step 2.</strong>
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle Violated:</strong> Never give the seller permission to de-prioritize the sale. Always frame urgency as an open question that makes the seller defend their timeline.
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What should have been said:</strong><br>
+                        "So it sounds like you're ready to be done with this renovation chapter — how soon would you want to close this out so you're not stuck in it for another 6-12 months?"<br><br>
+                        Or:<br>
+                        "When you think about the next 30-60 days, what would it look like if you were already out of this and onto the next step with your family?"
+                    </div>
+                    
+                    <div class="impact">
+                        <strong>Impact:</strong> Seller relaxed and said "no rush." Jacob killed the urgency he could have built. This will hurt the offer negotiation later.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block">
+                    <div class="timestamp-header">
+                        <span class="time">(00:04:37-00:05:35)</span> — Step 2: Price Anchor / Market Discussion
+                        <span class="label problem">Could Have Softened</span>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jake (seller):</strong> "I don't want to break even off it. I mean, we have to put a lot of work into it. And I mean, we have paid a lot of it off. And we would like the money, you know, just for the rent for the next whatever. And maybe if we find something else to buy a down payment or, you know, just to have a little extra money. So we want to make a little money off of it. I understand whoever buys it wants to make money off it, too. So I'm just kind of curious of what the market is out there that they would offer us."
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jake (seller):</strong> "Like I said, the inside needs a lot of work. I mean, if you put we're in a huge tourist area. so if you put egress windows in and there's room for a bathroom in the basement make it a 5 bedroom house 2 bathroom you could get over 320 I bet here for that house but I'm just tired of doing it I'm tired of messing with you"
+                    </div>
+                    
+                    <div class="fix-box problem">
+                        <strong>Note:</strong> Seller anchored himself at $320k ARV and said "I don't want to break even." Jacob asked about square footage and bedroom count, then moved on. He could have softened expectations here ("yeah, if it was finished that makes sense, but cash buyers buy as-is so it'll be lower"), but this is <strong>not a critical miss</strong> — the formal price reframe (Step 3.5) happens after underwriting on Call 2/3.
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle:</strong> Step 3.5 (formal price reframe) happens post-underwriting on Call 2 or 3. On Call 1, you can optionally soften high anchors, but it's not required.
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>Optional softening (if Jacob wanted to):</strong><br>
+                        "I hear you — and yeah, if you finished it out, $320k makes sense. Just so you know, cash buyers like us buy as-is, so our numbers are gonna be lower than retail. But let me get this over to underwriting and we'll see what we can do."
+                    </div>
+                    
+                    <div class="impact">
+                        <strong>Impact:</strong> Seller is expecting a number closer to $320k. The formal reframe will happen after underwriting (Step 3.5), but a light touch here could have softened the gap.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block good">
+                    <div class="timestamp-header">
+                        <span class="time">(00:08:07)</span> — Step 2: Future State Question + Validation
+                        <span class="label good">Strong</span>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jacob:</strong> "So let's say you guys are able to sell the property and you don't have to keep putting up with these renovations. What are you both looking forward to the most about this next chapter of your life?"
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jake (seller):</strong> "Honestly, like, not having to deal with any of this anymore. Like, just being able to do what we want to do and not have a house dictate when we can do something, what we can do with our time or our weekends or our evenings. Like, I'm gonna move where I move. I don't have to figure out how to figure this out. That stress goes away."
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What worked:</strong> Perfect future state question. Jake painted the emotional payoff (freedom from house dictating life, no stress). Jacob then validated it with "the new American dream is freedom, not a house." Seller agreed strongly. This builds trust.
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle:</strong> Future state questions let the seller articulate the emotional payoff of selling. This becomes the emotional anchor when you deliver the offer.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block critical">
+                    <div class="timestamp-header">
+                        <span class="time">(No Timestamp)</span> — Step 2: Consequence Questions Missing
+                        <span class="label critical">Critical Failure</span>
+                    </div>
+                    
+                    <div class="fix-box problem">
+                        <strong>What Jacob should have asked but didn't:</strong><br>
+                        "What happens if the next 30-60 days look the same and you're still stuck in renovations?"<br><br>
+                        Or:<br><br>
+                        "Hopefully this doesn't happen, but if you're still here in 6 months and you're still renovating, how would that affect you and your family?"
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle:</strong> Consequence questions make the seller self-diagnose the urgency. Without them, the seller doesn't feel the pressure to act now.
+                    </div>
+                    
+                    <div class="impact">
+                        <strong>Impact:</strong> Jake said he's "overwhelmed" and "tired of doing it" but didn't feel the emotional weight of what happens if that continues. This weakens Jacob's negotiating position later.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block good">
+                    <div class="timestamp-header">
+                        <span class="time">(00:16:22-00:22:55)</span> — Step 3: Property Condition Checklist
+                        <span class="label good">Thorough</span>
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What Jacob did:</strong> Ran through comprehensive condition checklist:
+                        <ul style="margin-top: 5px; margin-left: 20px;">
+                            <li>Roof age (2 years old)</li>
+                            <li>Exterior work completed (landscaping, gutters, siding, concrete)</li>
+                            <li>Foundation (poured concrete, no issues)</li>
+                            <li>HVAC (forced air, working)</li>
+                            <li>Plumbing (city water/sewer, no issues)</li>
+                            <li>Electrical (fuse box, no updates needed per inspector)</li>
+                            <li>Interior needs (kitchen, flooring, paint, insulation)</li>
+                            <li>No pets, no smoking</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What worked:</strong> Thorough coverage. Jacob got all the underwriting data needed.
+                    </div>
+                    
+                    <div class="fix-box problem">
+                        <strong>Problem:</strong> No formal transition into Step 3. Jacob drifted into questions without anchoring: "Alright Jake, I'm gonna run through our property condition checklist real quick so I can get this over to underwriting accurately. Sound good?"
+                    </div>
+                    
+                    <div class="principle">
+                        <strong>FHCO Principle:</strong> Anchor transitions between steps so the seller knows where they are in the process. Don't drift.
+                    </div>
+                </div>
+                
+                <div class="timestamp-block good">
+                    <div class="timestamp-header">
+                        <span class="time">(00:23:15-00:25:30)</span> — Objection Handling: Scam Concern
+                        <span class="label good">Professional</span>
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jake (seller):</strong> "So we actually got a call from somebody saying they were from the government and they were gonna buy our house. And then we found out it was a scam. So I'm just being cautious here."
+                    </div>
+                    
+                    <div class="quote-box">
+                        <strong>Jacob:</strong> "Yeah, I totally get that. There's a lot of scams out there, especially with people calling about buying houses. We're a legitimate company — you can look us up, Fast Home Cash Offers. We've been doing this for years. And the way we work, we don't ask you for any money upfront. We do all the work. So if that makes you feel better, I can send you some info after this call too."
+                    </div>
+                    
+                    <div class="fix-box">
+                        <strong>What worked:</strong> Jacob didn't get defensive. He explained the scam, validated the concern, and repositioned FHCO as legitimate. This was well done.
+                    </div>
+                </div>
+                
+
+            </div>
+            
+            <div class="section">
+                <h2>Top 3 Fixes</h2>
+                <ul class="fixes">
+                    <li><strong>1. Fix Step 1 execution:</strong> Always state company identity clearly ("This is Jacob with Fast Home Cash Offers"), give permission to say no, and flip conversation back to seller with "How are you hoping we can help?"</li>
+                    <li><strong>2. Stop killing urgency:</strong> Never give the seller permission to relax with leading questions like "it doesn't sound like a rush, right?" Frame urgency as an open question: "How soon would you want to close this out so you're not stuck in it for another 6-12 months?"</li>
+                    <li><strong>3. Run consequence questions:</strong> Make the seller visualize the cost of inaction: "What happens if the next 30-60 days look the same and you're still stuck in renovations?"</li>
+                </ul>
+            </div>
+            
+            <div class="coaching-section">
+                <h2>Coaching Priorities for Jacob</h2>
+                
+                <h3>CRITICAL (Must Fix Immediately)</h3>
+                <ul>
+                    <li><strong>Stop killing urgency</strong> — never give the seller permission to relax with leading questions like "it doesn't sound like a rush, right?"</li>
+                    <li><strong>Run consequence questions</strong> — make the seller visualize the cost of inaction: "What happens if the next 30-60 days look the same?"</li>
+                    <li><strong>Fix Step 1 structure</strong> — company identity, permission to say no, flip back to seller (non-negotiables)</li>
+                </ul>
+                
+                <h3>HIGH PRIORITY</h3>
+                <ul>
+                    <li><strong>Ask mortgage balance in Step 2</strong> — critical underwriting data: "What's the mortgage balance you still owe?"</li>
+                    <li><strong>Probe influencers deeper</strong> — don't just confirm involvement, dig into concerns: "What's most important to her in this sale?"</li>
+                    <li><strong>Dig into emotional pain</strong> — when seller says "overwhelmed," ask: "What's been the hardest part for you day-to-day?"</li>
+                </ul>
+                
+                <h3>MEDIUM PRIORITY</h3>
+                <ul>
+                    <li><strong>Reduce talking ratio</strong> — aim for 30% rep / 70% seller (Jacob was at 45/55)</li>
+                    <li><strong>Anchor transitions between steps</strong> — "Alright, I'm gonna run through our property condition checklist real quick."</li>
+                    <li><strong>Dig into emotional pain</strong> — when seller says "overwhelmed," ask: "What's been the hardest part for you day-to-day?"</li>
+                </ul>
+            </div>
+            
+            <div class="strengths-section">
+                <h2>What Worked (Replicate This)</h2>
+                <ul>
+                    <li><strong>Future state question executed correctly:</strong> "So let's say you guys are able to sell the property and you don't have to keep putting up with these renovations. What are you both looking forward to the most about this next chapter of your life?"</li>
+                    <li><strong>Validated seller stress with bigger concept:</strong> Jacob tied seller's stress to "the new American dream is freedom, not a house." Seller agreed strongly. This builds trust.</li>
+                    <li><strong>Handled scam situation calmly and professionally:</strong> Didn't get defensive, explained the scam, and repositioned FHCO as legitimate.</li>
+                    <li><strong>Thorough condition checklist:</strong> Covered all systems and interior/exterior points. Replicate this coverage every time.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated by Sales Coach | FHCO Internal Use Only<br>
+            <em>Audit Date: May 7, 2026 | Auditor: Sales Coach AI</em>
+        </div>
+    </div>
+</body>
+</html>

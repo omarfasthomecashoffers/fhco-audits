@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Jacob Adams / Elizabeth Toon</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item.na .icon { color: #3b82f6; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Jacob Adams<br>
+                <strong>Call Date:</strong> May 7, 2026 (Call 1)<br>
+                <strong>Seller:</strong> Elizabeth Toon<br>
+                <strong>Property:</strong> 3,000+ sq ft, 5BR/2BA, 29 W York St, Biglerville, PA 17307<br>
+                <strong>Call Type:</strong> Call 1 (Steps 1-3 Process Call)<br>
+                <strong>Seller Anchor:</strong> ~$20-30K cash needed [00:21:00-00:21:49]<br>
+                <strong>Total Duration:</strong> 56 min 48 sec<br>
+                <strong>Outcome:</strong> ⏳ <strong>IN PROGRESS</strong> (Next: Step 4 Commitment Call)<br>
+                <strong>Overall Grade:</strong> <strong>5/10 — Mixed (Missed Critical Price Questions, Strong Empathy)</strong>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary - Call 1</h2>
+                <p><strong>Verdict:</strong> Process call executed with strong empathy but MAJOR gap on Step 2C: Jacob NEVER asked the 4 mandatory price questions. Seller volunteered her cash needs ($20-30K for moving/relocation), but Jacob never formally asked: (1) what the cash is for, (2) how much cash needed vs wanted, (3) number breakdown, or (4) flexibility on price. This creates file-prioritization risk — Omar can't determine if this is a good or bad number without price anchoring. Elizabeth was highly emotional (mother-in-law dying, own autoimmune disease, 7 kids, urgent CA relocation), and Jacob showed excellent empathy and tone control throughout. He covered property condition thoroughly and proactively positioned mortgage assumption as the likely route (2.3% VA loan). Strong rapport-building, but failure to execute price discovery means file can't be properly prioritized for underwriting.</p>
+                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Estimated 35% Jacob / 65% Elizabeth (near 30/70 target — strong listening control given emotional depth of conversation)</p>
+                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Excellent empathy and tone matching during emotional moments, strong property condition discovery, proactive mortgage assumption framing (VA loan 2.3%), good rapport with seller (she cried, he stayed present and professional), let seller share full story without rushing.</p>
+                <p style="margin-top: 10px;"><strong>Critical Failures:</strong> NEVER formally asked Step 2C price questions (1-4), NEVER identified influencer (husband absent from call, Jacob didn't ask if he needed to be on next call), NEVER asked "who else is on title?" despite 2 spouses, NEVER confirmed timeline-to-urgency link, missed ALL 4 consequence questions, skipped 5-part closing sequence (no credibility info sent, no scorch-the-earth framing, no photos requested). <em>Note: Mortgage balance = $123,800 (seller volunteered).</em></p>
+            </div>
+            
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+                
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations</div>
+                            <div class="score-reason">Clean opening - identity stated, expectations set, permission missing. Flipped to seller immediately (great).</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Company identity stated clearly</strong> — "This is Jay with Fast Home Cash Office." [00:00:14]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Set expectations (time/agenda/results)</strong> — "So the way I'd like to do things is to have a brief open conversation with homeowners. That way you can tell me a little bit about the property and what you're hoping to accomplish with it. Really, that's just to see if we're even the right buyer for you at the end of the day." [00:00:27]
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Permission to say no</strong> — Should have said: <em>"Lastly, I want to emphasize that if at any point you feel that we're not a good fit for you, feel free to let us know. It's completely okay to say no."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Reverse conversation back to seller</strong> — Seller immediately began sharing property details and situation [00:00:47] — Jacob let her lead, which was appropriate given seller eagerness
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Strong empathy during emotional moments, excellent listening. Missed reverse selling, consequence questions (0/4), future state questions, and summary. Seller shared motivation deeply - no probing needed.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item na">
+                            <div class="icon">🔵</div>
+                            <div class="text">
+                                <strong>Situation Questions (icebreaker/small talk)</strong> — N/A: Seller immediately volunteered full property description and situation. "So the property is located in Biglerville, Pennsylvania... The reason why we are selling is more due to family emergency." [00:00:47 - 00:03:01]. No icebreaker needed.
+                            </div>
+                        </div>
+                        <div class="checklist-item na">
+                            <div class="icon">🔵</div>
+                            <div class="text">
+                                <strong>Asked problem/motivation</strong> — N/A: Seller volunteered deep motivation without prompting. "My mother-in-law has cancer, and the cancer has now spread to her liver, her lungs, and they have discovered a tumor in her brain... we need the money to get out there." [00:03:07 - 00:03:58]
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Reverse Selling</strong> — Should have said: <em>"What other options have you looked into that would let you get the cash without selling?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Tone Control - Emotional Moments</strong> — "That sounds tough" [00:06:29] — stayed present when Elizabeth started crying, didn't deflect or minimize the emotion
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Invited impact question</strong> — "You said you have to go somewhere tomorrow for something?" [00:06:35] — asked about her own medical treatment (Rituxan infusion for autoimmune disease)
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Acknowledged pain</strong> — "I see why you'd be incredibly stressed. I cannot imagine." [00:07:57 - 00:08:00]
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Asked future state question</strong> — Should have said: <em>"Let's say you're able to sell the property and you're no longer dealing with this stress — what are you looking forward to the most about that next chapter?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Created gap between now and future</strong> — Should have said: <em>"How often are you currently able to experience peace of mind?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Asked emotional impact (future)</strong> — Should have said: <em>"How's it going to feel once you're finally out there with your husband's family and no longer dealing with this stress?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Summarized problem, impact, future state</strong> — Should have said: <em>"So Elizabeth, it sounds like what I'm hearing is that you're dealing with your mother-in-law's cancer diagnosis and your own health battle, and because of that it's been causing immense stress and urgency. At this point you want to sell the house to get the cash so you can relocate your family to California in early June. Is that kind of what I'm hearing?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q1: Clarify block/delay</strong> — Should have said: <em>"What do you feel has prevented you from selling the house sooner?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q2: Short-term consequence</strong> — Should have said: <em>"What happens if the next 30-60 days look the same and you can't get out there by early June?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q3: Personal impact</strong> — Should have said: <em>"How would that make you feel if you didn't get the house sold in time?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q4: Close with label</strong> — Should have said: <em>"So it sounds like it's critical to make this happen now, not months from now."</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks</div>
+                            <div class="score-reason">Confirmed VA loan and balance. NEVER identified influencer (husband not on call), NEVER asked who else is on title, NEVER confirmed husband needs to be on next call. Timeline discussed but not anchored to urgency.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Timeline (anchored to urgency)</strong> — "So you guys are looking to be out there probably first or second week of June?" [implied from 00:03:38] — Jacob confirmed timeline but didn't anchor it to consequence
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>What other options have you explored?</strong> — Should have said: <em>"Besides reaching out to our company, what other options have you explored?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Mortgage balance</strong> — "$1,238 a month" [00:23:02-00:23:20] — Elizabeth volunteered monthly payment; Jacob confirmed it's a VA loan [00:22:47]
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Influencers identified</strong> — Should have said: <em>"Who else is important in this decision with you? I noticed your husband isn't on the call — is he on board with selling?"</em> — Jacob NEVER asked about the husband's involvement
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Asked how partner feels</strong> — Should have said: <em>"How does your husband feel about the whole transaction and the move to California?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Probed what's important to them</strong> — Should have said: <em>"What's most important to your husband in this sale?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Confirmed availability for offer call</strong> — Should have said: <em>"Would it be impossible to have your husband on any follow-up calls if we decide to submit an offer? My underwriting team will likely require it since he's an owner of the property."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Occupancy / where next?</strong> — "So when you guys go out to California, what's the plan once you do get there?" [00:13:05] — Jacob asked about relocation plan (renting in Tracy/Mountain House)
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Reverse Selling - Testing Urgency</strong> — "What type of questions would you have for me at that point?" [00:18:54] — invited seller to surface concerns/roadblocks
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price (MANDATORY)</div>
+                            <div class="score-reason">CRITICAL FAILURE: Jacob NEVER asked the 4 mandatory price questions. Seller volunteered cash needs (~$20-30K), but never formally anchored price. File cannot be prioritized without proper price discovery.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Q1: What do they need the cash for? (Future State)</strong> — Should have said: <em>"Once this property is sold and you have the cash, what is that money going to help you do?"</em> — Elizabeth volunteered moving expenses breakdown, but Jacob never formally asked this to anchor the purpose
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Q2: How much cash do you NEED, not "want"</strong> — Should have said: <em>"In order for you to stop dealing with this urgent relocation, how much cash do you need in your pocket after the mortgage is paid?"</em> — Elizabeth said "$20-30K max" [00:21:00-00:21:49] but Jacob never formally framed this as NEED vs WANT
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Q3: Number Breakdown (Separating WANT vs NEED)</strong> — Should have said: <em>"Just for my notes, how did you come up with that number? Would you say that's more of a 'love to get' or a 'need to get'?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Q4: Always Ask if They're Flexible on Price</strong> — Should have said: <em>"Just between you and I... Do you see yourself having any flexibility on that price?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Reset Expectations: Cash Offer Will Be Lower</strong> — "I always like to be up front. You know, we're a cash buying company. You already know that if you had the time, if you're on the real estate market, you could definitely get more than something we'd be able to pay." [00:21:57 - 00:22:12] — Good framing of trade-off (speed vs price)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Thorough condition discovery. Jacob asked about systems, interior, exterior, and got detailed answers. Positioned mortgage assumption proactively (2.3% VA loan). Skipped ALL 5 elements of the closing sequence (no credibility, no scorch-the-earth, no photos).</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Transition Into Step 3 (Checklist Framing)</strong> — "I'm just going to ask you quite a bit of questions. I was a general contractor before. That's one of the reasons they had me on front of a lot of these calls. I'm just going to ask a couple of questions about the property." [00:23:30 - 00:23:48]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Systems: Roof</strong> — "That roof you guys have looks newer, right?" / "Yeah, that was either 2017 or 2018." [00:32:23 - 00:32:29]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Systems: HVAC</strong> — "You were talking about the furnace. So do you have central cooling as well?" / "Yeah, it's the 8-Vac. We've never used it." [00:36:01 - 00:36:13]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Systems: Plumbing</strong> — "And flumming-wise, are you guys copper, cast iron, PVC?" / "Copper." [00:40:17 - 00:40:24]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Interior: Renovations</strong> — "And inside, have you guys done any renovations since you guys have bought it at all?" / "The only thing that we've really done is we put new flooring... LVP." [00:28:29 - 00:29:34]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Interior: Kitchens/Bathrooms</strong> — "Any changes you guys did to any kitchens or bathrooms?" / "No, the downstairs bathroom would need to be updated... The kitchen, the only thing I would do is put new countertops and a new sink." [00:29:58 - 00:30:37]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Interior: Pets</strong> — "So you guys gave any pets at home?" / "Yeah, we have our French bulldog mix, Mr. Jameson." [00:48:00 - 00:48:04]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Exterior: Foundation/Basement</strong> — "You guys are on a cement slab, right? Not a crawl space?" / "No, there's the basement and then you got a crawl space where they dug out." [00:41:30 - 00:41:36]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>Proactive Mortgage Assumption Framing</strong> — "I think the mortgage assumption route is probably going to be something that we end up going down." [00:19:24 - 00:19:27] — Jacob recognized the 2.3% VA rate and positioned assumption early
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5-Part Closing: Qualify Property for Offer</strong> — Should have said: <em>"So what I will do is have my underwriters look at the property and double check their number based on the conditions you told me. If they think it works, the next call will be to set up next steps for a final offer. And if they learn it doesn't work then we may have to part ways."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5-Part Closing: Send Credibility Info (ALWAYS A MUST)</strong> — Should have said: <em>"Hey, before I hang up, can I give you a little homework? I'm going to text over our Google reviews and Better Business Bureau rating so you can do your research on us."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5-Part Closing: Scorch the Earth (ALWAYS DO THIS)</strong> — Should have said: <em>"Unfortunately, in this industry, we've seen some fly-by-night companies... Look at their online presence, their reviews, their track record. When it comes to selling your home, you want to make sure you're working with a legitimate buyer."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5-Part Closing: Request Photos (ALWAYS)</strong> — Should have said: <em>"Elizabeth, how difficult would it be for you to get me some pictures of the property? Just so we can see what we are working with."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>5-Part Closing: Name & Phone Number</strong> — Jacob gave his direct line and confirmed next steps via text [00:50:21 - 00:51:00] — appropriate for hot lead
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4: Commitment for Offer</div>
+                            <div class="score-reason">Not yet executed (this was Call 1).</div>
+                        </div>
+                        <div class="score-badge" style="background: #9ca3af; color: white;">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item na">
+                            <div class="icon">🔵</div>
+                            <div class="text">Step 4 not yet executed. This was Call 1 (Steps 1-3 process call).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5: Deliver Offer & Negotiate</div>
+                            <div class="score-reason">Not yet executed (this was Call 1).</div>
+                        </div>
+                        <div class="score-badge" style="background: #9ca3af; color: white;">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item na">
+                            <div class="icon">🔵</div>
+                            <div class="text">Step 5 not yet executed. This was Call 1 (Steps 1-3 process call).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 6: Contract & Transfer</div>
+                            <div class="score-reason">Not yet executed (this was Call 1).</div>
+                        </div>
+                        <div class="score-badge" style="background: #9ca3af; color: white;">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item na">
+                            <div class="icon">🔵</div>
+                            <div class="text">Step 6 not yet executed. This was Call 1 (Steps 1-3 process call).</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li>
+                        <strong>1. ALWAYS execute Step 2C: Price (4 mandatory questions)</strong><br>
+                        Elizabeth volunteered her cash needs, but you never formally asked: (1) what the cash is for (future state), (2) how much cash NEEDED vs WANTED, (3) number breakdown (love vs need), (4) flexibility on price. This creates file-prioritization risk — Omar can't determine if $20-30K is a good or bad number without anchoring to equity and seller flexibility. Even when seller volunteers the number, run the full sequence to test want vs need and capture flexibility.
+                    </li>
+                    <li>
+                        <strong>2. ALWAYS identify influencer and confirm next-call availability (Step 2B)</strong><br>
+                        Husband absent from call, and you never asked: "Is your husband on board with selling?" / "Would it be impossible to have him on any follow-up calls?" The property is titled to both spouses (VA loan), and underwriting will require husband on offer call. Proactively confirm influencer involvement on Call 1 to avoid last-minute surprises on Call 2.
+                    </li>
+                    <li>
+                        <strong>3. ALWAYS execute the 5-part closing sequence after Step 3</strong><br>
+                        You skipped: credibility info (Google reviews/BBB), scorch-the-earth framing (fly-by-night competitors), and photo request. These three elements build trust, differentiate FHCO, and provide underwriting with visual data. Even on hot leads, send credibility + scorch-the-earth to reduce cancellation risk.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>What Worked - Replicate This</h2>
+                <ul>
+                    <li><strong>Excellent empathy and tone control during emotional moments</strong> [00:06:29 - 00:08:00] — When Elizabeth started crying about her mother-in-law's cancer and her own health battle, Jacob stayed present, acknowledged the pain ("That sounds tough" / "I see why you'd be incredibly stressed"), and didn't deflect or rush her. This built deep rapport and trust.</li>
+                    <li><strong>Strong listening control (35/65 talking ratio)</strong> — Jacob let Elizabeth share her full story (mother-in-law's cancer, own autoimmune disease, 7 kids, urgent relocation) without interrupting. Seller spoke ~65% of the time, which is near the 70% target for discovery calls.</li>
+                    <li><strong>Proactive mortgage assumption framing</strong> [00:19:24] — Jacob recognized the 2.3% VA loan early and positioned assumption as the likely route. This shows strategic thinking and sets expectations for the offer structure.</li>
+                    <li><strong>Thorough property condition discovery</strong> [00:23:30 - 00:42:00] — Jacob asked about systems (roof, HVAC, plumbing), interior (flooring, kitchen/bath), exterior (basement, foundation), and pets. Detailed notes will help underwriting.</li>
+                    <li><strong>Asked open-ended follow-up questions</strong> [00:13:05] — "So when you guys go out to California, what's the plan once you do get there?" — This uncovered relocation details (renting in Tracy/Mountain House, husband's job offer) and reinforced urgency.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            Generated by Sales Coach AI | Source: CA67cb7fbe61952d67cbb0a4e2edb2e5fe | May 7, 2026
+        </div>
+    </div>
+
+    <script>
+        // Auto-expand low-scoring items
+        document.querySelectorAll('.score-item').forEach(item => {
+            const badge = item.querySelector('.score-badge');
+            if (badge && (badge.classList.contains('low') || badge.textContent === '1' || badge.textContent === '2')) {
+                item.classList.add('expanded');
+            }
+        });
+    </script>
+</body>
+</html>

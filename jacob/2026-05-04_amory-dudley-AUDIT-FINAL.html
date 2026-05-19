@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Jacob Adams / Amory Q Dudley</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .score-badge.na { background: #9ca3af; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item.na .icon { color: #3b82f6; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Jacob Adams<br>
+                <strong>Call Dates:</strong> May 4-5, 2026 (2-call sequence)<br>
+                <strong>Seller:</strong> Amory Q Dudley + Ex-wife Rosalyn (co-owner on title)<br>
+                <strong>Property:</strong> 2315 Ridgeview Rd, Anniston, Alabama 36207<br>
+                <strong>Call Type:</strong> Offer + Contract Sequence (Call 1: Offer Delivery 3.4 min, Call 2: Contract 65.5 min)<br>
+                <strong>Seller Anchor:</strong> Not captured (MAJOR MISS)<br>
+                <strong>Total Duration:</strong> ~69 minutes across 2 calls<br>
+                <strong>Outcome:</strong> ⚠️ <strong>CONTRACT SIGNED at $165,000 net (Concierge) — BUT CRITICAL GAPS IN DISCOVERY</strong><br>
+                <strong>Overall Grade:</strong> <strong>4/10 — Deal Closed BUT Process Broken (No Steps 1-3, No Price Discovery, Ex-Wife Surprised at Contract Stage)</strong>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary - 2-Call Sequence</h2>
+                <p><strong>Verdict:</strong> CONTRACT SIGNED at $165,000 (concierge), but this is Omar's red flag in action: Jacob's Process→Offer ratio is 3.5:1 because he's SKIPPING the process entirely. These weren't full sales calls — they were offer deliveries with no foundation. Call 1 (May 4, 3.4 min): Jacob delivered a $165k concierge offer cold with ZERO discovery, no Step 1, no Step 2, no Step 3. Seller asked for time to think (expected — no rapport, no urgency established). Call 2 (May 5, 65.5 min): Seller called back ready to proceed. Jacob walked through the contract and got signatures from Amory + ex-wife Rosalyn (who was surprised by the whole thing). Deal closed, but it's fragile — no emotional buy-in, no roadblocks addressed, no price justification. If this deal falls apart in due diligence or if a competitor calls with $170k, Jacob has ZERO leverage because he never built the foundation.</p>
+                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Unable to assess accurately (Call 1 too short, Call 2 dominated by contract logistics — not discovery)</p>
+                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Got the contract signed. Handled ex-wife involvement smoothly when it surfaced. Explained contract sections clearly. Transferred to TC Joe Lee professionally.</p>
+                <p style="margin-top: 10px;"><strong>Critical Failures:</strong> NO STEP 1 (no expectations set, no identity established properly). NO STEP 2 (zero discovery — no motivation, no problem, no urgency, no future state, no consequence questions). NO STEP 2C (NEVER asked price — this is the biggest red flag). NO STEP 3 (zero property condition coverage). NO STEP 4 (commitment for offer). Delivered offer with no context in a 3-minute call. Ex-wife only learned about the sale when she was asked to sign the contract (influencer gap). This deal is vulnerable.</p>
+            </div>
+            
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+                
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations</div>
+                            <div class="score-reason">NEVER DONE. No intro, no expectations, no permission to say no, no reverse to seller. These calls started mid-transaction.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Company identity stated clearly</strong> — Should have said: <em>"Hey Amory, this is Jacob Adams with Fast Home Cash Offers."</em> — Call 1 opened mid-conversation with no identity anchor.
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Set expectations (time/agenda/results)</strong> — Should have said: <em>"What I like to do is have an open conversation, understand more about the property and what you're trying to accomplish. Towards the end, if I feel like we can help, I'll speak to our underwriters."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Permission to say no</strong> — Should have said: <em>"At any point if you feel we're not a good fit for you, feel free to let me know. It's completely okay to say no."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Reverse conversation back to seller</strong> — Should have said: <em>"So how are you hoping we can help with your property there?"</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">NEVER DONE. Zero discovery questions. No motivation, no problem, no emotional impact, no future state, no consequence questions. Jacob had no idea WHY Amory wanted to sell.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Situation Questions (icebreaker/small talk)</strong> — Should have said: <em>"How long have you owned the property? What's going on with it?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Asked problem/motivation</strong> — Should have said: <em>"What came up recently that made you want to sell now?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Reverse Selling</strong> — Should have said: <em>"What other options have you looked into that would let you keep the property?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Clarified/mirrored the problem</strong> — Should have said: <em>"When you say [problem], what do you mean by that exactly?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Stretched the timeline</strong> — Should have said: <em>"How long has that been going on?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Clarified problem deeper</strong> — Should have said: <em>"How has all this been making you feel?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Normalized with story</strong> — Should have said: <em>Share a story to normalize their situation</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Invited impact question</strong> — Should have said: <em>"How has all this been affecting you?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Labeled their emotions</strong> — Should have said: <em>"Sounds like you've been experiencing [stress/frustration]..."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Asked future state question</strong> — Should have said: <em>"Once the property is sold and you have cash, what is that money going to help you do?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Created gap between now and future</strong> — Should have said: <em>"How often are you currently able to experience [future state]?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Asked emotional impact (future)</strong> — Should have said: <em>"How's it going to feel once you're finally there?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Summarized problem, impact, future state</strong> — Should have said: <em>"So it sounds like you're dealing with [problem], it's impacting you by [X], and once sold you can [future state]..."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q1: Clarify block/delay</strong> — Should have said: <em>"What has prevented you from selling the house in the past?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q2: Short-term consequence</strong> — Should have said: <em>"What happens if the next 30-60 days look the same?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q3: Personal impact</strong> — Should have said: <em>"How would that make you feel if you didn't get the house sold?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Consequence Q4: Close with label</strong> — Should have said: <em>"So it sounds like it's important to make a change now, not 6 months from now."</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks</div>
+                            <div class="score-reason">NEVER DONE. No timeline, mortgage balance inferred on Call 2 (Amory mentioned $141k mortgage during contract), no influencer identification (ex-wife only surfaced when contract needed signature).</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Timeline (anchored to urgency)</strong> — Should have said: <em>"How soon would you want to be out of [problem] so you don't have to keep dealing with it?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>What other options have you explored?</strong> — Should have said: <em>"Besides reaching out to us, what other options have you explored?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item na">
+                            <div class="icon">🔵</div>
+                            <div class="text">
+                                <strong>Mortgage balance</strong> — N/A: Seller volunteered "the mortgage is in my name" [Call 2, 00:00:35] and later mentioned "$141" [Call 2, 00:10:04]. Never formally asked, but info surfaced.
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Influencers identified</strong> — Should have said: <em>"Who else is important in this decision with you?"</em> — Ex-wife Rosalyn only surfaced when DocuSign needed signatures [Call 2, 00:00:17]. Jacob had NO idea she existed before contract stage.
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Asked how partner feels</strong> — Should have said: <em>"How does your ex-wife feel about the whole transaction?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Probed what's important to them</strong> — Should have said: <em>"What's most important to her in this sale?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Confirmed availability for offer call</strong> — Should have said: <em>"Would it be impossible to have her on any follow-up calls if we decide to submit an offer?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Occupancy / where next?</strong> — Should have said: <em>"Where are you planning to go next?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Reverse Selling - Testing Urgency</strong> — Should have said: <em>"Is there anything that would prohibit you from selling the property?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Uncover hidden roadblocks</strong> — Should have said: <em>"Let's pretend our underwriting team qualifies for an offer you like, what questions are you going to have next?"</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price</div>
+                            <div class="score-reason">NEVER DONE. This is the most critical gap. Jacob NEVER asked what Amory needed or wanted. Delivered $165k with no anchor, no justification, no comparison. Seller had no context.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>1. What do they need the cash for? (Future State)</strong> — Should have said: <em>"Once the property is sold and you have cash, what is that money going to help you do?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>2. How much cash do you NEED (not want)?</strong> — Should have said: <em>"In order for you to stop dealing with [problem], how much cash do you need in your pocket after the mortgage is paid?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>3. Number breakdown (WANT vs NEED)</strong> — Should have said: <em>"How did you come up with that number? Would you say that's more of a 'love to get' or a 'need to get'?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>4. Always ask if flexible on price</strong> — Should have said: <em>"Do you see yourself having any flexibility on that price?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Captured a price anchor</strong> — Should have said: <em>"What was your ballpark or what were you hoping to walk away with from the sale?"</em> — NEVER ASKED. This is the root cause of Jacob's low offer submission rate.
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5. Reset expectations on why cash offer will be lower</strong> — Should have said: <em>"Companies like ours usually aren't the highest-paying buyers. Sellers who work with us usually value speed, certainty, and simplicity."</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">NEVER DONE. No condition questions. No photos requested. No credibility info sent. No scorching the earth. Jacob had zero property data before offering $165k.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Roof, foundation, HVAC, plumbing, electrical</strong> — Should have said: <em>"Is the roof original or replaced? Any foundation issues? How old is the HVAC?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Interior/exterior work documented</strong> — Should have said: <em>"Any remodeling or upgrading? Or is it original?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Square footage, bed/bath count</strong> — Should have asked basic property specs
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>Pets/smoking</strong> — Should have said: <em>"Any pets in the house? Anyone smoke inside?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>1. Qualify property for offer</strong> — Should have said: <em>"I'm going to have my underwriters look at the property. If it works, the next call will be for a final offer. If it doesn't, we may have to part ways."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>2. Send credibility info (ALWAYS A MUST)</strong> — Should have said: <em>"I'll text over our Google reviews and BBB rating so you can do your research on us."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>3. Scorch the Earth (ALWAYS DO THIS)</strong> — Should have said: <em>"There are fly-by-night companies out there who overestimate property value and can't follow through."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>4. Ask for photos (ALWAYS)</strong> — Should have said: <em>"If you happen to have any photos, send them over — it helps underwriting understand the home."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5. Name & Phone Number</strong> — Should have given direct contact info if this was a hot lead
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4: Commitment for Offer (Call 1)</div>
+                            <div class="score-reason">NEVER DONE. Jacob delivered the offer with zero commitment structure. No yes/no expectation, no influencer check, no timeline for decision. Seller asked for time (predictable outcome).</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>1. Set Expectations for Yes or No Offer</strong> — Should have said: <em>"When I call back with the number, I'll need a yes or no — if it works, we move. If it doesn't, no pressure."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>2. Avoid "Think About It"</strong> — Should have said: <em>"Sometimes sellers say 'let me think about it' when they really mean no. It's okay to tell me no if it doesn't work."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>3. Permission to Say No</strong> — Should have said: <em>"It's absolutely ok for you to say NO if this does not work, we would completely understand."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>4. Reconfirm Yes or No</strong> — Should have said: <em>"Do you feel comfortable giving us a clear NO or YES decision on our next call?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5. Inoffensive Close</strong> — Should have said: <em>"If we come to a verbal agreement, what do you think the next steps should be?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>6. Explain Title / Closing Process</strong> — Should have said: <em>"Once we have a verbal agreement, we'll send the contract, title company will do their work, and a mobile notary will come to you for final signing."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>7. Schedule Influencers (CRITICAL)</strong> — Should have said: <em>"Who else would need to be on the next call so you can comfortably pull the trigger if it makes sense?"</em> — Ex-wife was NEVER identified or scheduled.
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>8. Confirm Time for Decision-Makers</strong> — Should have said: <em>"Will you be available in the next [X] so I can let you know their decision?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>9. Confirm Seller Won't Be Distracted</strong> — Should have said: <em>"You won't be distracted right? I want you to picture this as if we were in your living room."</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5: Deliver Offer & Negotiate (Call 1)</div>
+                            <div class="score-reason">WEAK. Jacob delivered $165k concierge offer in 3 minutes. Mentioned pending rate and comp data (good), but no pen & paper, no FO number, no value stack, no triple confirm. Seller asked for time to think — deal stalled.</div>
+                        </div>
+                        <div class="score-badge medium">2</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>1. Engage the Seller & Engage the Influencer</strong> — Should have confirmed influencer was on the call before delivering. Ex-wife was NOT engaged until Call 2 contract stage.
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>2. Set Them Up for the Offer First with Pen and Paper</strong> — Should have said: <em>"Do you have a pen and paper handy? I have an important number the underwriters want me to share with you."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>3. Give Them the FO Number</strong> — Should have said: <em>"The number is FO-[XXXX], this is your fast offer number."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>4. Give Them Facts About Bad Comps, Bad Market, Bad Conditions</strong> — "The issue in your area is there's something called like a pending rate. Y'all's pending rate is super low. I see why that company that said they could do 220 cash is completely out of their mind." [Call 1, 00:00:38]
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5. Expectation Reminder</strong> — Should have said: <em>"As we mentioned earlier, if this does not work for you, feel free to tell me no."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>6. Accusation Audit (sigh/disappointed tone)</strong> — Should have said: <em>"You're probably still going to be a little disappointed by what they were able to approve."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>7. Value Stack and Future Pace Them</strong> — Should have said: <em>"This is a net number — what you walk away with in your pocket. You don't have to worry about putting any money upfront."</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>8. Days to Close</strong> — Should have specified closing timeline before the number
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>9. Deliver Offer</strong> — "With the cash offer we going to be incredibly low but we have a program where we use our buyers consistently... We could get you to 165." [Call 1, 00:02:00]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 6: Contract & Transfer (Call 2)</div>
+                            <div class="score-reason">GOOD contract walkthrough. Jacob explained sections clearly, navigated DocuSign, got both Amory and ex-wife Rosalyn to sign, ran the disclaimer, transferred to TC Joe Lee. Missed the "rip up contract" emotional lock.</div>
+                        </div>
+                        <div class="score-badge high">4</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>1. Send the contract before the call</strong> — "It should be in your email as well Mr. Moore" [Call 2, 00:17:26] — Contract sent to both Amory and Rosalyn
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>2. Navigate them to DocuSign</strong> — "The first thing you're going to do is press review, continue, and then start in order to be able to even see the starting page." [Call 2, 00:17:26]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>3. Walk through contract line by line</strong> — "Parties, that's our offer from us to you... The offer came in at $165 net to you. The property does need to be delivered vacant. We pay all the closing costs and commissions... Deposit... Risk of loss... Prorations... Licensure... Possession... Inspections... Prohibition memorandum of contract..." [Call 2, 00:17:26 - 00:22:48]
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>4. Get the signature (nonchalant)</strong> — "It was only two spots to sign" [Call 2, 00:50:16] — Both parties signed
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>5. Run "Rip Up the Contract" sequence (emotional lock)</strong> — Should have said: <em>"Congratulations! How does it feel to be in business? Just to confirm, you probably won't call us in the next few days and tell us you don't want to move forward, right? Why do you feel working with us is the right decision?"</em> — Jacob asked "How do both of you guys feel to be in business?" [00:51:17] but didn't run the full sequence.
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>6. Check for influencer objections</strong> — Should have said: <em>"Is there anyone else who would interject in this agreement? What are you going to tell them if they interject?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>7. Check for competitive offer risk</strong> — Should have said: <em>"If other buyers call you back, what are you going to tell them? What if they offer $5-10k more?"</em>
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>8. Read legal disclaimer (verbatim, recorded)</strong> — Should have read full FHCO disclaimer verbatim. Not detected in transcript.
+                            </div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text">
+                                <strong>9. Transfer to Transaction Coordinator</strong> — "They're selling because of Maury's already paying on a different property... The price that got approved for purchase is 165. Maury is aware this is the concierge service... Cash offer was coming in low, below his mortgage, so we got them approved to the concierge." [Call 2, 00:54:21] — Transfer to Joe Lee (TC)
+                            </div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text">
+                                <strong>10. Set communication expectations</strong> — Should have said: <em>"If you reach out to us, you'll never go days without hearing back. If we reach out, it'll be for a specific reason."</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>1. MANDATORY: Run Steps 1-3 Before ANY Offer (Non-Negotiable):</strong> Jacob cannot skip to the offer. Every file MUST have: (1) Step 1 - Intro + expectations, (2) Step 2A - Discovery (problem, motivation, urgency, future state, consequence questions), (3) Step 2B - Roadblocks (timeline, mortgage, INFLUENCER), (4) Step 2C - PRICE (capture their number FIRST), (5) Step 3 - Property condition. Without this foundation, every offer is a guess and every deal is fragile. THIS is why Jacob's Process→Offer ratio is 3.5:1 — he's not running the process.</li>
+                    <li><strong>2. ALWAYS Capture Price in Step 2C (Critical for Prioritization):</strong> Omar's instruction: "Never leave Call 1 without asking price." Jacob delivered $165k with NO IDEA what Amory wanted or needed. Ask: "What's your ballpark? What were you hoping to walk away with?" If they say $220k and mortgage is $141k, you know it's a bad file. If they say $150k, you know it's workable. Price determines file priority. NO PRICE = NO PRIORITY.</li>
+                    <li><strong>3. Identify Influencers in Step 2B, Engage Them in Step 4 (Before Offer):</strong> Ex-wife Rosalyn had NO IDEA this sale was happening until she was asked to sign the contract. She said "it's supposed to be [split] in the divorce decree" [Call 2, 00:10:04] — this is a landmine. ALWAYS ask in Step 2B: "Who else is on title? Who else is important in this decision?" Then in Step 4: "Who else needs to be on the offer call?" Get influencers engaged BEFORE the offer, not during contract.</li>
+                </ul>
+            </div>
+            
+            <div class="strengths-section">
+                <h2>✅ What Worked (Replicate This)</h2>
+                <ul>
+                    <li><strong>Comp Data Framing (Call 1, 00:00:38):</strong> "The issue in your area is there's something called a pending rate. Y'all's pending rate is super low." — Jacob used market data to frame why the other offer ($220k) was unrealistic. Good instinct.</li>
+                    <li><strong>Concierge Positioning (Call 1, 00:01:47):</strong> "With the cash offer we going to be incredibly low but we have a program where we use our buyers consistently... We could get you to 165." — Smooth pivot from low cash to higher concierge offer.</li>
+                    <li><strong>Contract Walkthrough (Call 2, 00:17:26 - 00:22:48):</strong> Jacob explained every section clearly — parties, price, deposit, risk of loss, prorations, licensure, possession, inspections, prohibition clause. Professional and thorough.</li>
+                    <li><strong>Divorce Decree Handling (Call 2, 00:10:27):</strong> "Whatever is going on with the divorce decree, our title company has to pay it out like it is stated in the divorce." — Acknowledged the complexity and set expectations that title will handle it.</li>
+                    <li><strong>TC Transfer (Call 2, 00:54:21):</strong> Jacob gave Joe Lee full context — reason for selling, price, concierge service, mortgage situation. Clean handoff.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            FHCO Sales Audit Report • Generated by Sales Coach AI • Based on actual transcript evidence<br>
+            Source Transcripts: Call 1 (2026-05-04, CA74bf4eb72852978ccc182e60694ba7e1), Call 2 (2026-05-05, CAd58240a68fa089c77976552c6bd22c85)
+        </div>
+    </div>
+    
+    <script>
+        // Auto-expand low-scoring items
+        document.querySelectorAll('.score-badge.low').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
