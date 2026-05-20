@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Adrian Huerta / Mirian</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Adrian Huerta<br>
+                <strong>Call Date:</strong> May 19, 2026 (Single conversation call)<br>
+                <strong>Seller:</strong> Mirian — 3306 Collier Road, Maryland<br>
+                <strong>Property:</strong> 9BR/3BA (original 2BR/1.5BA expanded without permits), 30 years owned, ~1 acre corner lot, 3 kitchens, mortgage still active<br>
+                <strong>Call Type:</strong> First conversation — 16 minutes 40 seconds<br>
+                <strong>Lead Stage After Call:</strong> Long-term follow-up (lead is only 10 days old)<br>
+                <strong>Outcome:</strong> 🔴 <strong>NO PROCESS — Lead parked in long-term follow-up after one conversation on a 10-day-old viable lead</strong><br>
+                <strong>Overall Grade:</strong> <strong>3.5/10 — Good rapport, found key facts, but pre-judged the lead and parked it instead of pushing to process</strong>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Mirian is a 67-year-old seller who wants to move to Florida to be with her family. She opened the call saying "I'm not going to sell it no more" — but Adrian correctly kept the conversation going and uncovered significant motivation: she's tired of cold weather, her kids have moved out, she wants a smaller home in Florida, and she's been thinking about this for a while. The property is a 9-bedroom house with unpermitted additions, had a $550k offer last year she declined, and she wants $650k. Adrian found the price anchor, the mortgage, the motivation, the timeline, and the future state. He then concluded the call by advising her to use a real estate agent and parking the file in long-term follow-up. This was a pre-judgment call. The fact that she wants $650k does not disqualify a process — FHCO has closed deals at $1M+. The unpermitted work, the mortgage, the motivation to move to Florida, the fact that she said no to $550k — none of these individually kill this file. Adrian made a judgment call to park it without running a full process to let the underwriters decide. That decision belonged to the underwriters, not to Adrian on a first conversation call.</p>
+                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Estimated 40% Adrian / 60% Mirian — acceptable. Mirian was talkative and Adrian let her speak, which is good.</p>
+                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Handled the cold open ("I'm not selling") perfectly — kept her talking. Found price ($650k ask), found previous offer ($550k declined), found mortgage, found motivation (Florida, cold weather, family), found future state. Good rapport with a 67-year-old seller.</p>
+                <p style="margin-top: 10px;"><strong>Critical Failures:</strong> Advised seller to use a real estate agent — that's closing the door on our own deal. Parked a 10-day-old viable lead in long-term follow-up based on price alone. Never attempted to push toward a process call. Never ran consequence questions. Never asked what she NEEDS vs WANTS on price. Never asked when she's planning to make the move to Florida.</p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations</div>
+                            <div class="score-reason">Recovered well from a cold open — seller said "I'm not selling anymore" at [00:00:36] and Adrian kept her engaged. Identity stated. Missed formal expectations and permission to say no.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Company identity stated</strong> — "Hey, this is Adrian with Fast Home Cash Offers." [00:00:08]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Handled cold open / objection</strong> — Seller said "Oh, never mind. I'm not going to sell it no more." [00:00:36] — Adrian responded: "Oh, no, don't be sorry. What happened? Were you thinking about it and change your mind?" [00:00:42] — Kept her talking. This was good instinct.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Set expectations for the call</strong> — Should have said: <em>"I just want to have an open conversation with you, understand what you're trying to accomplish, and see if we can be the right buyer for you."</em> — Never formally framed the call after recovering from the cold open.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Permission to say no</strong> — Should have said: <em>"At any point if you feel like we're not a good fit, feel free to tell me no — no pressure."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Reverse conversation to seller</strong> — Should have said: <em>"I always like to start by asking — how are you hoping we can help with your property?"</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Found motivation (Florida, cold weather, family), future state (smaller home, be with grandkids), and situation (kids moved out, 30 years in home). Missed all consequence questions and never created urgency around her timeline.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Problem/motivation surfaced</strong> — "I don't like no more that cold weather... I'm 67 years old and I can't handle no more." [00:03:08] — Kids grown and moved out. Wants to be with family in Florida. Clear motivation.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Clarified the motivation</strong> — "What's come up recently to make you guys want to make this move?" [00:02:22] — Good situational question.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Future state surfaced</strong> — Mirian wants to buy a smaller home in Fort Lauderdale/Orlando area to be near family. [00:01:06] — Adrian confirmed this: "You want to buy it in Florida. Gotcha." [00:01:12]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Future state question (formal)</strong> — Should have asked: <em>"Once the property is sold and you have cash in hand, what does that next chapter look like for you in Florida?"</em> — Never formally asked, just received it passively.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence Q2: Short-term consequence</strong> — Should have said: <em>"If this takes another 6-12 months to work out, how does that affect your plans to get to Florida and be with your family?"</em> — She's 67, cold weather is a real pain point. Never pressed.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence Q3: Personal impact</strong> — Should have said: <em>"How's it feeling to still be tied to this house while your kids are all moved out and you're ready for that next chapter?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence Q4: Close with label</strong> — Should have said: <em>"So it sounds like the longer this drags out, the longer you're stuck in the cold, away from your family in Florida. Is that fair?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Reverse selling — other options</strong> — Should have asked: <em>"Besides us, what other options have you looked at for selling?"</em> — She mentioned a friend in real estate did an informal evaluation but nothing formal. Was never properly explored.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks</div>
+                            <div class="score-reason">Found mortgage (still active), found unpermitted additions, found timeline vagueness ("not this year, maybe next year"). Never confirmed influencer — husband mentioned multiple times but never identified as decision-maker.</div>
+                        </div>
+                        <div class="score-badge medium">2</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Mortgage confirmed</strong> — "You guys still have a mortgage or is this one free and clear?" / Mirian: "I still have a mortgage." [00:03:25] — Confirmed. Balance not asked.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Roadblock surfaced (unpermitted work)</strong> — Mirian volunteered that additions were done without permits by her husband. [00:03:31] — Adrian acknowledged this. He correctly identified it as a complication but never worked through it.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Mortgage balance</strong> — Should have asked: <em>"And what's the balance left on the mortgage?"</em> — Never asked. Critical for underwriting.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Influencer identified</strong> — Husband mentioned multiple times ("my husband works in construction," "my husband" did the additions). Should have asked: <em>"Is your husband part of this decision with you? Would he need to be on a call?"</em> — Never asked. Husband is almost certainly on title.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Timeline anchored</strong> — Mirian said "not this year, maybe next year" at [00:00:49] — Adrian accepted this and never pushed back. Should have said: <em>"What would need to happen for you to be ready to move this year instead of next year?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Occupancy / where next</strong> — She mentioned her daughter lives in the basement. Should have asked: <em>"When you sell, does your daughter have somewhere to go? Would that affect your timeline?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Uncover hidden roadblocks</strong> — Should have asked: <em>"If our underwriting team came back with an offer that worked for you, what questions would you have?"</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price</div>
+                            <div class="score-reason">Price anchor captured ($650k ask, $550k previous offer declined). Adrian then used this to disqualify — told her to use a real estate agent instead of asking what she NEEDS. Massive missed opportunity.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Price anchor captured</strong> — "How much were you looking for?" / Mirian: "I'm looking for at least $650,000." [00:07:54-00:08:10] — Also found previous offer of $550k was declined last year.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>What do they NEED (not want)?</strong> — Should have said: <em>"Once the house is sold and you have cash in hand, what does that money need to do for you to make the move to Florida work?"</em> — She mentioned wanting to buy a smaller home in Florida. That's the NEED. The $650k is the WANT. Never separated the two.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Number breakdown (WANT vs NEED)</strong> — Should have said: <em>"Is the $650k more of a 'love to get' or a 'need to get' to make this Florida move happen?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Flexibility question</strong> — Adrian asked "Are you not flexible?" [00:08:17] — Mirian said "I can go down $20,000." [00:08:29] — Adrian heard this and then dropped the subject entirely instead of exploring further.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Reset expectations on cash offer</strong> — Should have said: <em>"I want to be upfront — our offers won't match retail. We buy as-is, close fast, no commissions, no repairs. The tradeoff is the price will be below what a realtor might get you on a good day. Whether the math works for your situation is what my underwriters will figure out."</em> — Instead Adrian told her to use a realtor, which closes our deal.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>CRITICAL: Advised seller to use a real estate agent</strong> — Adrian said: <em>"I mean, if you aim for a higher price, listing with a real estate agent might be more beneficial."</em> [~00:06:46] — This is self-defeating. We don't disqualify based on the seller's WANT price. We let underwriting decide if the numbers work. Telling a seller to go use a realtor ends our deal on the spot.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Got some basic info — 9BR/3BA, corner lot, 3 kitchens, unpermitted additions. Never ran the full condition sweep. Never asked for photos. Call ended before Step 3 was completed.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Bedroom/bath count</strong> — Confirmed 9 bedrooms, 3 bathrooms (original 2BR/1.5BA expanded). [00:04:20]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Lot size</strong> — Corner lot, almost an acre. [00:06:30]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Unpermitted additions surfaced</strong> — 3 kitchens, expanded from original layout, done without permits by husband (construction worker). [00:03:31-00:05:14]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Roof, HVAC, plumbing, electrical</strong> — None of the standard condition questions were asked. Call ended before full property sweep.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Send credibility info + scorch the earth</strong> — Never done. Call ended before this step.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Ask for photos</strong> — Never asked.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Qualify for offer / take to underwriters</strong> — Never said. Instead advised her to use a realtor and closed out the call.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEPS 4-6 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Steps 4-6: Commitment, Offer & Contract — N/A (Never reached)</div>
+                            <div class="score-reason">Call ended at mid-Step 2C. No process submitted. Lead parked in long-term follow-up.</div>
+                        </div>
+                        <div class="score-badge medium">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text">Steps 4-6 not applicable — call ended before process was submitted. Lead is 10 days old and was parked in long-term follow-up.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>1. NEVER TELL A SELLER TO USE A REAL ESTATE AGENT — THAT'S NOT YOUR DECISION TO MAKE:</strong> Adrian told Mirian: "If you aim for a higher price, listing with a real estate agent might be more beneficial." [~00:06:46] — That sentence ended our deal. It's not Adrian's job to decide if the math works — that's what underwriters are for. The right response to a $650k ask is: <em>"I hear you. What I'm going to do is take this to my underwriting team and let them run the numbers. If it works for both of us, great. If it doesn't, I'll be honest with you. But let me at least get you to that point before we decide anything."</em> Never close the door on your own deal.</li>
+                    <li><strong>2. "NOT THIS YEAR, MAYBE NEXT YEAR" IS NOT A DEAD FILE — PUSH ON THE TIMELINE:</strong> Mirian said she's not selling this year at [00:00:49]. Adrian accepted this immediately. The right move is: <em>"What would need to happen for you to be ready sooner? Because if we could get you an offer that covers your mortgage and gets you enough to buy that smaller home in Florida, would timing still be an issue?"</em> She's 67, hates cold weather, her kids are gone. The motivation is real. The timeline is a moveable objection, not a dead end.</li>
+                    <li><strong>3. A 10-DAY-OLD VIABLE LEAD SHOULD NOT GO TO LONG-TERM FOLLOW-UP AFTER ONE CONVERSATION:</strong> This lead came in May 9th. It's now May 19th — one conversation, and it's parked in long-term follow-up. The rule: if a lead is viable and less than 30 days old, it does not go to long-term follow-up until we've attempted a full process call. The right disposition after this call was "Warm — schedule process call" not "Long-term follow-up." Adrian needs to call Mirian back, run the full Steps 2B-3, and take it to underwriting.</li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>✅ What Worked (Replicate This)</h2>
+                <ul>
+                    <li><strong>Recovered from the cold open perfectly:</strong> Seller opened with "I'm not going to sell it no more." Adrian didn't hang up — "Oh, don't be sorry. What happened?" [00:00:42] — That one question saved a 17-minute conversation with real motivation underneath.</li>
+                    <li><strong>Found all the key motivators:</strong> Cold weather (67 years old, can't handle it), family in Florida, kids grown and gone, 30 years in the house and ready for a new chapter. Real, deep motivation that could close a deal.</li>
+                    <li><strong>Let her talk:</strong> 40/60 talk ratio. Mirian talked freely and shared a lot. Adrian's rapport with older sellers is genuine — she was comfortable throughout.</li>
+                    <li><strong>Found the previous offer:</strong> "Were you offered $550,000?" [00:07:15] — Good instinct to confirm the prior offer and understand her rejection of it.</li>
+                    <li><strong>Found unpermitted work proactively:</strong> Got Mirian to disclose the 9-bedroom expansion without permits. That's important information for underwriting and Adrian surfaced it naturally.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            FHCO Sales Audit Report • Generated by Hermes Sales Coach AI • May 19, 2026 • Adrian Huerta / Mirian — 3306 Collier Road, Maryland
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-badge.low').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
