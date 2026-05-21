@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Adrian Huerta / Brandon Lillie</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .bracket-header:first-child { margin-top: 0; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Adrian Huerta<br>
+                <strong>Call Date:</strong> May 20, 2026<br>
+                <strong>Seller:</strong> Brandon Lillie<br>
+                <strong>Property:</strong> 5BR/2BA, 2-story, ~0.24 acres, detached garage, above-ground pool w/deck, LVP flooring throughout main floor, Illinois<br>
+                <strong>Call Type:</strong> First process call — 38.4 minutes<br>
+                <strong>Situation:</strong> Divorce — ex-wife pushing sale, both on title, Brandon currently living there<br>
+                <strong>Mortgage Balance:</strong> ~$130k (per notes) — Brandon mentioned wanting ~$160k to walk away with<br>
+                <strong>Zillow/Realtor estimate:</strong> ~$180k+ | Equity: potentially tight — pending comp verification<br>
+                <strong>Timeline:</strong> "If the offer is right, I can sign in a week or two" ✅<br>
+                <strong>Photos committed:</strong> Today or by 5-6pm tomorrow ✅<br>
+                <strong>Outcome:</strong> 🟡 <strong>First call complete — pending underwriting. Call went well. File is warm.</strong>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Brandon Lillie is going through a divorce, his ex-wife is pushing the sale, and he's ready to move — he said "if the offer is right, I can sign in a week or two." Adrian ran a genuinely solid call — clean Step 1, good rapport, thorough property sweep, got photos committed, sent credibility and scorched the earth. Most importantly: he identified the influencer correctly, confirmed both ex-wife and Brandon are on title, and stated FHCO's policy that both need to sign — that's a direct improvement from past patterns. The main gaps are in the Step 2A emotion work (divorce situation had real emotional depth that was barely scratched), and he never separated what Brandon NEEDS to walk away with (cover the mortgage + proceed) vs what he WANTS ($160k net). The equity math is tight — mortgage ~$130k, Zillow ~$180k — and needs to be verified with comps before underwriting. File is warm but math-dependent.</p>
+                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Estimated 50/50 — acceptable for a first process call with a motivated seller who had a lot to share about his situation.</p>
+                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Step 1 textbook. Identified both parties on title and stated policy. Photos committed. Thorough property sweep. Good rapport — Brandon was comfortable throughout. Sent credibility and scorched the earth. Got timeline commitment ("week or two if offer is right").</p>
+                <p style="margin-top: 10px;"><strong>Areas for Growth:</strong> Divorce situation = real emotional depth that was barely touched. Never asked NEED vs WANT on price. Never ran consequence questions. Future state question asked but not deepened. Step 2A emotional brackets mostly skipped.</p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations</div>
+                            <div class="score-reason">Textbook — identity, open conversation framing, personal questions heads-up, permission to say no, reversed to seller.</div>
+                        </div>
+                        <div class="score-badge high">5</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Company identity stated</strong> — "Hey, I'm just going to call you... just wanted to give you a call, you know what I found what works best is just to have an open conversation with you." [00:00:27]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Set expectations for the call</strong> — "Understand a little more about the property, what you're trying to accomplish, and really just to see if we might even be the right type of buyer for you. Towards the end of the call if I feel like we can help I'll speak to my underwriters." [00:00:27]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Personal questions heads-up</strong> — "I have been told a couple times some of the questions I ask can sound a little personal, although you know it's not my intention." [00:00:27]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Permission to say no</strong> — "At any point if you feel we're not a good fit feel free to tell me no, it's completely okay to say no." [00:00:27]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Reverse to seller</strong> — "I always like to start off just by asking homeowners, you know, how are you hoping that we can help with your property there?" [00:01:32]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Found motivation (divorce, ex-wife pushing). Got situation and timeline. Normalized with a relatable story. But missed almost all of the emotional depth frameworks — divorce is one of the richest emotional situations a seller can have and it was barely explored.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+
+                        <div class="bracket-header">Situation Questions</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>What's going on with the property?</strong> — Reversed to seller immediately: "How are you hoping that we can help with your property there?" [00:01:32] — Brandon volunteered the entire divorce situation unprompted.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>How long have you owned the property?</strong> — "When did you guys buy it?" / Brandon: "Back in 2020." [00:03:33]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Who's living there / occupancy?</strong> — "What are you currently living in the property or who's living at the property?" [00:02:12] — Brandon confirmed he's still there. [00:02:21]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>What are your plans after you sell?</strong> — Brandon volunteered this later (rent for a year, rebuild credit, buy something personalized), but Adrian never formally asked. Should have said: <em>"Once this is sold and you've got your share of the proceeds, what does the next chapter look like for you?"</em></div>
+                        </div>
+
+                        <div class="bracket-header">Problem / Motivation Questions — Past, Present, Future</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>What came up / why now?</strong> — Brandon volunteered: "I'm currently going through a divorce and she wants to sell the house because it's just she wants the money from it and doesn't really want to deal with it anymore." [00:01:42] — Motivation was clear and unprompted.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Why selling vs keeping it?</strong> — "If it were up to you, would you keep the property?" [00:04:05] — Brandon: "I would like to but it would probably be easier just to go about it this way." Good reverse selling.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>What specifically triggered the search NOW?</strong> — Should have asked: <em>"What made this week the week you finally reached out?"</em> — The divorce has presumably been going on for months. Something made him search now. Never explored.</div>
+                        </div>
+
+                        <div class="bracket-header">Reverse Selling — Why Now?</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Why not go with a realtor?</strong> — "I guess most people would usually talk to like a real estate agent..." [00:06:15] — Brandon: "She's trying to do it quickly and get it handled... I know sometimes you go to sell it, it could take a couple of months." [00:06:32] — Confirmed cash buyer is the right path for their situation.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>What makes selling now the right choice?</strong> — Should have asked: <em>"You mentioned waiting until you're separated might complicate taxes — does that create any urgency to get this done before the divorce is final?"</em> — Brandon mentioned tax implications of selling while still legally married. That's a real timeline driver. Never explored.</div>
+                        </div>
+
+                        <div class="bracket-header">Impact Questions</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Acknowledged what they said</strong> — "I appreciate you sharing that with me... you're not the only person going through this." [00:03:02] — Adrian acknowledged and normalized. Good.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Normalized with story</strong> — "I talk to at least 15 different sellers every day, seven days a week... Almost every other day, I have clients in the same situation." [00:03:02] — Normalized well. Made Brandon feel heard.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Clarified the situation deeper</strong> — "How long ago did she move out?" / "Does she already have her own place?" / "Is she the one pushing the sale?" [00:03:47-00:04:05] — Adrian clarified the dynamics well.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Stretched the timeline</strong> — Should have asked: <em>"How long has all of this been going on? When did things start falling apart?"</em> — Brandon is managing kids, missed mortgage payment, credit damage, a divorce. Never asked how long he's been carrying this.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Invited impact question</strong> — "How have you been dealing with everything lately?" [00:05:15] — Brandon: "Managing." Adrian followed up on the co-parenting and work situation. Good emotional check-in.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Clarified problem deeper</strong> — Should have asked: <em>"What is it about having the house tied to the divorce that's been the most difficult part?"</em> — Brandon has kids, credit damage, missed payments, memories tied to the house. The emotional weight was there. Never deepened.</div>
+                        </div>
+
+                        <div class="bracket-header">Label Their Emotions</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Labeled emotions</strong> — Should have said: <em>"Sounds like you've been carrying a lot — not just the house, but the whole situation with the kids and trying to keep everything together. That's a lot for one person."</em> — Brandon mentioned kids, credit, missed payment, everything in his name. The emotional undertow was unmistakable. Never labeled.</div>
+                        </div>
+
+                        <div class="bracket-header">Reverse Selling — Testing Urgency</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>What would prohibit you from selling?</strong> — "Is there anything else that you or your ex would need to think about before you're actually ready to sell the property?" [00:32:27] — Brandon: "I don't feel that way now." [00:33:06] ✅</div>
+                        </div>
+
+                        <div class="bracket-header">Future State Questions</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>1. What are you looking forward to most?</strong> — "Once the property is sold and you guys have the cash, what are your proceeds going to help you do?" [00:14:36] — Brandon: "Taking care of any potential debt, moving, using that to get my credit better, then buy what I want." ✅ Future state captured.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>2. Create the gap between now and future</strong> — Should have asked: <em>"Right now with the house still tied to the divorce, how much is that slowing down your ability to start fresh?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>3. Emotional impact question</strong> — Should have asked: <em>"How is it going to feel once this is done, the divorce is behind you, and you're in your own place with a clean slate?"</em></div>
+                        </div>
+
+                        <div class="bracket-header">Consequence Questions</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Q1: Clarify block/delay</strong> — Never asked directly. Should have said: <em>"Is there anything that might slow this down on your end or on your ex's end?"</em> — He mentioned the divorce isn't finalized. That's a potential block. Never probed.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Q2: Short-term consequence</strong> — Should have asked: <em>"If this takes another 3-4 months to resolve, how does that affect you financially with the mortgage payment and the credit situation?"</em> — He's already missed his latest payment. The clock is ticking.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Q3: Personal impact</strong> — Should have asked: <em>"How does it feel knowing that every month this drags out is another month you can't start rebuilding?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Q4: Close with label</strong> — Should have said: <em>"So it sounds like getting this resolved sooner rather than later is pretty critical — not just for the house, but for your whole fresh start. Is that fair?"</em></div>
+                        </div>
+
+                        <div class="bracket-header">Summarize Problem, Impact & Future State</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Summary close</strong> — Should have said: <em>"So Brandon, what I'm hearing is that you're going through a divorce, the house is tied to it, and because of that it's been creating financial pressure and holding you back from starting fresh. At this point you want to sell it, pay off the mortgage, split the proceeds, and use your share to rebuild. Is that kind of what I'm hearing?"</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks</div>
+                            <div class="score-reason">✅ INFLUENCER IDENTIFIED AND HANDLED CORRECTLY — both on title confirmed, FHCO policy stated. Mortgage balance captured. Missed divorce finalization timeline as a potential roadblock.</div>
+                        </div>
+                        <div class="score-badge high">4</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Influencer identified — BOTH ON TITLE</strong> — "Is she, is it in both your names correct?" / Brandon: "The loan is in my name but the title is in both our names." [00:09:03] — Adrian caught this and stated policy: "Our company policy is whenever there's two people on title we have to speak to both since both people have to sign." [00:11:36] ✅ This is the pattern that has caused problems before. He got it right here.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Influencer availability confirmed</strong> — "Is she a hard person to get a hold of?" / Brandon: "I'm sure she would [answer], yeah, given what it's about." [00:11:36] — Confirmed ex-wife will cooperate. ✅</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Mortgage balance captured</strong> — Per Tarneem's notes: ~$130k mortgage. Brandon mentioned wanting to walk away with ~$160k after payoff. Both figures noted for underwriting.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Other liens</strong> — "Any other debts against the property?" / Brandon: "Nope. Just that." [00:17:09] ✅</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Timeline established</strong> — "If the offer is right and good, probably in a week or two." [00:33:18] — Clear urgency. ✅</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Divorce finalization as potential roadblock</strong> — Brandon mentioned the divorce isn't final and that selling now (while still married) has tax advantages. Should have asked: <em>"Does the divorce need to be finalized before you can sell, or can you two sign the paperwork now while it's still in process?"</em> — This is a real legal variable that could affect timing.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Missed mortgage payment — urgency signal</strong> — "I haven't made the most recent one." [00:04:46] — Adrian heard this but never used it as a consequence question. Should have noted: this increases urgency. Every month that passes is another missed payment adding to credit damage.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price</div>
+                            <div class="score-reason">Brandon mentioned $160k as what he'd like to walk away with. Mortgage is ~$130k. Adrian correctly reset expectations on cash offer vs retail and got Brandon to say speed/certainty matters more than top dollar. Never separated NEED from WANT.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Price anchor captured</strong> — Brandon: "I don't know, like $160k, is that too much?" [00:16:35] — He volunteered a number unprompted. Adrian heard it. [00:16:42]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Reset expectations on cash offer vs retail</strong> — "Companies like ours usually aren't the highest paying buyers... sellers that work with us usually value the speed, certainty and simplicity." [00:17:21] — Adrian correctly reframed. Brandon confirmed: "Probably option B." [00:18:48] ✅</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Future state — what the money needs to do</strong> — "Once the property is sold... what are your proceeds going to help you do?" [00:14:36] — Brandon: "Taking care of debt, moving, rebuilding credit." ✅</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Separate NEED from WANT</strong> — Brandon said $160k to walk away with. But with ~$130k mortgage, he needs the proceeds to cover that first. Should have asked: <em>"So after you pay off the mortgage, how much do you actually need to pocket to make this work for you?"</em> — His real NEED might be much lower than $160k. Never separated.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Flexibility question</strong> — Should have asked: <em>"Is there any flexibility on that $160k number if we can close fast and clean, no repairs, no showings?"</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Thorough sweep — roof, HVAC, plumbing, windows, flooring, garage, pool, basement, kitchen, bathrooms, water/sewer, mold, pests. Sent credibility + scorched the earth. Got photos committed. Strong overall.</div>
+                        </div>
+                        <div class="score-badge high">4</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Bed/bath count + square footage</strong> — 5BR/2BA (possibly 6 with basement room), 2-story. [00:19:10]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Roof</strong> — Shingled. Age unknown. [00:23:07]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>HVAC</strong> — Central AC (works), furnace 14-15 years old, water heater brand new (2026). [00:23:14]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Flooring</strong> — LVP throughout main floor (done ~1 year ago), carpet on stairs and 2 upstairs bedrooms. [00:25:35]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Pool</strong> — Above ground, working, deck around it. [00:22:34]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Basement</strong> — Partially finished — carpet and electric but not fully finished. Never flooded. [00:20:34]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Water/sewage, mold, pests, plumbing</strong> — City water/sewer ✅, no mold to knowledge ✅, no known plumbing issues ✅. [00:30:41-00:31:03]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Send credibility + scorch the earth</strong> — "100+ five-star reviews, A-rated BBB... lot of fly-by-night companies." [00:34:54] ✅</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Photos requested and committed</strong> — "Would it be difficult for you to snap some pictures?" / Brandon: "There shouldn't be too much of an issue, no." Committed to sending today or by 5-6pm tomorrow. [00:32:23] ✅</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Pets</strong> — Brandon has 3 dogs (pit rescue, unknown mix, 1-year-old mastiff mix). [00:26:53] Adrian asked about them for rapport but never noted for property condition — dog damage to flooring was actually mentioned (one room needed LVP because of dog scratches). Should have noted formally.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4: Commitment for Offer (Second Call)</div>
+                            <div class="score-reason">N/A — Step 4 happens on the second call after underwriting. First call complete. Next step is Adrian underwrites the file and calls back with the offer.</div>
+                        </div>
+                        <div class="score-badge medium">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text">Step 4 is the second call — after underwriting. First call wrapped correctly with "I'll call you back once I have an update from the underwriters." Brandon confirmed willingness to give a yes/no: "If the number was right and everything, to sign and get everything taken care of, I need a week or two." [00:33:32] That's a buying signal. Step 4 will set the formal yes/no commitment structure when the offer is ready.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Specific callback time not set</strong> — Adrian said "I'll give you a call back as soon as I have an update from the underwriters." [00:38:16] A general timeframe ("I'll call you back in a couple of hours" or "I'll call you tomorrow morning") would be better than open-ended — Brandon is about to go look at an apartment and his schedule will get busy.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEPS 5-6 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Steps 5-6: Offer & Contract — N/A (Pending underwriting)</div>
+                            <div class="score-reason">File pending underwriting. Equity math needs verification — ~$130k mortgage, Zillow ~$180k. If comps support a higher ARV, this is a workable file.</div>
+                        </div>
+                        <div class="score-badge medium">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text">Steps 5-6 pending. File math: ~$130k mortgage payoff + Brandon wants ~$160k to walk away = ~$290k+ offer needed. Zillow shows ~$180k. Comps need to be run — if ARV supports $230k+ there may be room for a concierge/novation play. Brandon already said speed and certainty matter more than top dollar. Photos coming today/tomorrow.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>1. ✅ INFLUENCER IDENTIFIED CORRECTLY — THIS IS THE WIN:</strong> Brandon mentioned the ex-wife early. Adrian confirmed both are on title, stated FHCO policy that both need to sign, and confirmed the ex-wife will cooperate. [00:09:03-00:11:43] This is a direct improvement from past patterns where title issues caused problems post-contract. Make this a habit — every time a spouse, partner, or family member is mentioned, stop and ask: "Are they on title with you?" This call shows Adrian can do it. Now make it automatic.</li>
+                    <li><strong>2. THE DIVORCE SITUATION HAD MUCH MORE EMOTIONAL DEPTH AVAILABLE:</strong> Brandon is managing two kids, all debt in his name, credit damage, a missed mortgage payment, memories tied to the house, and a divorce in progress. He said "managing" when asked how he's been dealing with it — that's understatement. The moment to go deeper was right there: <em>"You said 'managing' — what does that actually look like for you day to day right now?"</em> Getting him to articulate the emotional weight of the situation would have deepened urgency and made the offer call much easier. The situation was rich. It was barely scratched.</li>
+                    <li><strong>3. SEPARATE NEED FROM WANT ON PRICE — ESPECIALLY IN DIVORCE SITUATIONS:</strong> Brandon said he'd like to walk away with ~$160k. But his mortgage is ~$130k. So his actual NEED might just be: cover the mortgage and have something left over. Should have asked: <em>"After you pay off the mortgage, how much do you actually need to pocket to make this fresh start work for you?"</em> In divorce situations, the seller's WANT is often aspirational and their NEED is much more flexible. That's important information before underwriting.</li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>✅ What Worked (Replicate This)</h2>
+                <ul>
+                    <li><strong>Step 1 was textbook — again.</strong> Full framework clean every time. This is now Adrian's strongest consistent element.</li>
+                    <li><strong>Identified both parties on title and stated policy [00:09:03-00:11:43]:</strong> This is the improvement that matters most this week. He got it right. Replicate on every call where a spouse or partner comes up.</li>
+                    <li><strong>"If it were up to you, would you keep it?" [00:04:05]:</strong> Clean reverse selling. Brandon's answer confirmed motivation instantly.</li>
+                    <li><strong>Reset expectations on cash offer correctly [00:17:21]:</strong> Framed it as speed/certainty vs top dollar. Brandon chose option B. That's the close that sets up the offer call.</li>
+                    <li><strong>Got photos committed [00:32:23]:</strong> Specific ask, specific commitment. Today or by 5-6pm tomorrow. That's actionable.</li>
+                    <li><strong>Thorough property sweep:</strong> Roof, HVAC, plumbing, basement, pool, flooring, windows — everything covered. Brandon was open and detailed.</li>
+                    <li><strong>Good rapport throughout:</strong> The dog conversation, the normalized story about other divorce sellers — Brandon was comfortable. The relationship was there.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            FHCO Sales Audit Report • Generated by Sage AI • May 20, 2026 • Adrian Huerta / Brandon Lillie
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-badge.low').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
