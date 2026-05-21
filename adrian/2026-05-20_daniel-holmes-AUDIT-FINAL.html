@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Adrian Huerta / Daniel Holmes</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Adrian Huerta (Pass-off from Tarneem Amara)<br>
+                <strong>Call Date:</strong> May 20, 2026<br>
+                <strong>Seller:</strong> Daniel "Dan" Holmes — 813 Williams Way, Carbon Cliff, Illinois<br>
+                <strong>Property:</strong> Brand new construction (Dec 2025), 3BR/3BA, 1,076 sq ft main + 650 sq ft finished basement, ~0.5 acre, tenant-occupied (month-to-month, insurance-placed, through August)<br>
+                <strong>Call Type:</strong> First conversation — 42.9 minutes (pass-off from Tarneem)<br>
+                <strong>Seller Profile:</strong> 40-year builder, highly sophisticated, 50-50 with wife Shell — both aligned on selling<br>
+                <strong>Listed at:</strong> $325k (broker's open avg) | Adrian's ballpark: under $265k<br>
+                <strong>Dan's response to $265k:</strong> "I believe we're in the range that we can put something together." ✅<br>
+                <strong>Outcome:</strong> 🟡 <strong>Ended with "I'll take it to underwriters" — no process submitted yet, no Step 4 commitment structure</strong>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Daniel Holmes is a 40-year builder selling his first spec house in a growing bedroom community near Carbon Cliff, IL. He is sophisticated, motivated, flexible on price, and explicitly said "I believe we're in the range that we can put something together" after Adrian floated under $265k. His wife Shell is co-decision-maker and they are both aligned. The property is brand new construction — brand new everything — with a good tenant through August on month-to-month. Adrian ran a genuinely strong call: clean Step 1 (Tarneem's language read through his execution), excellent rapport with an experienced builder, thorough property sweep, sent credibility info and scorched the earth. The main gaps are in Step 2C (never asked what Dan NEEDS vs WANTS on price — just got a range), and Step 4 (same pattern as Ryan Stewart — ended with "I'll take it to underwriters" with no specific callback time and no yes/no commitment structure). This file is close. Dan is ready. The follow-up call needs to come fast before he talks to someone else.</p>
+                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Estimated 45% Adrian / 55% Dan — Dan is a talker and Adrian let him go, which built tremendous rapport. Acceptable for this type of sophisticated seller.</p>
+                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Outstanding rapport with a sophisticated seller. Handled the tenant situation well. Found the price range early (broker's open at $325k, got soft agreement at under $265k). Got the wife/influencer confirmed at the end. Thorough property sweep. Scorched the earth naturally.</p>
+                <p style="margin-top: 10px;"><strong>Areas for Growth:</strong> No price NEED vs WANT separation — $265k was a ballpark, not an anchored number. No Step 4 commitment structure before hanging up. No specific callback time set. No photos requested.</p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations</div>
+                            <div class="score-reason">Textbook execution — identity, expectations, personal questions heads-up, permission to say no, reversed to seller. Note: transcript labels Adrian as "Tarneem Amara" throughout — likely a voice ID issue. The language and execution is Adrian's.</div>
+                        </div>
+                        <div class="score-badge high">5</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Company identity stated</strong> — "Hey, this is Adrian with Fast Home Cash Offers." [00:00:00]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Set expectations for the call</strong> — "What I found works best, Dan, is just to have an open conversation with you, understand a little more about the property and really what you're trying to accomplish, see if we might be the right type of buyer for you or not. Towards the end of the call, if I feel like we can help, I'll speak to my underwriters." [00:00:23]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Personal questions heads-up</strong> — "I've been told a couple of times, some of the questions I ask can sound a little personal. It's not my intention. Just want to give you a heads up." [00:00:41]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Permission to say no</strong> — "At any point, if you feel like we're not a good fit, feel free to tell me. We know it's completely okay to say no in the conversation without any pressure." [00:00:41]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Reverse to seller</strong> — "I just like always, you know, ask homeowners, how are you hoping that we can help with your property there?" [00:01:07]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Found motivation (builders, not rental business, bad past rental experience). Dan volunteered his entire history — Adrian listened well and asked good clarifying questions. Missed consequence questions and future state question.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Problem/motivation surfaced</strong> — "We don't want to deal with a realtor... We're not in the rental business." [00:01:15] — Dan explained the bad rental history (previous house burnt down by tenant's grandson cooking drugs, insurance nightmare). Motivation is clear: get out of rental situation, liquidate spec house, redeploy capital into next build.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Asked reverse selling / retention question</strong> — "Why don't you guys just keep it?" [00:04:10] — Dan: "We're not in the rental business." Clean confirmation of motivation.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Other options explored</strong> — Listed with realtor in January, 90-day agreement expired, never showed it (tenant occupied). No active realtor now. [00:07:43-00:08:58]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Future state question</strong> — Should have asked: <em>"Once this property is sold and you have that capital back in hand, what does the next chapter look like for you guys — what are you building next?"</em> — Dan mentioned developing multiple lots on the same street plus 2.5 acres at the cul-de-sac. The sale of this house likely feeds his next project. That's the NEED behind the WANT price.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence questions</strong> — Should have said: <em>"If this takes another 3-6 months to sell, how does that affect your plans for the next builds on those lots?"</em> — Builders work on capital cycles. A slow sale has real downstream consequences for him. Never explored.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks</div>
+                            <div class="score-reason">Confirmed tenant situation (month-to-month, through August, insurance-placed). Found influencer (wife Shell, 50-50, both aligned) — good catch at the end. No mortgage mentioned — likely free and clear since he built it. Missed asking directly.</div>
+                        </div>
+                        <div class="score-badge high">4</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Tenant situation fully explored</strong> — Month-to-month lease, insurance company pays $3k/month, committed through August but possibly longer. Family of four, no pets, great tenants. [00:01:44-00:02:36]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Influencer confirmed</strong> — "Is the decision-making on you, or is it the wife as well?" / Dan: "Shell and I are 50-50 and we're both on the game. We're going this way with this." [00:28:42-00:28:57] — Both aligned. ✅</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Timeline — no urgency block</strong> — Dan confirmed he's ready: "I think we've cleared everything. If you want to go back and follow up your numbers and talk about where we go from here." [00:26:38]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Mortgage balance</strong> — Never asked. Dan built the house so it may be free and clear or construction-financed. Should have asked: <em>"Do you have a construction loan on the property or is it free and clear?"</em> — Critical for underwriting.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Influencer on next call</strong> — Adrian confirmed Shell is involved but didn't ask to have her on the offer call. Should have said: <em>"Would Shell be available to join us on the next call when we go over the final number?"</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price</div>
+                            <div class="score-reason">Good instinct — floated under $265k early, got soft agreement ("I believe we're in the range"). But never separated NEED from WANT, never asked flexibility directly, never reset expectations on cash vs retail. The $265k ballpark needs to become an anchored number with a committed yes/no.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Price anchor approached</strong> — "As a builder, what are you looking to sell this one for? What's your true ballpark range?" [00:10:23] — Dan deflected and said "I can't be buyer and seller — you tell me what you need to make money." Smart move from a sophisticated seller. Adrian correctly took it to the "underwriter" and came back with under $265k. [00:14:31]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Soft agreement on price range</strong> — Dan: "I believe we're in the range that we can put something together." [00:15:01] — That's a yes. Adrian heard it and moved on correctly.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>What do they NEED the cash for?</strong> — Should have asked: <em>"Once you close on this, is the capital going straight into your next build on those lots?"</em> — Connecting the sale to his next project creates urgency and ties the price conversation to his business timeline.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Flexibility question</strong> — Dan signaled flexibility multiple times ("I can't be buyer and seller," "I understand you have to make money," "I don't expect $300k out of it"). Should have explicitly asked: <em>"Just so my underwriters know — is there any flexibility below the $265k range if it gets us to a fast close?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Reset expectations on cash offer vs retail</strong> — Dan knows the broker's open came in at $325k. Adrian floated $265k. That's a $60k gap. Should have acknowledged: <em>"I want to be straight with you Dan — as builders you know our model. We come in below retail, close fast, as-is. The tradeoff is the price won't match what a traditional buyer would pay if they listed it finished vacant."</em> Dan would have respected this directly.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Strong sweep — brand new construction so most condition issues are N/A. Got sq footage, lot size, garage, plumbing (PEX Type A), appliances, tenant occupancy, no pets. Sent credibility + scorched the earth. Missed photos.</div>
+                        </div>
+                        <div class="score-badge high">4</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Square footage confirmed</strong> — 1,076 main floor + 650 finished basement. Total ~1,726 sq ft. [00:15:58]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Year built</strong> — Finished December 2025. Brand new. [00:15:41]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Plumbing</strong> — PEX Type A expansion throughout. All brand new. [00:24:55]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Appliances</strong> — All stay with house. Brand new refrigerator, stove, microwave, dishwasher. Washer/dryer is tenant's. [00:25:14]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Water/sewage</strong> — City water, city sewage. [00:19:22]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Send credibility + scorch the earth</strong> — "We have over 100 five-star reviews, A-rated with BBB... a lot of fly-by-nights out there." [00:26:57] ✅</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Condition issues</strong> — N/A. Brand new construction, passed all inspections. Dan mentioned the building department was precise and professional — nothing flagged.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Photos requested</strong> — Should have said: <em>"The online listing photos should still be current since it's brand new. Can you confirm those are still accurate? And do you have the blueprint you mentioned? My underwriters would love to have that."</em> — Dan specifically offered to send blueprints. Never followed up on it.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4: Commitment for Offer</div>
+                            <div class="score-reason">Same pattern as Ryan Stewart — ended with "I'll take it to my underwriters" with no yes/no commitment structure and no specific callback time. Dan is ready. The next call needs to be set before hanging up.</div>
+                        </div>
+                        <div class="score-badge low">1</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Set yes/no expectations</strong> — Should have said: <em>"Dan, when I call you back with our final number, I just need a yes or no — not a 'let me think about it.' You told me you and Shell are both aligned. Can you commit to giving me a clear answer on the next call?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Pre-empt "think about it"</strong> — Should have said: <em>"You mentioned you and Shell talk everything through before you move. Is there anything she'd need to know before the next call that I should make sure to have answered?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Schedule specific callback time</strong> — Adrian said "let me take it to my underwriters" with no time. Dan even said "just give me a call" [00:28:34]. Should have said: <em>"I'll have our final number by tomorrow morning. Can I call you at 10am?"</em> — Dan is a builder — he keeps a schedule. A specific time gets held.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Request blueprints before hanging up</strong> — Dan offered to send blueprints at [00:15:58]. Should have texted the number right then: <em>"I'm texting you now — can you forward those blueprints when you get a chance? Makes a difference with underwriting on a new build."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Invite Shell onto the offer call</strong> — Confirmed she's 50-50 but never said: <em>"Would it be possible to have Shell on the call when we go over the final number? Easier to answer any questions you both have at the same time."</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEPS 5-6 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Steps 5-6: Offer & Contract — N/A (Pending underwriter review)</div>
+                            <div class="score-reason">Call ended with soft agreement on price range. Next step is formal offer call.</div>
+                        </div>
+                        <div class="score-badge medium">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text">Steps 5-6 pending. Dan agreed the range works ("I believe we're in the range"). Next call is the offer delivery. Shell should be on that call.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>1. SET THE CALLBACK TIME BEFORE YOU HANG UP — EVERY TIME:</strong> Dan literally said "just give me a call" [00:28:34] and Adrian said "thanks Dan" and hung up. That is the moment to say: <em>"Perfect. I'll have our final number ready tomorrow morning — can I call you at 10am?"</em> Dan is a 40-year builder. He keeps a schedule. He will hold a 10am slot. "I'll call you back" is not a commitment. A specific time is. This is the same miss as Ryan Stewart — both files have a seller who said yes to the range and Adrian left without a scheduled callback.</li>
+                    <li><strong>2. ASK FOR THE BLUEPRINTS — DAN OFFERED THEM TWICE:</strong> At [00:15:58] Dan said "I can send you the blueprints and you can see for yourself." Adrian never followed up. Blueprints on a new construction file like this are gold for underwriting — exact sq footage, room count, everything. Should have texted his number right then: <em>"Sending you my number now — shoot me those blueprints when you get a chance, it'll help us get you an accurate number faster."</em> That also keeps the conversation going after the call ends.</li>
+                    <li><strong>3. INVITE SHELL ON THE OFFER CALL:</strong> Dan confirmed Shell is 50-50 and both aligned [00:28:49]. Adrian got this information but didn't act on it. On the offer call, if Shell isn't there and Dan says "let me talk to Shell," that's a deal delay. Close it before it happens: <em>"Would Shell be able to join us on the next call when I come back with the number? Easier to answer any questions you both have at the same time and we can get it moving quickly."</em></li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>✅ What Worked (Replicate This)</h2>
+                <ul>
+                    <li><strong>Step 1 was textbook:</strong> Full framework — identity, agenda, personal questions heads-up, permission to say no, reverse to seller. Clean every time.</li>
+                    <li><strong>Outstanding rapport with a sophisticated seller:</strong> Dan is a 40-year builder who has dealt with every kind of buyer. Adrian matched his energy, let him talk, asked smart follow-up questions about his business ("You built it? Oh, you're builders."). Dan was completely comfortable for 43 minutes.</li>
+                    <li><strong>"Why don't you guys just keep it?" [00:04:10]:</strong> Textbook reverse selling. Clean execution. Dan's answer ("We're not in the rental business") confirmed motivation instantly.</li>
+                    <li><strong>Floated the price mid-call via "underwriter" [00:12:09-00:14:31]:</strong> Smart move. Instead of asking Dan what he wanted, Adrian used the underwriter buffer to drop a number. Dan's response ("I believe we're in the range") is a soft yes before the offer call even happens.</li>
+                    <li><strong>Got the influencer [00:28:42]:</strong> Late in the call but he got it. Shell is 50-50 and both aligned. That's critical information for the offer call.</li>
+                    <li><strong>Scorched the earth naturally:</strong> The fly-by-night speech landed well with a builder who already knows exactly how contractors and investors cut corners. Dan respected it.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            FHCO Sales Audit Report • Generated by Sage AI • May 20, 2026 • Adrian Huerta / Daniel Holmes — Carbon Cliff, IL
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-badge.low').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
