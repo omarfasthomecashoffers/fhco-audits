@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Jacob Adams / Vincent Monet</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .urgent { background: #fee2e2; border-left: 4px solid #ef4444; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .urgent h2 { font-size: 18px; margin-bottom: 10px; color: #991b1b; }
+        .urgent p { font-size: 16px; color: #7f1d1d; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .bracket-header:first-child { margin-top: 0; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Jacob Adams<br>
+                <strong>Call Date:</strong> May 20, 2026<br>
+                <strong>Seller:</strong> Vincent Monet — New York (townhouse)<br>
+                <strong>Property:</strong> 3BR/1BA, ~1,800 sq ft, fully renovated, free and clear, garage + driveway in low-inventory neighborhood<br>
+                <strong>Renovation:</strong> $50k new kitchen, open concept, new floors, new bathroom, new electric, plaster walls/ceilings repaired<br>
+                <strong>Call Type:</strong> First process call — 15.8 minutes (cut short)<br>
+                <strong>Competing Offer:</strong> 🔴 $750k from another investor — deadline END OF THIS WEEK<br>
+                <strong>Outcome:</strong> 🔴 <strong>Jacob cut call short for a meeting. No offer submitted. No callback made. Competing buyer calling this afternoon.</strong>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <div class="urgent">
+                <h2>🚨 URGENT — Call Vincent Monet TODAY</h2>
+                <p>Another investor offered $750k, has spoken to Vincent 2-3 times, sent a contract, and has a deadline of <strong>end of this week</strong>. Vincent said "I was going to just say yes to him" but held off because more people were calling. Jacob's follow-up is set for today (May 22). The window is open RIGHT NOW. If Jacob doesn't call today with a competitive offer, this deal goes to the other buyer.</p>
+                <p style="margin-top:10px;"><strong>What Jacob needs to say on the callback:</strong> <em>"Vincent, I ran the numbers on your property. It's a great house — fully renovated, free and clear, low inventory area. I want to make you a real offer. Can we get on a call today?"</em></p>
+            </div>
+
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Vincent Monet is a motivated seller with a fully renovated, free-and-clear property in a low-inventory New York market. He already has a competing offer at $750k, is ready to move, and literally said "if you're interested, make me an offer." Jacob ran a decent first half of the call — good credibility setup, good rapport, got the property conditions. Then at [00:15:19] he said "I actually got a meeting I'm running into right now" and ended the call. He never got to price, never asked Vincent what he needed, never competed with the $750k offer. And then — no callback. This is not a dead file. This is a live deal with a ticking clock.</p>
+                <p style="margin-top:10px;"><strong>The core issue:</strong> Jacob disengaged at the moment the deal was most alive. The seller was cooperative, the house was done, and there was already market validation at $750k. Jacob needed to stay on the call, finish the process, get the number, and compete.</p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations</div>
+                            <div class="score-reason">Skipped the formal framework — jumped straight into conversation. Decent rapport but no explicit expectations set, no permission to say no.</div>
+                        </div>
+                        <div class="score-badge medium">2</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Identity stated</strong> — "Hey, this is Jake with Fast Home Cash Offers." [00:00:14]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Set expectations for the call</strong> — No framework set. Should have said: <em>"What I find works best is just to have an open conversation — understand the property, what you're trying to accomplish, and see if we might be the right buyer for you."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Personal questions heads-up</strong> — Skipped entirely.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Permission to say no</strong> — Skipped. This matters especially with a seller who already has a competing offer — he needs to feel no pressure so he stays engaged.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Credibility established early</strong> — Jacob shared his background as a realtor and general contractor, explained the model, normalized the fly-by-night concern. [00:01:08-00:02:46] Vincent responded well.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Motivation surfaced but not deepened. Vincent volunteered everything — mom passed, spent 1.5 years renovating, just wants it sold. Jacob acknowledged but never emotionally deepened. Never asked future state, no consequence questions, no summary.</div>
+                        </div>
+                        <div class="score-badge medium">2</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+
+                        <div class="bracket-header">Situation Questions</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>What's going on with the property?</strong> — Vincent volunteered: mom passed, spent 1.5 years renovating, fully done, just needs to be sold. [00:04:47]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>How long have you owned it / what are your plans after?</strong> — Never asked. This is his late mother's home. That's a significant emotional context. Never explored.</div>
+                        </div>
+
+                        <div class="bracket-header">Problem / Motivation Questions</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Why not use a realtor?</strong> — Jacob asked at [00:07:14]. Vincent: "Why go through that trouble? I just want to sell it." Confirmed motivation clearly.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>What came up that makes this the time to sell NOW?</strong> — Never asked. Vincent spent 1.5 years renovating his late mother's home and is now selling. What's driving the timing? That emotional story was right there.</div>
+                        </div>
+
+                        <div class="bracket-header">Impact Questions</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Acknowledged and deepened the mom story</strong> — Should have said: <em>"Wow, so this was your mom's home. You spent a year and a half fixing it up yourself — that's a lot of work and a lot of heart in that house. How has that process been for you?"</em> — That's the emotional depth that builds real rapport and urgency.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Labeled emotions</strong> — Never said anything like: <em>"Sounds like you've put a lot into this one — not just money, but time and care."</em></div>
+                        </div>
+
+                        <div class="bracket-header">Future State / Consequence Questions</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Future state — what happens after you sell?</strong> — Never asked. What does Vincent do with the proceeds? Understanding this creates urgency around closing fast.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence — what happens if this drags out?</strong> — Should have asked: <em>"With the end-of-week deadline from the other buyer, what happens if we don't get you a number by then — do you just go with them?"</em> — This creates urgency to compete NOW.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Summarized problem, impact, future state</strong> — Never done.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks</div>
+                            <div class="score-reason">Got mortgage status (free and clear). Missed the competing offer as a roadblock — heard $750k and moved on instead of competing. Never asked influencer (wife mentioned but not addressed on title).</div>
+                        </div>
+                        <div class="score-badge medium">2</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Mortgage status</strong> — "This house is paid off?" / Vincent: "Yeah." [00:08:35-00:08:44] Free and clear confirmed. ✅</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Competing offer — never competed</strong> — At [00:09:33] Vincent said he has a $750k offer with an end-of-week deadline. Jacob said "Okay" and asked about property conditions. Should have said: <em>"$750k — okay. Is that number locked in or is there room for us to come in and make a case? What would it take for you to consider our offer over theirs?"</em> This was the moment to compete. Jacob let it pass.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Influencer / who else is on title?</strong> — Vincent mentioned "I'll check with my wife" [00:15:01]. Jacob never asked if she's on title. This is the exact pattern that has caused contract problems before.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Timeline urgency</strong> — Competing buyer has a deadline of end of this week [00:09:46]. Jacob never acknowledged the urgency or set up a competing timeline.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price</div>
+                            <div class="score-reason">Never reached. Jacob cut the call before getting to price. The competing offer at $750k was the only number mentioned — Jacob never asked Vincent's expectation or what he needed to net.</div>
+                        </div>
+                        <div class="score-badge low">0</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Never asked price expectation</strong> — Should have asked: <em>"Vincent, the other buyer is at $750k. Is that where you're expecting to land, or is there a number you need to net out of this to make it work for you?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Never soft anchored</strong> — With a competing offer at $750k, Jacob needed to at minimum understand the gap before running numbers. If FHCO can't hit $750k, what's the range? What does Vincent actually need vs want? Never explored.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Never reset expectations</strong> — Vincent knows cash buyers come in below market. He's been talking to 30 companies. Jacob should have said: <em>"Just so you know, we're going to be competitive but we may not match every number out there. What matters to you more — getting the absolute highest price or getting it done fast, clean, no showings, no repairs?"</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Partial sweep — got bed/bath, sq footage approx, garage, renovation status. Cut off before completing. No photos requested. Good info gathered but incomplete.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Bed/bath + sq footage</strong> — 3BR/1BA, ~1,800 sq ft. [00:11:00-00:11:33]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Garage</strong> — Single car garage + driveway, confirmed selling feature in low-parking neighborhood. [00:12:02-00:12:46]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Renovation status</strong> — Fully renovated: $50k kitchen, open concept, new floors, new bathroom, new electric. [00:05:35-00:07:09]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Basement</strong> — Full utility basement, unfinished cement floors. [00:11:40]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Photos requested</strong> — Never asked. Vincent mentioned his wife might have photos. Should have said: <em>"Can you text me any photos you or your wife have? Even Google Street View helps but interior shots of the renovations would be great."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>HVAC, roof, plumbing, lot size</strong> — Never completed. Call ended before finishing the property sweep.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Credibility / scorch the earth</strong> — Mentioned earlier in the call informally [00:02:29] but never formally sent the Google reviews link or BBB. Should have texted it before hanging up.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4: Commitment / Steps 5-6: Offer & Contract</div>
+                            <div class="score-reason">N/A — call ended before offer stage. But the competing offer with end-of-week deadline means the callback IS effectively a Step 4/5 situation. Jacob needs to come back with a number.</div>
+                        </div>
+                        <div class="score-badge medium">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>No callback made yet</strong> — Follow-up set for May 22 (today). Competing buyer is calling this afternoon. Jacob must call back TODAY with a number or a competitive position. Not tomorrow — today.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Call ended without competing on the $750k offer</strong> — Jacob said "I'll give you a call back when we have some numbers to put together." [00:15:38] That's fine — but the call back needs to happen within hours, not days. The window closes end of this week.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>1. 🚨 CALL VINCENT BACK TODAY — THE DEAL IS ALIVE RIGHT NOW:</strong> A competing buyer has a $750k offer on the table with an end-of-week deadline. Vincent said he was going to say yes but held off because more companies were calling. Jacob's window is open TODAY. The callback script: <em>"Vincent, I ran the numbers. Your house is done — renovated, free and clear, great garage. I want to make you a real offer. Can we get on a call in the next hour?"</em> If Jacob doesn't call today, this goes to the other buyer.</li>
+                    <li><strong>2. WHEN A SELLER SAYS THEY HAVE A COMPETING OFFER — COMPETE, DON'T MOVE ON:</strong> At [00:09:33] Vincent said "$750k, and he can close immediately." Jacob said "Okay" and asked about property conditions. That's the wrong move. The right move: <em>"$750k — okay. Is that your number or is that just where they came in? What would it take for you to consider working with us over them?"</em> — Find out if the number is locked or if it's a starting point. Find out what else matters to Vincent besides price (speed, simplicity, trust). Compete on those dimensions.</li>
+                    <li><strong>3. NEVER CUT A CALL FOR A MEETING WHEN A SELLER IS ENGAGED:</strong> At [00:15:19] Jacob said "I actually got a meeting I'm running into right now." Vincent was cooperative, the house was fully renovated, free and clear, and there was a competing offer on the table. There is no meeting more important than this call at that moment. If there was a genuine conflict, the right move was: <em>"Vincent, I have 5 more minutes — let me finish getting the property info and I'll call you back this afternoon with our number. Does 3pm work?"</em> — Lock in a specific callback time before hanging up. Don't leave a live deal open-ended.</li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>✅ What Worked (Replicate This)</h2>
+                <ul>
+                    <li><strong>Strong credibility opening [00:01:08]:</strong> Jacob shared his background as a realtor and GC, explained the model clearly, acknowledged the fly-by-night concern proactively. Vincent responded well and engaged immediately.</li>
+                    <li><strong>"Why not just use a realtor?" [00:07:14]:</strong> Clean reverse selling. Vincent's answer confirmed motivation — he'd already considered it and chose not to go that route.</li>
+                    <li><strong>Got the key property facts:</strong> Free and clear, fully renovated, 3BR, garage, low-inventory area. Enough to run numbers even from the incomplete call.</li>
+                    <li><strong>Follow-up set for today:</strong> At least Jacob set a follow-up. The opportunity is still there. He just needs to use it — today.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            FHCO Sales Audit Report • Generated by Sage AI • May 22, 2026 • Jacob Adams / Vincent Monet — New York
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-badge.low').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
