@@ -24,10 +24,19 @@
         .score-left { flex: 1; }
         .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
         .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
-        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
-        .score-badge.high { background: #10b981; color: white; }
-        .score-badge.medium { background: #f59e0b; color: white; }
-        .score-badge.low { background: #ef4444; color: white; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 52px; border-radius: 50%; font-weight: bold; font-size: 13px; margin-left: 15px; }
+        .score-100 { background: #10b981; color: white; }
+        .score-90  { background: #34d399; color: white; }
+        .score-80  { background: #6ee7b7; color: #065f46; }
+        .score-70  { background: #fcd34d; color: #78350f; }
+        .score-60  { background: #fbbf24; color: #78350f; }
+        .score-50  { background: #f59e0b; color: white; }
+        .score-40  { background: #f97316; color: white; }
+        .score-30  { background: #fb923c; color: white; }
+        .score-20  { background: #ef4444; color: white; }
+        .score-10  { background: #dc2626; color: white; }
+        .score-0   { background: #991b1b; color: white; }
+        .score-na  { background: #f3f4f6; color: #9ca3af; }
         .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
         .score-item.expanded .checklist { display: block; }
         .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
@@ -85,7 +94,7 @@
                             <div class="score-label">Step 1: Intro & Expectations</div>
                             <div class="score-reason">Textbook execution — identity, expectations, personal questions heads-up, permission to say no, reversed to seller. Note: transcript labels Adrian as "Tarneem Amara" throughout — likely a voice ID issue. The language and execution is Adrian's.</div>
                         </div>
-                        <div class="score-badge high">5</div>
+                        <div class="score-badge score-100">100%</div>
                     </div>
                     <div class="checklist">
                         <h4>Framework Elements</h4>
@@ -119,7 +128,7 @@
                             <div class="score-label">Step 2A: Discovery</div>
                             <div class="score-reason">Found motivation (builders, not rental business, bad past rental experience). Dan volunteered his entire history — Adrian listened well and asked good clarifying questions. Missed consequence questions and future state question.</div>
                         </div>
-                        <div class="score-badge medium">3</div>
+                        <div class="score-badge score-60">60%</div>
                     </div>
                     <div class="checklist">
                         <h4>Framework Elements</h4>
@@ -251,7 +260,7 @@
                             <div class="score-label">Step 2B: Roadblocks</div>
                             <div class="score-reason">Confirmed tenant situation (month-to-month, through August, insurance-placed). Found influencer (wife Shell, 50-50, both aligned) — good catch at the end. No mortgage mentioned — likely free and clear since he built it. Missed asking directly.</div>
                         </div>
-                        <div class="score-badge high">4</div>
+                        <div class="score-badge score-80">80%</div>
                     </div>
                     <div class="checklist">
                         <h4>Framework Elements</h4>
@@ -285,7 +294,7 @@
                             <div class="score-label">Step 2C: Price</div>
                             <div class="score-reason">Good instinct — floated under $265k early, got soft agreement ("I believe we're in the range"). But never separated NEED from WANT, never asked flexibility directly, never reset expectations on cash vs retail. The $265k ballpark needs to become an anchored number with a committed yes/no.</div>
                         </div>
-                        <div class="score-badge medium">3</div>
+                        <div class="score-badge score-60">60%</div>
                     </div>
                     <div class="checklist">
                         <h4>Framework Elements</h4>
@@ -319,7 +328,7 @@
                             <div class="score-label">Step 3: Property Condition</div>
                             <div class="score-reason">Strong sweep — brand new construction so most condition issues are N/A. Got sq footage, lot size, garage, plumbing (PEX Type A), appliances, tenant occupancy, no pets. Sent credibility + scorched the earth. Missed photos.</div>
                         </div>
-                        <div class="score-badge high">4</div>
+                        <div class="score-badge score-80">80%</div>
                     </div>
                     <div class="checklist">
                         <h4>Framework Elements</h4>
@@ -365,7 +374,7 @@
                             <div class="score-label">Step 4: Commitment for Offer — Pending Underwriting Review</div>
                             <div class="score-reason">After Call 1, rep underwrites the deal. If it qualifies, Call 2 is the commitment call — get seller's yes/no before revealing the offer number. Steps 5-6 happen on Call 3.</div>
                         </div>
-                        <div class="score-badge medium">N/A</div>
+                        <div class="score-badge score-na">N/A</div>
                     </div>
                     <div class="checklist">
                         <div class="checklist-item">
@@ -386,7 +395,7 @@
                             <div class="score-label">Steps 5-6: Offer & Contract — Pending (Call 3)</div>
                             <div class="score-reason">If deal qualifies after underwriting, Call 2 secures commitment, Call 3 delivers the offer and closes the contract.</div>
                         </div>
-                        <div class="score-badge medium">N/A</div>
+                        <div class="score-badge score-na">N/A</div>
                     </div>
                     <div class="checklist">
                         <div class="checklist-item">
@@ -421,7 +430,8 @@
     </div>
 
     <script>
-        document.querySelectorAll('.score-badge.low').forEach(badge => {
+        // Auto-expand steps scoring 50% or below
+        document.querySelectorAll('.score-0,.score-10,.score-20,.score-30,.score-40,.score-50').forEach(badge => {
             badge.closest('.score-item').classList.add('expanded');
         });
     </script>
