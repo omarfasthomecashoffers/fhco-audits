@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Jacob Adams / Cro'ashia Nurse</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .urgent { background: #fee2e2; border-left: 4px solid #ef4444; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .urgent h2 { font-size: 18px; margin-bottom: 10px; color: #991b1b; }
+        .urgent p { font-size: 16px; color: #7f1d1d; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
+        .score-badge.high { background: #10b981; color: white; }
+        .score-badge.medium { background: #f59e0b; color: white; }
+        .score-badge.low { background: #ef4444; color: white; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .bracket-header:first-child { margin-top: 0; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+        .stage-flag { background: #fee2e2; border: 1px solid #fca5a5; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 14px; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Jacob Adams<br>
+                <strong>Call Date:</strong> May 21, 2026<br>
+                <strong>Seller:</strong> Cro'ashia Nurse — Browndale, Pennsylvania<br>
+                <strong>Property:</strong> 4BR/2BA duplex-style, 2,471 sq ft, 1940 build, unfinished basement, detached garage, baseboard heat, old wood windows<br>
+                <strong>Mortgage Situation:</strong> ~$140K main + ~$24K HUD forbearance loans = true payoff ~$164-165K. ARV ~$280K, asking ~$165K.<br>
+                <strong>Call Type:</strong> First process call — ~37 minutes, seller engaged<br>
+                <strong>Outcome:</strong> 🔴 <strong>Process call completed. Seller motivated (foreclosure risk in 30-60 days). No offer made. Lead was moved to "Long Term Follow Up – Cold" despite HOT motivation. No follow-up call logged after the scheduled 4:45pm callback on May 22.</strong>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <div class="stage-flag">
+                ⚠️ <strong>CRM STAGE MISMATCH:</strong> Lead is marked "Long Term Follow Up – Cold" with reason "High Mortgage Balance – No Equity" — but seller motivation = HOT, foreclosure risk in 30-60 days, ARV $280K vs payoff ~$165K. There IS equity here. The stage is wrong. This lead should be in <strong>Pass Off</strong> immediately.
+            </div>
+
+            <div class="urgent">
+                <h2>🚨 URGENT — This Lead Needs a Pass Off TODAY</h2>
+                <p>Cro'ashia Nurse is facing foreclosure within 30-60 days if she doesn't sell. She has genuine motivation (moving, can't afford the mortgage, tired of the property). ARV is ~$280K and her true payoff is ~$164-165K — that leaves potential wholesale/novation room. The previous company (OpenDoor) backed out over inspection issues that are likely cosmetic. Jacob got all the data, promised a callback the next day (May 22 between 4:45-5pm), and the seller texted the inspection report over. There is no record of a follow-up call on May 22 or since. <strong>This cannot sit in cold follow-up. Sage is flagging this for immediate escalation to Omar for Pass Off.</strong></p>
+                <p style="margin-top:10px;"><strong>What needs to happen NOW:</strong> Pull the inspection report she texted. Run the numbers. If MAO at $165K+ is achievable on a wholesale deal, pass off to Omar TODAY. Her timeline is real — she said in 30-60 days she's in foreclosure territory.</p>
+            </div>
+
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> This was actually a solid first process call from Jacob. He set expectations cleanly, used the FHCO framework opener almost verbatim, built genuine rapport (the Croatian nurse joke worked), and gathered the key property data. He surfaced the real motivation (foreclosure risk), clarified the HUD forbearance situation proactively, and correctly identified the true payoff at $164-165K. He even asked the future-state question and got the emotional answer: <em>"Actually be able to enjoy life."</em> The seller sent the inspection report by text that same night.</p>
+                <p style="margin-top:10px;"><strong>The problem isn't the call — it's what happened after.</strong> Jacob promised a callback for the next day at 4:45-5pm. The inspection report arrived. And then nothing. The lead got filed into "Long Term Follow Up – Cold" with the reason "High Mortgage Balance – No Equity" — but that's inaccurate. There IS equity. The true payoff is $165K, ARV is $280K. That's a $115K spread. Jacob either pulled back from running the numbers or just lost track. Either way, this is a <strong>motivated seller being left to find someone else.</strong></p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro & Expectations</div>
+                            <div class="score-reason">Strong. Used the FHCO framework opener almost verbatim. Set expectations, explained the process, gave permission to say no. Good tone throughout.</div>
+                        </div>
+                        <div class="score-badge high">4</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Identity stated clearly</strong> — "Hello, this is Jake with Fast Home Cash Offers." [00:00:06] Clean cold-call opener.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Set expectations for the call</strong> — "What I found best is just having an open conversation with homeowners. That way you can help me understand some more about the property and what you're hoping to accomplish with it — really, that's just to see if we're even going to write about it for you." [00:01:10] Nearly verbatim FHCO framework.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Permission to say no</strong> — "If at any point you feel like we're not a good fit for you, feel free to let me know. Completely okay to say no." [00:01:42] Clean and disarming.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Strong opener question</strong> — "How are you hoping our company could help with your property out there?" [00:02:02] Opened the discovery perfectly.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Credibility/contractor background used</strong> — Jacob referenced being a former GC when discussing the chimney and foundation cracks, adding legitimacy to his assessment. [00:04:08-00:04:55]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery — Situation & Motivation</div>
+                            <div class="score-reason">Good — surfaced the real situation (OpenDoor backed out, inspection issues, moving), got the key motivation (downsizing, bad tenant experience, can't afford the mortgage). Got the future-state answer. Missed deepening the emotion around the foreclosure risk.</div>
+                        </div>
+                        <div class="score-badge high">4</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+
+                        <div class="bracket-header">Situation Questions</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>What's going on with the property?</strong> — Seller explained the OpenDoor deal fell through post-inspection, three issues cited (chimney, foundation cracks, kitchen floor). Jacob probed further. [00:02:09-00:03:08]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>How long have you been trying to sell?</strong> — Asked at [00:06:20]. Cro'ashia: "I wasn't — they were the first ones." Context confirmed: this was her first real attempt to sell. Good context gathered.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Updates done to property?</strong> — Jacob asked [00:07:12]. Got the full picture: plumbing ($8,300+), bathroom renovation, furnace replacement, PVC piping — ~$15-16K in documented improvements. This is valuable context for underwriting.</div>
+                        </div>
+
+                        <div class="bracket-header">Motivation / Impact</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>What's causing you to want to sell?</strong> — Asked directly at [00:11:58]. Cro'ashia: "Just downsizing. Too big for one person. Too many repairs." Real answer, emotionally connected to her situation.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>What happens if you don't sell in the next 30-60 days?</strong> — Asked at [00:18:06]. Cro'ashia: "I have to pull the mortgage because I can't afford it anymore... if I don't have a new option, it has to go." FORECLOSURE RISK confirmed. Jacob identified this correctly. [00:18:52]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Future state — what are you looking forward to?</strong> — Asked at [00:19:05]. Cro'ashia: "Actually being able to live comfortably and not having to worry about the next repair... actually be able to enjoy life." Emotional answer captured.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Deepened the foreclosure consequence</strong> — When Cro'ashia said "I can't afford it anymore" [00:18:36], Jacob said "Obviously foreclosure is the last step anybody wants to go down." That's fine, but he moved on immediately. The right move: <em>"So if we can't get you an offer that works, you're looking at foreclosure in a few months — is that what you're saying?"</em> Get her to confirm the severity out loud. That creates real urgency — for her AND for Jacob to run the numbers seriously.</div>
+                        </div>
+
+                        <div class="bracket-header">Competitive Landscape</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Other investors / competing offers?</strong> — Asked at [00:20:24]. Cro'ashia described the shady investor who sent a contract then called back 2 minutes later asking what she'd bring to closing. Jacob correctly identified the red flags. Good trust-building moment.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2B -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2B: Roadblocks — Mortgage, Liens, Decision Makers</div>
+                            <div class="score-reason">Strong — Jacob proactively discovered the HUD forbearance loans and corrected the seller's understanding of her true payoff. Calculated $164-165K real number. Confirmed no other liens, no other decision-makers. This was one of the best parts of the call.</div>
+                        </div>
+                        <div class="score-badge high">5</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Mortgage balance confirmed — and HUD discovered</strong> — Jacob used PropertyStream to pull three loans: $140K main + $15K HUD + $9K HUD = ~$164K true payoff. Seller thought she only owed $140-150K. Jacob educated her correctly and transparently. [00:21:51-00:22:52] This is exactly what the FHCO framework is built for.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>No other liens confirmed</strong> — "There's no other liens on the property, right? Like no solar or anything like that?" [00:24:22] Clean. Seller confirmed no.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>No other decision-makers</strong> — "Would anybody else be upset if you did decide to sell?" [00:24:36] Seller: "No, I'm solo." Confirmed single decision-maker.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>True payoff anchored with seller</strong> — Jacob told Cro'ashia directly: "164, 165 is really where you need to be at." [00:24:13] She acknowledged. This is critical — she now knows her real number and any investor who tells her otherwise is lying to her.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Set up title company process</strong> — Explained how quick-claim deeds are used by bad actors, FHCO uses a real title company. [00:23:42] Good trust-building.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C - PRICE -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price Expectation</div>
+                            <div class="score-reason">Partially done — Jacob anchored $164-165K as the breakeven payoff and seller acknowledged. But never asked what she needs to NET above payoff, or how flexible she is on that number. The commitment question was done well.</div>
+                        </div>
+                        <div class="score-badge medium">3</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Payoff anchored correctly</strong> — "164, 165 is really where you need to be at." [00:24:13] Seller agreed.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Commitment question asked well</strong> — "Let's pretend my underwriting team here can qualify you for an offer that you'd like — what type of questions would you have for me at that point?" [00:24:48] Seller's answer: how quickly can we close, and mortgage payoff included. Clean commitment step.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Never asked what she needs to NET above payoff</strong> — Jacob correctly established $165K as the break-even. But he never asked: <em>"If we came in at $165K, is that enough for you to walk away clean — or do you need anything above that to make this work?"</em> Knowing her flexibility above payoff is critical for offer construction.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Never used the "if I could... would you?" pre-close</strong> — Should have said: <em>"If we could get you an offer that pays off all your loans and lets you walk away clean — and we can close in 2-3 weeks — is that something you'd want to move forward on today?"</em> This would have tested commitment before ending the call.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 - PROPERTY -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Thorough. Jacob got bed/bath, sq footage, age, condition issues, plumbing history, roof estimate, windows, HVAC, basement, garage, pet damage disclosure, vacancy status. Used PropertyStream. Asked for photos and inspection report — and got them texted that night.</div>
+                        </div>
+                        <div class="score-badge high">5</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Bed/bath/sq ft confirmed</strong> — 4BR/2BA (duplex style), 2,471 sq ft, 1940 build. [00:26:56]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Foundation / structural</strong> — Two cracks in foundation noted in inspection report but Jacob (as a former GC) assessed them as likely cosmetic given the age of the house and that the inspector marked foundation condition "great." [00:28:01-00:29:05]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Plumbing history</strong> — Full PVC replacement, $8,300 + $6,300 invoices. Documented and seller can provide proof. [00:15:52-00:16:47]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Roof</strong> — Estimated ~15 years, some missing shingles from weather. [00:29:16-00:29:36]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>HVAC</strong> — New furnace, baseboard heat, oil + gas options. No central AC. [00:30:11-00:30:34]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Pets / tenant damage disclosed</strong> — Seller proactively told Jacob about tenant with two dogs, had to rip up carpet, multiple layers of flooring. [00:33:40-00:34:34]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Inspection report requested and received</strong> — Jacob asked Cro'ashia to email the 92-page PDF. She texted "I'm sending the report over now" at 7:47pm that same night. Follow-through from seller confirmed.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Photos of foundation cracks</strong> — Jacob asked for photos of the cracks specifically [00:28:01]. Cro'ashia said she has the inspection report with pictures. Whether those photos were included in the PDF she sent is unknown. This should be confirmed when doing the offer follow-up.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 - FOLLOW-UP FAILURE -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4-6: Commitment / Offer / Follow-Up — THE FAILURE POINT</div>
+                            <div class="score-reason">CRITICAL MISS. Jacob promised a callback May 22 at 4:45pm. Seller sent the inspection report. No offer was made. Lead moved to cold follow-up incorrectly. A motivated seller facing foreclosure is being left dormant.</div>
+                        </div>
+                        <div class="score-badge low">0</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>No follow-up call made on May 22</strong> — Jacob said "I'll call you sometime between 4:45 and 5." [00:37:06] Seller confirmed. The last call attempt logged is May 21 at 8:17pm (same night). No May 22 follow-up call is logged. This is a broken promise to a seller who is facing foreclosure.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Inspection report received — never actioned</strong> — Cro'ashia texted "I'm sending the report over now" at 7:47pm May 21. There is no record of a response, acknowledgment, or offer construction from this report.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Lead incorrectly staged as "Long Term Follow Up – Cold"</strong> — The CRM reason is "High Mortgage Balance – No Equity." But ARV ~$280K and true payoff ~$165K = ~$115K spread. That is NOT no equity. This lead should be in Pass Off right now.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>No offer attempted</strong> — A complete process call was run, all data was gathered, the seller sent the inspection report, and ZERO offer was generated. The process call did exactly what it was supposed to — the breakdown is entirely in the post-call execution.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>1. 🚨 PASS THIS OFF NOW — THE MATH IS THERE:</strong> ARV ~$280K. True payoff $164-165K. That's a ~$115K spread. Even with 25% repairs ($70K), that's $210K MAO on a wholesale. The "High Mortgage Balance – No Equity" reason is WRONG. Either Jacob didn't run the numbers, or he panicked at the payoff figure and filed it away. Either way, this needs to be reviewed for pass-off to Omar TODAY. Seller is 30-60 days from foreclosure. She sent the inspection report. She's waiting.</li>
+                    <li><strong>2. BROKEN PROMISES KILL TRUST — AND DEALS:</strong> Jacob told Cro'ashia he would call at 4:45pm the next day. She texted him her inspection report. He never called. This is pattern behavior — Jacob has a chronic issue with follow-through on process calls (see Vincent Monet, same week). The fix: after every process call, Jacob must set a Podio task for the callback <em>before ending the call</em>. The task must have a specific time. Not "tomorrow afternoon" — "May 22 at 4:45pm." And when the task fires, the call happens — period.</li>
+                    <li><strong>3. THE "IF I COULD… WOULD YOU?" TEST — ALWAYS BEFORE HANGING UP:</strong> Before ending any process call, Jacob needs to confirm commitment: <em>"Cro'ashia — if we came in with an offer that pays off all your loans and lets you walk away clean, and we can close in the next 2-3 weeks — is that something you'd want to move forward on today?"</em> If she says yes, the deal is alive and Jacob MUST follow through. If she hesitates, he surfaces the real objection before the call ends. Never close a process call without the pre-close. This turns "maybe" into "yes — call me tomorrow" and creates personal accountability to follow through.</li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>✅ What Worked (Replicate This)</h2>
+                <ul>
+                    <li><strong>Framework opener — nearly verbatim [00:01:10]:</strong> Jacob used the exact FHCO framework language to set expectations. "Open conversation, understand the property, see if we're even going to write about it." Permission to say no included. This is how every call should start.</li>
+                    <li><strong>HUD forbearance discovery [00:21:51]:</strong> Jacob proactively pulled the title data in PropertyStream and found $24K in HUD loans the seller didn't know about. He explained it clearly, transparently, and used it to build trust ("I got no reason to lie to you"). This is a massive value-add that differentiates FHCO from every other caller she talked to.</li>
+                    <li><strong>Consequence question fired [00:18:06]:</strong> "What happens if you don't get the house sold in the next 30-60 days?" Cro'ashia confirmed foreclosure risk. This is the urgency that should have driven a same-day follow-up, not cold filing.</li>
+                    <li><strong>Future state asked and answered [00:19:05]:</strong> "What are you looking forward to?" — "Actually be able to enjoy life." This is the emotional anchor for the whole deal. That quote should be at the top of Jacob's notes when he calls back.</li>
+                    <li><strong>Contractor credibility used well:</strong> When discussing the chimney, foundation cracks, and piping — Jacob used his GC background to normalize the issues and give Cro'ashia genuine context. She relaxed. That's the FHCO advantage over faceless investment companies.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            FHCO Sales Audit Report • Generated by Sage AI • May 26, 2026 • Jacob Adams / Cro'ashia Nurse — Browndale, Pennsylvania<br>
+            <strong>Podio Lead:</strong> <a href="https://podio.com/investacalcom/fast-home-cash-offers/apps/seller-leads/items/17302">View Seller Lead #17302</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-badge.low').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
