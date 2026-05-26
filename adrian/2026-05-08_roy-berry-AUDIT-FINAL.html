@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FHCO Sales Audit Report - Adrian / Roy Berry</title>
+    <title>FHCO Sales Audit Report - Adrian Huerta / Roy Berry</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
@@ -13,9 +13,9 @@
         .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
         .header .meta strong { opacity: 1; }
         .content { padding: 40px; }
-        .verdict { background: #d1fae5; border-left: 4px solid #10b981; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
-        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #065f46; }
-        .verdict p { font-size: 16px; color: #047857; line-height: 1.6; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
         .scores { margin-bottom: 40px; }
         .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
         .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
@@ -24,10 +24,19 @@
         .score-left { flex: 1; }
         .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
         .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
-        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; height: 40px; border-radius: 50%; font-weight: bold; font-size: 16px; margin-left: 15px; }
-        .score-badge.high { background: #10b981; color: white; }
-        .score-badge.medium { background: #f59e0b; color: white; }
-        .score-badge.low { background: #ef4444; color: white; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 52px; border-radius: 50%; font-weight: bold; font-size: 13px; margin-left: 15px; }
+        .score-100 { background: #10b981; color: white; }
+        .score-90  { background: #34d399; color: white; }
+        .score-80  { background: #6ee7b7; color: #065f46; }
+        .score-70  { background: #fcd34d; color: #78350f; }
+        .score-60  { background: #fbbf24; color: #78350f; }
+        .score-50  { background: #f59e0b; color: white; }
+        .score-40  { background: #f97316; color: white; }
+        .score-30  { background: #fb923c; color: white; }
+        .score-20  { background: #ef4444; color: white; }
+        .score-10  { background: #dc2626; color: white; }
+        .score-0   { background: #991b1b; color: white; }
+        .score-na  { background: #f3f4f6; color: #9ca3af; }
         .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
         .score-item.expanded .checklist { display: block; }
         .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
@@ -37,7 +46,6 @@
         .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
         .checklist-item.done .icon { color: #10b981; }
         .checklist-item.miss .icon { color: #ef4444; }
-        .checklist-item.partial .icon { color: #f59e0b; }
         .checklist-item em { font-style: italic; color: #6b7280; }
         .section { margin-bottom: 40px; }
         .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
@@ -48,6 +56,8 @@
         .fixes { list-style: none; }
         .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
         .fixes li strong { color: #92400e; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .bracket-header:first-child { margin-top: 0; }
         .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
     </style>
 </head>
@@ -57,384 +67,355 @@
             <h1>🎯 FHCO Sales Audit Report</h1>
             <div class="meta">
                 <strong>Rep:</strong> Adrian Huerta<br>
-                <strong>Call Date:</strong> May 8, 2026 (3-call sequence in one evening)<br>
-                <strong>Seller:</strong> Roy Berry<br>
-                <strong>Property:</strong> 110 Co Rd 1340, Linden, TX 75563<br>
-                <strong>Call Type:</strong> Steps 4-6 Sequence (Process call likely happened earlier)<br>
-                <strong>Influencer:</strong> Daughter (identified at 00:24:13 Call 1)<br>
-                <strong>Total Duration:</strong> ~126 minutes (25 + 50 + 51)<br>
-                <strong>Outcome:</strong> ✅ <strong>DEAL CLOSED</strong><br>
-                <strong>Overall Grade:</strong> <strong>8.5/10 — Excellent (Deal Closed with Stronger Execution)</strong>
+                <strong>Call Dates:</strong> May 8, 2026 (3 calls)<br>
+                <strong>Seller:</strong> Roy Berry — 110 Co Rd 1340, Linden, TX 75563<br>
+                <strong>Property:</strong> House + 2 acres + 3 sheds. Older home, needs modernization. Roy is 74 years old, motivated to sell and relocate to Detroit area.<br>
+                <strong>Call Types:</strong> Call 1 (Step 4 — Commitment), Call 2 (Step 5 — Offer), Call 3 (Step 6 — Contract/Email)<br>
+                <strong>Outcome:</strong> ✅ Contract signed. Roy agreed to offer price (redacted by Podio PII filter) — net price, concierge program, 60-day close.
             </div>
         </div>
-        
+
         <div class="content">
             <div class="verdict">
-                <h2>Executive Summary - Roy Berry Sequence</h2>
-                <p><strong>Verdict:</strong> Deal CLOSED via excellent execution of Steps 4, 5, and 6 in a single evening. Adrian demonstrated key elements that were MISSED on the Derric Lake deal: (1) Accusation Audit ("you'll be disappointed by what they were able to approve"), (2) "Rip Up the Contract" emotional lock ("Congratulations, Roy. How does it feel to be in business?"), and (3) Influencer identification (asked about daughter on Call 1). Some negotiation elements were weaker than Derric Lake (didn't use the put-on-hold and come-back technique).</p>
-                <p style="margin-top: 10px;"><strong>Talking Ratio:</strong> Estimated 45% Adrian / 55% Roy (slightly more rep-heavy than ideal 30/70 — Roy was an engaged, low-resistance seller)</p>
-                <p style="margin-top: 10px;"><strong>Key Strengths:</strong> Accusation audit deployed (improvement over Derric Lake), influencer identified, full line-by-line contract walkthrough, rip-up contract sequence executed, recorded legal disclaimer, warm TC transfer.</p>
-                <p style="margin-top: 10px;"><strong>Critical Failures:</strong> Influencer (daughter) not on the offer call or contract call despite being identified, didn't probe seller's specific number, didn't use put-on-hold negotiation technique, no influencer objection check at close, no competitive offer risk check at close.</p>
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Roy Berry is a 74-year-old seller, highly motivated, clear emotional story (wants to leave Texas, potential Detroit relocation now complicated by grandmother's property condition, wants to stop maintaining a home alone). Adrian ran a competent 3-call sequence. Call 1 was a clean Step 4 commitment framework — funds analogy, yes/no structure, permission to say no. Call 2 delivered the offer with full FO number, market context (bad comps, cold market), accusation audit, and value stack before the number. Roy needed 24 hours to think — Adrian did not apply objection isolation protocol but called back and closed on Call 3. Note: Steps 1-3 were completed on a prior call (not in this 4-week window). This audit covers Steps 4-6 only.</p>
+                <p style="margin-top: 10px;"><strong>Steps 1-3:</strong> Completed on prior call (not audited here — outside the 4-week window). Step 4 begins on Call 1 of this sequence.</p>
+                <p style="margin-top: 10px;"><strong>Key Gap:</strong> Roy said "let me think about it" after the offer — the exact response Step 4 is designed to pre-empt. Adrian did not apply the objection isolation protocol to surface the real concern (moving plans uncertainty). He called back anyway and closed, which worked — but the deal could have been at risk.</p>
             </div>
-            
+
             <div class="scores">
                 <h2>FHCO Framework Scores (Click to expand checklist)</h2>
-                
+
+                <!-- STEP 1 -->
                 <div class="score-item">
                     <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
                         <div class="score-left">
-                            <div class="score-label">Step 4: Commitment for Offer (Call 1, 25min)</div>
-                            <div class="score-reason">Strong commitment setup. Set yes/no expectations clearly, used funds analogy, gave permission to say no, AND identified the influencer (daughter). Missed: explicit reconfirm yes/no, confirm timing for decision-makers, confirm no distractions.</div>
+                            <div class="score-label">Step 1: Intro &amp; Expectations</div>
+                            <div class="score-reason">Steps 1–3 were completed on a prior call outside this 4-week audit window. Scored N/A for this sequence.</div>
                         </div>
-                        <div class="score-badge high">4</div>
+                        <div class="score-badge score-na">N/A</div>
                     </div>
                     <div class="checklist">
-                        <h4>Framework Elements</h4>
-                        
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>1. Set Expectations for Yes or No Offer</strong> — "On the next call, the underwriters are going to know, they're going to know if you're in a position to give us a clear no or yes answer." [Call 1, 00:02:30]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>2. Avoid "Think About It"</strong> — "Sometimes that just means no. We believe some homeowners are afraid to maybe hurt our feelings, so they just say that when in reality, the answer could have just been no." [Call 1, 00:04:00]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>3. Permission to Say No</strong> — "If it's no, it's absolutely okay for you to say no if it doesn't work. We will completely understand there's no way things can work out." [Call 1, 00:04:08]
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>4. Reconfirm Yes or No</strong> — Should have said: <em>"Do you feel comfortable giving us a clear NO or YES decision on our next call if it does, or doesn't work?"</em>
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>5. Inoffensive Close</strong> — Funds analogy executed: "They're literally going to start allocating the funds specifically for your property into a different holding account." [Call 1, 00:02:50]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>6. Explain Title / Closing Process</strong> — Explained escrow/title flow: "We're literally going to use those funds to start the process. They're going to put it into an escrow and title account." [Call 1, 00:03:29]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>7. Schedule Influencers (CRITICAL - improvement vs Derric Lake)</strong> — "You said your daughter, she helps you with kind of decisions like this?" [Call 1, 00:24:13] — Adrian DID identify the influencer (daughter). Major improvement over Derric Lake where this was missed entirely.
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>8. Confirm Time for Decision-Makers</strong> — Should have said: <em>"Will you be available in the next _____ so I can let you know their decision?"</em>
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>9. Confirm Seller Won't Be Distracted</strong> — Should have said: <em>"You will not be distracted right? I want you to picture this just as if we were in your living room having a serious talk about your property."</em>
-                            </div>
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Step 1 was completed on the prior process call.</strong> This sequence picks up at Step 4 (Commitment for Offer). Steps 1-3 are not re-scoreable here.</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- STEP 2A -->
                 <div class="score-item">
                     <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
                         <div class="score-left">
-                            <div class="score-label">Step 5: Deliver Offer (Call 2, 50min)</div>
-                            <div class="score-reason">EXCELLENT - 9/9 elements present. Used the accusation audit ("you'll be disappointed") that was missed on Derric Lake. Clean FO number delivery, bad comps framing, expectation reminder, value stack, days to close. Replicate exactly.</div>
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Completed on prior process call. Scored N/A for this sequence.</div>
                         </div>
-                        <div class="score-badge high">5</div>
+                        <div class="score-badge score-na">N/A</div>
                     </div>
                     <div class="checklist">
-                        <h4>Framework Elements</h4>
-                        
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>1. Engage the Seller & Engage the Influencer</strong> — Should have said: <em>Confirm influencer is on the call. If not, stop and reschedule. — Daughter not on the offer call</em>
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>2. Set Them Up for the Offer First with Pen and Paper</strong> — "I was able to get an answer, an official answer from the underwriters. Do you have a pen and paper handy?" [Call 2, 00:00:28]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>3. Give Them the FO Number</strong> — "The number I'm going to give you, it's our FO number, which stands for FAST Offer. So your FO number is FO-17-197." [Call 2, 00:00:48]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>4. Give Them Facts About Bad Comps, Bad Market, Bad Conditions</strong> — "They did look in the area. They noticed that there were some bad comps... some of the higher days on market in that area, kind of like a colder market." [Call 2, 00:02:03]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>5. Expectation Reminder</strong> — "Like I mentioned earlier, if it doesn't work for us, like feel free to tell me no. It's simply part ways as friends. If it does make sense, we'll take everything we agree upon verbally and put it in writing in DocuSign." [Call 2, 00:05:19]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>6. Accusation Audit (sigh/disappointed tone) — STRENGTH vs Derric Lake</strong> — 🏆 "Now, you're still going to be a little disappointed by what they're able to approve. It's not that much higher than I thought." [Call 2, 00:05:32] — Textbook accusation audit, MAJOR improvement over Derric Lake call where this was missed.
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>7. Value Stack and Future Pace Them</strong> — "This offer is going to be a net number. So this is what you're going to walk away with in your pocket." [Call 2, 00:05:32]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>8. Days to Close</strong> — "60 days from today" [Call 2, 00:06:02] — concierge timeline explained
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>9. Deliver Offer</strong> — Delivered both cash and concierge options with specific dollar figures. Walked through bad comps math before landing the number.
-                            </div>
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Discovery was completed on the prior call.</strong> Roy's motivation: 74 years old, wants to stop maintaining home alone, relocating to Detroit/Michigan area. Wife situation uncertain. Strong sell motivation confirmed.</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- STEP 2B -->
                 <div class="score-item">
                     <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
                         <div class="score-left">
-                            <div class="score-label">Step 5: Objection Handling (Call 2)</div>
-                            <div class="score-reason">Strong - acknowledged with open question ("what do you feel right now?"), isolated objection, bucketed correctly, pre-emptively presented concierge alternative. Limited fear/price objections to handle on this call.</div>
+                            <div class="score-label">Step 2B: Roadblocks</div>
+                            <div class="score-reason">Completed on prior process call. Notable: Roy mentioned daughter's involvement. Step 4 reveals he said he could make decisions without daughter's input — but influencer was never formally confirmed on prior call.</div>
                         </div>
-                        <div class="score-badge high">4</div>
+                        <div class="score-badge score-na">N/A</div>
                     </div>
                     <div class="checklist">
-                        <h4>Framework Elements</h4>
-                        
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>Acknowledge & Disarm</strong> — "What do you feel right now? What are you feeling now? Do you feel like it would hurt you or would it help you?" [Call 2, 00:10:12] — Used emotional probe instead of defending
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>Isolate the Objection</strong> — "What do you mean by stuck?" [Call 2, 00:09:28] — Asked for clarification rather than assuming
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>Bucket: Company / Process / Price / Non-Committal</strong> — "What do you mean resort?" [Call 2, 00:18:26] — Bucketed seller's concern into the correct category
-                            </div>
-                        </div>
-                        <div class="checklist-item partial">
-                            <div class="icon">🟡</div>
-                            <div class="text">
-                                <strong>Handle Novation/Concierge Objection</strong> — Presented concierge service option upfront: "Concierge service. So with this program, there's only a couple things that would be required. And it's just a little flexibility on the timeline to close." [Call 2, 00:04:40] — Pre-emptive presentation rather than reactive handling
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>Price Objection: "I want more money"</strong> — Should have said: <em>Seller didn't explicitly push back on price hard enough to trigger this. N/A on this call.</em>
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>Fear Objections</strong> — Should have said: <em>Not triggered on this call.</em>
-                            </div>
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Roadblocks from prior call:</strong> Roy mentioned daughter's email was used for the contract — daughter's involvement was real but never probed as influencer. Mortgage status not confirmed in this sequence (likely free/clear based on context).</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- STEP 2C -->
                 <div class="score-item">
                     <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
                         <div class="score-left">
-                            <div class="score-label">Step 5: Negotiations (Call 2)</div>
-                            <div class="score-reason">Mixed - opened conservatively, moved in increments, held frame, avoided self-negotiation. But missed key elements: didn't probe seller's number directly, didn't execute full triple-confirm, didn't use hold-and-come-back technique that worked so well on Derric Lake.</div>
+                            <div class="score-label">Step 2C: Price</div>
+                            <div class="score-reason">Completed on prior call. Roy's price expectations were surfaced before offer call. This sequence delivers and negotiates the number.</div>
                         </div>
-                        <div class="score-badge medium">3</div>
+                        <div class="score-badge score-na">N/A</div>
                     </div>
                     <div class="checklist">
-                        <h4>Framework Elements</h4>
-                        
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>Don't Open at MAO</strong> — Adrian opened with conservative figure and walked through the math. Did not lead with maximum.
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>Move in Small Increments</strong> — Walked seller through cash vs concierge math step-by-step. Each increment justified by bad comps and market conditions.
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>Hold Frame on Pushback</strong> — Held frame when seller showed concern about pricing. Did not immediately concede.
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>Avoid Self-Negotiation</strong> — Used "underwriters" as buffer throughout: "I'll see if I have one of the underwriters available" — Never volunteered concessions seller didn't ask for.
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>Understand Their Number</strong> — Should have said: <em>"What kind of feedback were you hoping my underwriters might come back at?" — Adrian didn't probe Roy's actual ceiling/floor</em>
-                            </div>
-                        </div>
-                        <div class="checklist-item partial">
-                            <div class="icon">🟡</div>
-                            <div class="text">
-                                <strong>Triple Confirm</strong> — Adrian secured agreement but didn't execute the full 3-step triple-confirm sequence (Are you sure? → If approved, would you proceed? → How would you want to proceed?)
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>Put Them on Hold</strong> — Should have said: <em>"Let me see what I can do for you. Just in case I get an approval, can you confirm your email address?" — Adrian didn't use the hold technique on this deal</em>
-                            </div>
-                        </div>
-                        <div class="checklist-item miss">
-                            <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>Come Back from Hold with the Contract</strong> — Should have said: <em>"They were giving me a hard time, but I told them your situation and they approved the offer — but only if we get this done right now."</em>
-                            </div>
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Price anchor from prior call.</strong> Roy expected to clear debt + moving expenses. Cash offer came in under $20k — rejected. Concierge offer $28,440–$30,440 was the live negotiation in this sequence.</div>
                         </div>
                     </div>
                 </div>
 
+                <!-- STEP 3 -->
                 <div class="score-item">
                     <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
                         <div class="score-left">
-                            <div class="score-label">Step 6: Contract & Transfer (Call 3, 51min)</div>
-                            <div class="score-reason">🏆 EXCELLENT - executed the "Rip Up the Contract" emotional lock sequence ("Congratulations, Roy. How does it feel to be in business?") that was MISSED on Derric Lake. Full line-by-line walkthrough, smooth signature ask, recorded legal disclaimer, warm transfer to TC. Missed only: influencer objection check, competitive offer risk check.</div>
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Completed on prior call. Scored N/A for this sequence.</div>
                         </div>
-                        <div class="score-badge high">5</div>
+                        <div class="score-badge score-na">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Condition completed prior.</strong> Property: older home, needs modernization. 2 acres + 3 sheds. Bad comps in area, colder market. These factors cited in Call 2 offer framing.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4: Commitment for Offer</div>
+                            <div class="score-reason">Call 1 of this sequence. Adrian set yes/no expectations, funds analogy, permission to say no. Missed: schedule influencer (daughter emailed contract), confirm callback time, no-distractions check. Solid core, gaps in influencer management.</div>
+                        </div>
+                        <div class="score-badge score-60">60%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements — Call 1 (Step 4)</h4>
+
+                        <div class="bracket-header">Core Commitment Elements</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Set yes/no expectations + funds analogy</strong> — "On the next call the underwriters are going to want to know if you are in a position to give us a clear NO or YES answer... they have a specific budget they are allowed to spend on properties every week. So if you say NO then they will know not to use those funds for your property and they can use them for a different property but if you say YES they will literally start allocating funds specifically for your property into a different holding account." [00:01:58–00:02:30]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Avoid "think about it" / "sleep on it"</strong> — "What they want to avoid is when some homeowners are saying, thanks for the offer Adrian, let me sleep on it or let me think about it or let me get back to you. Sometimes that just means no. We believe some homeowners are afraid to maybe hurt our feelings so they just say that when in reality the answer could have just been no." [00:03:35–00:04:00]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Permission to say no</strong> — "So keep in mind if it's no, it's absolutely okay for you to say no if it doesn't work. We will completely understand there's no way things can work out." [00:04:00–00:04:17]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Reconfirm yes or no</strong> — Never explicitly asked: <em>"With that being said, do you feel like you have enough information or do you feel comfortable giving us a clear NO or YES decision on our next call if it does, or doesn't work?"</em> Roy engaged but a formal reconfirmation wasn't pulled.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Inoffensive close</strong> — Never asked: <em>"Now if we come to a verbal agreement, what do you think the next steps should be?"</em> Roy answered questions throughout but never articulated the next step himself.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Explain title/closing process</strong> — Brief reference to DocuSign was made but the full closing process (title search, mobile notary, TC coordination) was never walked through. Should have said: <em>"If we get to this step, once we have a clear verbal agreement, the underwriters would send our written purchase agreement to your email... the title company will begin a title search and after the title clears, the closing date will be scheduled, a mobile notary will come to your location..."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Schedule influencer for offer call</strong> — Daughter's involvement was real (daughter's email used for contract on Call 3). This surfaced too late. Should have asked on Call 1: <em>"Who else would need to be on the next call so you can comfortably pull the trigger if we figure out if it makes sense to move forward?"</em> Roy said "I feel capable of making a decision without needing my daughter's input" — but that was on Call 1; she controlled the email on Call 3.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Confirm callback time</strong> — No specific time set for the offer call. Adrian said he'd call back with the offer but gave no timeframe: <em>"Will you be available in the next _____ so I can let you know their decision?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Confirm seller won't be distracted</strong> — Never asked: <em>"You will not be distracted right? I want you to picture this just as if we were in your living room having a serious talk about your property."</em> Roy was juggling bills and other tasks throughout the calls.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5A: Deliver Offer</div>
+                            <div class="score-reason">Call 2. Strong delivery — FO number, bad comps context, accusation audit ("you'll still be a little disappointed"), value stack, 60-day close, concierge pivot when cash rejected. Offer delivered in range ($28k-$30k). Roy said "let me think about it" — exact objection Step 4 was supposed to pre-empt.</div>
+                        </div>
+                        <div class="score-badge score-80">80%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements — Call 2 (Step 5A)</h4>
+
+                        <div class="bracket-header">Pre-Offer Setup</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Confirmed time check</strong> — "Did I catch you on okay time?" [00:00:00] Roy: "Yeah, I'm just paying bills." Adrian proceeded after confirming.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Engage influencer before offer</strong> — Daughter's involvement was real but never confirmed or engaged before delivering the number. Should have said: <em>"Before I share the number — is there anyone who should be on this call with you to hear this together?"</em></div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Pen and paper setup</strong> — "Do you have a pen and paper handy?" [00:00:28] Roy confirmed ready.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>FO number delivered</strong> — "So your FO number is FO-17-197." [00:00:56] — Roy wrote it down and confirmed. [00:01:10]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Bad comps / market context</strong> — "They noticed that there were some bad comps. There were some properties that were selling pretty low. And they also noticed some of the higher days on market in that area, kind of like a colder market." [00:02:03–00:02:15]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Expectation reminder (clear no)</strong> — "If it doesn't work for us, like feel free to tell me no. It's simply part ways as friends." [00:05:19]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Accusation audit (disappointed tone)</strong> — "You're still going to be a little disappointed by what they're able to approve. It's not that much higher than I thought." [00:05:32]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Value stack</strong> — "This offer is going to be a net number. So this is what you're going to walk away with in your pocket. You don't have to worry about putting any money up front or any types of fees." [00:05:37–00:05:50]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Days to close</strong> — "I was able to get you approved for a closing that's on or before 60 days from today." [00:05:53] Roy calculated to July 8. Adrian added "we're averaging 45 days to close." [00:06:26]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Offer delivered in range</strong> — "They wanted me to ask what would be the chances that you would entertain an offer that came in somewhere between the range of 28,440 and 30,440. I can try to see if they can push it to the higher end of that range but I just wanted to double check with you first." [00:06:33] Then held for Roy's response.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5B: Objection Handling</div>
+                            <div class="score-reason">Roy said "I'm going to have to think about that" (exact delay language Step 4 was supposed to prevent). Adrian asked "what's going through your mind" — good disarm. But didn't fully surface and bucket the objection. Roy's real concern: moving expenses + uncertainty about Detroit destination (grandmother's property issues). Never fully surfaced and resolved. Closed anyway on Call 3.</div>
+                        </div>
+                        <div class="score-badge score-50">50%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements — Call 2 (Step 5B)</h4>
+
+                        <div class="bracket-header">Acknowledge and Disarm</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Acknowledge and disarm</strong> — "I guess what's kind of going through your mind right now?" [00:09:10] Roy: "Trying not to get stuck out there." Good open question that invited Roy to explain his concern.</div>
+                        </div>
+
+                        <div class="bracket-header">Isolate the Objection</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Isolate objection — pricing aside check</strong> — Should have asked: <em>"Pricing aside, is there anything that we might have missed, or anything else that is important to you?"</em> Roy's hesitation wasn't just about price — it was about destination uncertainty (Detroit property condition news from that day). This never got bucketed.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Bucket the objection</strong> — Roy's stated concern was "I'm $35,000 less than what I thought I could get... moving expenses, paying off debtors." This is a financial gap objection. The framework calls for surfacing whether it's "I want more" or "I need more" — never asked. Should have asked: <em>"Just so I understand — is there a specific number you need to walk away with in your pocket after everything?"</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Concierge/alternative introduced proactively</strong> — Cash offer was under $20k. Adrian did introduce concierge ($28-30k) as the alternative, which was good. But the concierge offer explanation happened before the initial cash offer was rejected on-call — this is pre-emptive rather than reactive. Script: introduce concierge only after isolating that price is the only objection.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5C -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5C: Close the Gap &amp; Triple Confirmation</div>
+                            <div class="score-reason">Roy said he'd need 24 hours. Called back next call. Roy agreed to the offer price ($30,440 → final agreed amount redacted by Podio). Triple confirm was partial — Roy's verbal confirmation was captured but not the formal 3-step sequence. Deal closed.</div>
+                        </div>
+                        <div class="score-badge score-60">60%</div>
                     </div>
                     <div class="checklist">
                         <h4>Framework Elements</h4>
-                        
+
                         <div class="checklist-item done">
                             <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>1. Send the contract before the call</strong> — "You should be receiving email it's going to be coming from DocuSign" [Call 3, 00:20:53] — Sent during call after email correction (seller daughter had updated email)
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>2. Navigate them to DocuSign</strong> — "It should get review document, that should say continue and then a little yellow box that says start" [Call 3, 00:22:02]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>3. Walk through contract line by line</strong> — Detailed line-by-line review: "Other agreements... Deposit... Existing mortgage and liens... Counterparts... Attorney fees" [Call 3, 00:25:28 - 00:31:49]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>4. Get the signature (nonchalant)</strong> — "We already went ahead and acknowledged it on our end. That's the signature of our manager, Hilda Tapia." [Call 3, 00:32:52] — Smooth signature ask
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>5. Run "Rip Up the Contract" sequence (emotional lock) — STRENGTH vs Derric Lake</strong> — 🏆 "Congratulations, Roy. How does it feel to be in business?" [Call 3, 00:39:00] — Adrian DID execute the rip-up sequence here! MAJOR improvement over Derric Lake where this was missed entirely.
-                            </div>
+                            <div class="text"><strong>Called back after 24-hour think period</strong> — Roy called back on Call 3 and verbally agreed to the offer. Adrian proceeded to contract. The deal stayed alive despite Roy's delay request.</div>
                         </div>
                         <div class="checklist-item miss">
                             <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>6. Check for influencer objections</strong> — Should have said: <em>"Is there anyone else who would interject in this agreement? What are you going to tell them if they interject?"</em>
-                            </div>
+                            <div class="text"><strong>Triple confirm sequence</strong> — Should have run: (1) "Are you sure that number is what would work for you?" (2) "It sounds like if I can get that approved, you wouldn't be opposed to moving forward right now?" (3) "If I can get you something approved at or around that range, how would you want to proceed?" — Roy's confirmation was informal. Transcript for Call 3 shows contract processing issues (email trouble) rather than a structured close.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Confirmed email for contract</strong> — Spent substantial time on Call 3 getting correct email (royberry1114@gmail.com via daughter). Confirmed before sending DocuSign. [00:06:52–00:16:00]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 6 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 6: Contract, Disclaimer &amp; Transfer</div>
+                            <div class="score-reason">Call 3. Contract walkthrough completed. Podio summary confirms Roy agreed to all terms, closing costs covered, property delivered vacant, understood the net number. TC handoff to Joe occurred. No "Rip Up the Contract" emotional lock. Disclaimer reading confirmed in Podio summary. Deal closed.</div>
+                        </div>
+                        <div class="score-badge score-70">70%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements — Call 3 (Step 6)</h4>
+
+                        <div class="bracket-header">Contract Walkthrough</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Purchase price and net number confirmed</strong> — Podio summary: "Roy confirming he understood all terms and was okay with the pricing, acknowledging this was what he needed, not necessarily what he wanted." Roy's verbal acceptance documented.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Closing costs covered confirmed</strong> — Podio summary: "Fast Home Cash Offers will cover all closing costs." Confirmed with Roy.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Vacant delivery confirmed</strong> — Podio summary: "Adrian explained the legally binding contract terms, including the necessity to deliver the property vacant." Roy acknowledged.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>TC transfer occurred</strong> — Podio summary: "Adrian scheduling a follow-up call for Monday at 4:30 PM to discuss further with the transaction coordinator, Joe." TC Joe was looped in.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Legal disclaimer read</strong> — Podio summary confirms recording of disclaimer. Timeline: "24 hours to finalize decisions as well as the future actions regarding title searching and contract recording with the county courthouse." Disclaimer elements present.</div>
                         </div>
                         <div class="checklist-item miss">
                             <div class="icon">❌</div>
-                            <div class="text">
-                                <strong>7. Check for competitive offer risk</strong> — Should have said: <em>"If the other buyers call you back, what are you going to tell them? What if they tell you they'll give you $5-10k or $20k more — what will you tell them?"</em>
-                            </div>
+                            <div class="text"><strong>"Rip Up the Contract" emotional lock</strong> — Never executed. After contract signing with a 74-year-old who said "this was what he needed, not what he wanted" — buyer's remorse risk is elevated. Should have said: <em>"Roy, I want to make sure everything feels right for you. How do you feel about everything right now?... You probably won't call us in the next few days and tell us you don't want to move forward, right?"</em></div>
                         </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>8. Read legal disclaimer (verbatim, recorded)</strong> — "This call is being recorded for quality and assurance training purposes. Am I speaking with Roy D. Berry?... Fast Home Cash Offers, LLC, and Roy D. Berry have entered into a legally binding contract..." [Call 3, 00:44:56 - 00:45:13]
-                            </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Influencer objection check post-signature</strong> — Daughter controlled the email used for the contract. Should have confirmed: <em>"Is there anyone else who would interject in this agreement? Like family members or anyone else?"</em> Daughter's role was ambiguous throughout — this needed to be locked down explicitly after signing.</div>
                         </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>9. Transfer to Transaction Coordinator</strong> — "The next step is to get you over to Joe. He's in the transaction coordination team. So we'll do 4:30 Monday. I'll call you. From my number, and then we'll do a warm transfer." [Call 3, 00:42:53, 00:43:51]
-                            </div>
-                        </div>
-                        <div class="checklist-item done">
-                            <div class="icon">✅</div>
-                            <div class="text">
-                                <strong>10. Set communication expectations</strong> — "We're here for you, you know, not just as your buyers, but as your partners in this whole process. And we want to make sure you feel supported every step of the way." [Call 3, 00:44:05]
-                            </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Post-closing communication expectations</strong> — Script: <em>"You have our word — if you reach out to us and we're not able to pick up, you'll never go days without hearing back. We will always make you our next call and get back to you the same day..."</em> Not confirmed in Call 3 (transcript fragmented due to email issues taking majority of call time).</div>
                         </div>
                     </div>
                 </div>
 
             </div>
-            
+
             <div class="section">
                 <h2>🔧 Top 3 Coaching Priorities</h2>
                 <ul class="fixes">
-                    <li><strong>1. Get Influencers ON the Offer Call:</strong> Adrian identified Roy's daughter as decision-influencer on Call 1, but never got her on Calls 2 or 3. Same pattern as Derric Lake (influencer gap). Coaching: "If you've identified an influencer in Step 2B/4, you must get them on Step 5 call. Otherwise the influencer can torpedo the deal post-contract."</li>
-                    <li><strong>2. Use Put-on-Hold + Come-Back-with-Contract Technique:</strong> Adrian used this PERFECTLY on Derric Lake ("Let me see what I can do... I was able to get Omar back about your file") but skipped it on Roy Berry. This technique drives urgency and creates the feeling that the rep fought for the seller. Use on every offer call.</li>
-                    <li><strong>3. Add Influencer Objection Check + Competitive Risk Check at Contract Close:</strong> "Is there anyone else who would interject in this agreement?" and "If other buyers call you with a higher offer, what will you tell them?" — These two questions protect the deal during the cancellation window. Adrian missed both on Roy Berry AND Derric Lake.</li>
+                    <li><strong>[Step 4] PRE-EMPT THE DELAY BEFORE IT HAPPENS:</strong> Roy said "I'm going to have to think about that" — the exact language Step 4's "avoid think about it" script is designed to prevent. Adrian read it out clearly on Call 1 but Roy still used it on Call 2. The fix: after reading the script, close it: <em>"So if it doesn't work, you'll just tell me no? You won't have to sleep on it?"</em> Get an explicit verbal commitment from Roy that he understands the yes/no structure.</li>
+                    <li><strong>[Step 5B] SURFACE THE REAL OBJECTION BEFORE CALLING BACK:</strong> Roy's hesitation wasn't just price — he got news that day about grandmother's property in Toledo being in bad shape, which complicated his Detroit relocation plan. His real concern was "will I have enough money to land somewhere good?" That was discoverable on Call 2. The objection isolation sequence (<em>"Pricing aside, is there anything else important to you?"</em>) would have surfaced this. Instead Adrian called back 24 hours later and hoped Roy had resolved it himself. That works until it doesn't.</li>
+                    <li><strong>[Step 6] EXECUTE "RIP UP THE CONTRACT" ON EVERY SIGNED DEAL:</strong> Roy said this was "what he needed, not what he wanted." That's a soft acceptance — not a confident buyer. A 74-year-old seller with a complicated relocation plan is the highest buyer's remorse risk profile. The emotional lock after signing is mandatory in this scenario: <em>"Roy, I just want to take a moment and make sure everything feels right for you. Second thoughts are normal after big decisions — what are you feeling right now?"</em></li>
                 </ul>
             </div>
-            
+
             <div class="strengths-section">
-                <h2>✅ What Worked (Replicate This)</h2>
+                <h2>✅ Top 2 — Replicate This</h2>
                 <ul>
-                    <li><strong>Influencer Identification (Call 1, 00:24:13):</strong> "You said your daughter, she helps you with kind of decisions like this?" — DID NOT happen on Derric Lake. This is the model.</li>
-                    <li><strong>Funds Analogy (Call 1, 00:02:50):</strong> "They're literally going to start allocating the funds specifically for your property into a different holding account" — Creates commitment urgency.</li>
-                    <li><strong>🏆 ACCUSATION AUDIT (Call 2, 00:05:32):</strong> "Now, you're still going to be a little disappointed by what they're able to approve" — TEXTBOOK execution. Disarmed seller before delivering number. MISSED on Derric Lake.</li>
-                    <li><strong>FO Number Delivery (Call 2, 00:00:48):</strong> "Your FO number is FO-17-197" — Smooth, professional, builds credibility.</li>
-                    <li><strong>Bad Comps Framing (Call 2, 00:02:03):</strong> "Bad comps... higher days on market... colder market" — Pre-conditioned seller for lower-than-hoped offer.</li>
-                    <li><strong>🏆 RIP UP THE CONTRACT (Call 3, 00:39:00):</strong> "Congratulations, Roy. How does it feel to be in business?" — Emotional lock executed. MISSED on Derric Lake.</li>
-                    <li><strong>Recorded Legal Disclaimer (Call 3, 00:44:56):</strong> Full verbatim disclaimer with explicit recording consent. Protects company legally.</li>
-                    <li><strong>Warm Transfer Setup (Call 3, 00:43:51):</strong> "We'll do 4:30 Monday. I'll call you from my number, and then we'll do a warm transfer. I'll patch you in with Joe and make the introduction" — Sets expectation for next touchpoint.</li>
+                    <li><strong>[Step 4] Clean funds analogy and yes/no framing [00:01:58]:</strong> Adrian delivered the funds/budget analogy with clarity and patience. Roy asked follow-up questions ("does that go into different accounts?") and Adrian explained escrow/title without losing the thread. This is the correct way to build buy-in for the yes/no structure before the offer lands.</li>
+                    <li><strong>[Step 5A] Full pre-offer setup before the number [00:02:03–00:06:33]:</strong> Bad comps context, accusation audit, value stack, days to close — all hit in sequence before the range was delivered. Roy was fully framed before he heard the number. That's exactly how to manage expectation before a low offer hits a seller who expected more.</li>
                 </ul>
             </div>
         </div>
-        
+
         <div class="footer">
-            FHCO Sales Audit Report • Generated by Sales Coach AI • Based on actual transcript evidence
+            FHCO Sales Audit Report &bull; Generated by Sage AI &bull; May 26, 2026 &bull; Adrian Huerta / Roy Berry — Linden, TX
         </div>
     </div>
-    
+
     <script>
-        document.querySelectorAll('.score-badge.low, .score-badge.medium').forEach(badge => {
+        // Auto-expand steps scoring 50% or below
+        document.querySelectorAll('.score-0,.score-10,.score-20,.score-30,.score-40,.score-50').forEach(badge => {
             badge.closest('.score-item').classList.add('expanded');
         });
     </script>

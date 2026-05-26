@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Adrian Huerta / Carly Bernard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 52px; border-radius: 50%; font-weight: bold; font-size: 13px; margin-left: 15px; }
+        .score-100 { background: #10b981; color: white; }
+        .score-90  { background: #34d399; color: white; }
+        .score-80  { background: #6ee7b7; color: #065f46; }
+        .score-70  { background: #fcd34d; color: #78350f; }
+        .score-60  { background: #fbbf24; color: #78350f; }
+        .score-50  { background: #f59e0b; color: white; }
+        .score-40  { background: #f97316; color: white; }
+        .score-30  { background: #fb923c; color: white; }
+        .score-20  { background: #ef4444; color: white; }
+        .score-10  { background: #dc2626; color: white; }
+        .score-0   { background: #991b1b; color: white; }
+        .score-na  { background: #f3f4f6; color: #9ca3af; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .bracket-header:first-child { margin-top: 0; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Adrian Huerta<br>
+                <strong>Call Date:</strong> May 12, 2026 (1 call — Offer call)<br>
+                <strong>Seller:</strong> Carly Bernard — 21 Overbrook Ave, Warwick, Rhode Island 02889<br>
+                <strong>Property:</strong> House, needs modernization per underwriters. Bad comps in area.<br>
+                <strong>Call Type:</strong> Offer Delivery Call (Steps 5–6; Steps 1–4 on prior calls)<br>
+                <strong>Outcome:</strong> 🔴 Offer not accepted. Cash offer under $200k; Carly needs to net $130k minimum and has a competing offer at $310k from another party. Adrian introduced concierge, asked Carly to send existing contracts for review. Follow-up planned.
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Carly Bernard's offer call surfaced a critical piece of intelligence that should have been found in discovery: she had a $310k offer from another party. This is a competing offer situation — and it appeared for the first time on the offer call. That means Steps 2B (Other Selling Options) missed a live competing offer sitting in the background. On the offer call itself, Adrian ran the FO sequence correctly, introduced concierge well, but fell short on the objection isolation sequence and the competing offer handling protocol. Carly's stated minimum ($130k net) is achievable — there's a deal here if the other offer is a novation/concierge structure that falls apart under scrutiny. Adrian asked for the contract to review it — good instinct, but it needs a structured follow-up. Note: Steps 1–4 on prior calls.</p>
+                <p style="margin-top: 10px;"><strong>Key Discovery Failure:</strong> A $310k competing offer was active at the time of Adrian's offer call. This should have been found in Step 2B ("Besides reaching out to our company, what other options have you explored?"). If known, the entire offer strategy would have been different.</p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+
+                <!-- STEPS 1-4 N/A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Steps 1–4: Intro, Discovery, Condition, Commitment</div>
+                            <div class="score-reason">Completed on prior calls. Note: Step 2B failed to surface the $310k competing offer — a critical intelligence miss that hurt the offer call.</div>
+                        </div>
+                        <div class="score-badge score-na">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">⚠️</div>
+                            <div class="text"><strong>Critical Step 2B miss (prior call):</strong> Carly had a $310k competing offer that was never surfaced during discovery. The "Other Selling Options" question ("Besides reaching out to our company, what other options have you explored?") was either not asked or not pressed. This is the most consequential miss of the sequence — it means Adrian walked into an offer call blind to a live competitor.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5A: Deliver Offer</div>
+                            <div class="score-reason">Strong opening. FO number (FO-17217), pen and paper, bad comps context, concierge pivoted well. Carly quickly revealed the competing $310k offer — but Adrian had already delivered without knowing this. Pre-offer setup was solid.</div>
+                        </div>
+                        <div class="score-badge score-80">80%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+
+                        <div class="bracket-header">Pre-Offer Setup</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Time check</strong> — "Did I catch you on okay time?" [00:00:19] Carly: "Yep, yep, we're good." [00:00:22]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Engage influencer</strong> — "Hang on. Guys, excuse me, please." [00:00:44–00:00:58] — Carly clearly had others around. No confirmation of who else was involved in the decision. Should have asked: <em>"Before I share the number — is there anyone who should be on this call with you to hear this together?"</em></div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Pen and paper setup</strong> — Adrian asked and Carly retrieved a pen. [00:00:37–00:01:10]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>FO number delivered</strong> — "So what I'm going to give you is what's called our FO number... your number is FO-17217." [00:01:12–00:01:28] Explained funds association cleanly.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Underwriter feedback / bad comps</strong> — "The underwriters identified bad comps in the area, indicated potential needing modernization." [per Podio summary] Market context provided before number.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Expectation reminder (clear no)</strong> — Not confirmed explicitly before the number. Should have said: <em>"As we mentioned — if this doesn't work for you, feel free to tell me no and we simply part ways as friends."</em></div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Accusation audit</strong> — Should have said with a sigh: <em>"You're probably still going to be a little disappointed by what they were able to approve. It's not that much higher than I thought."</em> Not done.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Value stack</strong> — Net number, closing costs covered, no repairs, no commissions. [per Podio summary — "covering closing costs, no needed repairs"]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Cash offer delivered under $200k</strong> — Podio summary: "The cash offer came in lower than expected, under $200,000, which Carly found unacceptable as she needs to walk away with at least $130,000." Offer delivered, reaction captured.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5B: Objection Handling</div>
+                            <div class="score-reason">Carly stated minimum need ($130k net). Adrian introduced concierge. Carly revealed $310k competing offer. Adrian asked to review the contract — good instinct. But objection isolation sequence (pricing aside check, bucketing) was incomplete. Competing offer handling protocol not deployed.</div>
+                        </div>
+                        <div class="score-badge score-50">50%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+
+                        <div class="bracket-header">Acknowledge and Disarm</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Open disarm question</strong> — Should have asked: <em>"What's going on in your mind right now?"</em> or <em>"Yeah, I kind of thought you would feel that way... What's going through your mind?"</em> Transcript shows Adrian went to concierge alternative before fully listening to Carly's reaction.</div>
+                        </div>
+
+                        <div class="bracket-header">Isolate the Objection</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Pricing aside — anything else?</strong> — Should have asked: <em>"Pricing aside, is there anything that we might have missed, or anything else that is important to you?"</em> This would have surfaced the $310k competing offer before Adrian pivoted to concierge.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Price confirmed as the issue</strong> — Carly stated she needs $130k net minimum. Price objection clearly identified. [per Podio summary]</div>
+                        </div>
+
+                        <div class="bracket-header">Concierge / Alternative</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Concierge service introduced</strong> — Podio: "Adrian presented an alternative 'concierge service' offer, providing flexibility in closing within 60 days, guaranteeing net price, covering closing costs, and no needed repairs." Good pivot, positioned as genuine alternative.</div>
+                        </div>
+
+                        <div class="bracket-header">Competing Offer Handling</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Competing offer Socratic loop</strong> — The framework has a specific sequence: "What did they say they can do for you?" → "Are they giving you a number or just doing a visit?" → "What matters more to you — highest price or fastest/cleanest certainty?" → "If we're within your range, is there any reason you wouldn't move forward with us today?" — This was not run. Adrian went to "send me the contract" instead.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Offered to review competing contract</strong> — Podio: "Adrian offered to have his underwriters review any proposals Carly received, aiming to provide insights and help negotiate a better deal." This is a creative offer-review approach. Good instinct for keeping the relationship alive.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Kill shot on competing offer timeline</strong> — Should have said: <em>"If you're waiting to see if they beat us — that's fair. But underwriting won't reserve funds that long. So we either decide on our call, or I'll re-run it after you hear from them. Which do you prefer?"</em> This creates urgency without being pushy. Never deployed.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5C / 6 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Steps 5C–6: Close / Contract</div>
+                            <div class="score-reason">Not reached. No deal struck on this call. Follow-up scheduled. N/A.</div>
+                        </div>
+                        <div class="score-badge score-na">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>No close or contract.</strong> Podio summary: "Carly to send any existing contracts to Adrian for review, with plans for a follow-up call the next day." Relationship maintained. File still potentially alive if the $310k deal falls through (it was a novation-style arrangement with 5-walkthrough conditions).</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2>🔧 Top 3 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>[Step 2B — Prior Call] COMPETING OFFERS MUST BE SURFACED IN DISCOVERY:</strong> Carly had a $310k offer active. The question that surfaces this is: <em>"Besides reaching out to our company, what other options have you explored?"</em> If Adrian knew about the $310k offer before the offer call, the entire strategy changes: (1) You know exactly what you're competing against, (2) You can run the competing offer Socratic loop from a position of knowledge, (3) You don't blindly deliver a number and get surprised. This must be asked on every single process call. Every time.</li>
+                    <li><strong>[Step 5B] RUN THE COMPETING OFFER SOCRATIC LOOP:</strong> Once Carly revealed the $310k offer, the framework has a specific response: "What did they say they can do for you? Are they giving you a number or just doing a visit? What matters more to you — highest price or fastest/cleanest certainty? If we're within your range, is there any reason you wouldn't move forward with us today?" — The "We Buy Homes 365" $110k offer (from the Mary Bourland sequence) had 5-walkthrough conditions. The $310k Carly is referencing may have similar contingencies. Ask what it looks like before conceding on price.</li>
+                    <li><strong>[Step 5A] ACCUSATION AUDIT ON EVERY LOW OFFER:</strong> Cash under $200k against a seller who expected significantly more — this is exactly where the accusation audit matters most. The disappointed tone pre-empts the emotional reaction so it doesn't derail the conversation. Three seconds of setup prevents five minutes of damage control.</li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>✅ Top 2 — Replicate This</h2>
+                <ul>
+                    <li><strong>[Step 5A] Clean FO number delivery and concierge pivot:</strong> FO number explained, concierge introduced smoothly as a genuine alternative when cash was rejected. The pivot was handled without defensiveness — "I have something that might work better for your situation." That framing keeps the seller in the conversation instead of closing the door.</li>
+                    <li><strong>[Step 5B] Offering to review competing contract [end of call]:</strong> When Carly mentioned another offer, Adrian asked to see the contract to provide feedback. This is smart — it positions FHCO as an advisor, not just a buyer. It also gives Adrian a chance to spot weaknesses in the competing offer. Excellent relationship-building instinct on a call that was otherwise headed to a dead end.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            FHCO Sales Audit Report &bull; Generated by Sage AI &bull; May 26, 2026 &bull; Adrian Huerta / Carly Bernard — Warwick, RI
+        </div>
+    </div>
+
+    <script>
+        // Auto-expand steps scoring 50% or below
+        document.querySelectorAll('.score-0,.score-10,.score-20,.score-30,.score-40,.score-50').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>

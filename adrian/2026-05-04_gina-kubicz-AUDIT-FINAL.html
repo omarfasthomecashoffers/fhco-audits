@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Adrian Huerta / Gina Kubicz</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 16px; color: #78350f; line-height: 1.6; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 52px; border-radius: 50%; font-weight: bold; font-size: 13px; margin-left: 15px; }
+        .score-100 { background: #10b981; color: white; }
+        .score-90  { background: #34d399; color: white; }
+        .score-80  { background: #6ee7b7; color: #065f46; }
+        .score-70  { background: #fcd34d; color: #78350f; }
+        .score-60  { background: #fbbf24; color: #78350f; }
+        .score-50  { background: #f59e0b; color: white; }
+        .score-40  { background: #f97316; color: white; }
+        .score-30  { background: #fb923c; color: white; }
+        .score-20  { background: #ef4444; color: white; }
+        .score-10  { background: #dc2626; color: white; }
+        .score-0   { background: #991b1b; color: white; }
+        .score-na  { background: #f3f4f6; color: #9ca3af; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item.done .icon { color: #10b981; }
+        .checklist-item.miss .icon { color: #ef4444; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; }
+        .fixes { list-style: none; }
+        .fixes li { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin-bottom: 10px; border-radius: 4px; }
+        .fixes li strong { color: #92400e; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .bracket-header:first-child { margin-top: 0; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Adrian Huerta<br>
+                <strong>Call Date:</strong> May 4, 2026 (1 call — Offer call)<br>
+                <strong>Seller:</strong> Gina Kubicz — 3440 40th Ave SE, Naples, FL 34117<br>
+                <strong>Property:</strong> House on 2 acres. Needs some work. Some bad comps in area, higher days on market. Two acres is positive factor.<br>
+                <strong>Call Type:</strong> Offer Delivery Call (Steps 5–6 only; Steps 1–4 completed on prior calls)<br>
+                <strong>Outcome:</strong> 🔴 Offer rejected. Cash offer $272,500 — Gina wanted ~$360,000. Concierge option introduced but Gina elected to hire a new property manager and rent instead. No deal.
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Gina Kubicz is a landlord who wanted to sell but had a $360k price anchor against a $272.5k cash offer — a $87.5k gap. Adrian ran the pre-offer sequence correctly (FO number, bad comps, accusation audit, value stack, days to close). However, the concierge alternative was introduced too early (before isolating whether price was the only objection), the objection isolation sequence was incomplete, and the "alternative selling options" consequence sequence was never deployed when Gina signaled she'd rent it out instead. This is a dead sequence — the gap was too large. But the handling from the point of rejection could have been sharper. Note: Steps 1–4 were completed on prior calls (outside this window). This audit covers Steps 5–6 only.</p>
+                <p style="margin-top: 10px;"><strong>Triage Decision:</strong> DEAD — price gap too large. Gina's decision to hire property manager and rent is a known alternative that wasn't consequence-questioned hard enough when it surfaced. File properly killed.</p>
+            </div>
+
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand checklist)</h2>
+
+                <!-- STEPS 1-4 N/A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Steps 1–4: Intro, Discovery, Condition, Commitment</div>
+                            <div class="score-reason">Completed on prior calls outside this 4-week audit window. Scored N/A for this sequence.</div>
+                        </div>
+                        <div class="score-badge score-na">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Steps 1–4 completed prior.</strong> This call is the offer delivery call. Gina's motivation was to sell (landlord, wants to exit). Price anchor ~$360k. Bad comps in Naples area noted by underwriters.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5A: Deliver Offer</div>
+                            <div class="score-reason">Strong delivery. FO number (FO-17150), bad comps context, potential positives (2 acres), accusation audit implied, value stack before number. Cash offer $272,500. Full pre-offer setup sequence hit.</div>
+                        </div>
+                        <div class="score-badge score-80">80%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+
+                        <div class="bracket-header">Pre-Offer Setup</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Time check</strong> — "Did I catch you at an okay time?" [00:00:19] Gina: "Yes, yes, I'm fine." [00:00:21]</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Engage influencer</strong> — No influencer confirmed on this call. Should have asked: <em>"Before I share the number — is [partner/anyone on title] available to be on the call with us?"</em> Single-owner implied but never confirmed.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Pen and paper setup</strong> — "Do you happen to have a pen and paper handy?" [00:00:23] Gina: "Yes, I'm ready." [00:00:26]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>FO number delivered</strong> — "So this is our FO number. So FO stands for fast offer. So your FO number is FO-17150." [00:00:33–00:00:45] Explained funds association. [00:00:48]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Bad comps / market context before number</strong> — "They did notice that there was, you know, a few bad comps. There were some properties that were selling pretty low... some that did have some higher days on market." [00:01:37–00:01:52]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Positives noted</strong> — "They did notice that it is on two acres, that it is situated in a position where it does have potential." [00:01:55–00:02:00] Balanced presentation before offer.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Expectation reminder (clear no reminder)</strong> — Should have explicitly restated: <em>"As we mentioned earlier, if this does not work for us, feel free to tell me no and we simply part ways as friends. Or if it makes sense, we'll put it in writing."</em> Not confirmed before the number was delivered.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Accusation audit</strong> — Should have said: <em>"You're probably still going to be a little disappointed by what they were able to approve. It's not that much higher than I thought."</em> (Disappointed tone, sigh.) Not done explicitly — went straight from positives to value stack to offer.</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Value stack (net number, no fees)</strong> — Implied in delivery: offer is net number, no closing costs, as-is. Confirmed in concierge explanation. [00:02:10]</div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Offer delivered — cash $272,500</strong> — Delivered with range framing: "Cash offer of $272,500." Gina's response: "That's a lot lower than what I thought." [per Podio summary]</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5B -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5B: Objection Handling</div>
+                            <div class="score-reason">Gina rejected $272.5k (wanted ~$360k). Adrian introduced concierge before isolating whether price was the only concern. Gina then signaled she'd rent instead. Adrian inquired about $322-325k range. Gina said no. No consequence-questioning of the "rent it" alternative — which is the one objection that can be worked. Dead file, but the exit sequencing could have been sharper.</div>
+                        </div>
+                        <div class="score-badge score-40">40%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+
+                        <div class="bracket-header">Acknowledge and Disarm</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Open disarm question</strong> — Should have asked: <em>"What's going on in your mind?"</em> or <em>"Yeah, I kind of thought you would say that... what is it that's going through your mind right now?"</em> Transcript shows Adrian moved quickly from rejection to concierge alternative without a disarm pause.</div>
+                        </div>
+
+                        <div class="bracket-header">Isolate the Objection</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Pricing aside — anything else?</strong> — Should have asked: <em>"Pricing aside, is there anything that we might have missed, or anything else that is important to you?"</em> Never done. Went straight to alternative offer.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Company/process check</strong> — Should have asked: <em>"Were there any questions or doubts you might've had about me or the company?"</em></div>
+                        </div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Price confirmed as the issue</strong> — Gina clearly stated cash offer was too low. Price gap ($272.5k vs $360k) confirmed as the core objection. Price correctly isolated by context.</div>
+                        </div>
+
+                        <div class="bracket-header">Concierge / Alternative</div>
+                        <div class="checklist-item done">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Concierge alternative introduced</strong> — Adrian introduced concierge program as alternative: guaranteed net price, covers closing costs, sell as-is, extended timeline. [per Podio summary] Good pivot.</div>
+                        </div>
+
+                        <div class="bracket-header">Address Alternative Selling (Critical Miss)</div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence-question the "rent it" alternative</strong> — Gina said she'd get a new property manager and rent instead. This is a live competing alternative. The framework has a specific sequence for this: <em>"Well, if you don't sell to us or a cash buyer like us, what do you think would be your next best alternative?"</em> then: <em>"What's more important to you — selling it as-is for a cash offer with speed and convenience? Or trying to extract every penny out of it, even if it means more time or uncertainty?"</em> — Never deployed. Adrian asked about $322-325k instead.</div>
+                        </div>
+                        <div class="checklist-item miss">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Consequence of renting further</strong> — Should have asked: <em>"If you go back to managing this rental — another property manager, another tenant cycle — what are the chances that's actually going to get you to where you want to be financially in the next 6-12 months?"</em> Gina's last buyer backed out (mentioned in Podio summary). There's a pain pattern here that was never exploited.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5C -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5C: Close the Gap</div>
+                            <div class="score-reason">$87.5k gap ($272.5k vs $360k) is too large. Concierge option offered at $322-325k range — still $35-38k short of Gina's number. Gina declined and elected to rent. No deal. Sequence correctly terminated.</div>
+                        </div>
+                        <div class="score-badge score-na">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Deal correctly killed.</strong> $87.5k gap on cash offer, ~$35-38k gap even on concierge. Gina elected to manage the property rather than accept. File properly closed. Podio summary: "Gina indicated that she was not interested in selling at the offered price and preferred to manage the property herself."</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 6 -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 6: Contract</div>
+                            <div class="score-reason">Not reached — offer rejected. N/A.</div>
+                        </div>
+                        <div class="score-badge score-na">N/A</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="icon">🔵</div>
+                            <div class="text"><strong>Contract stage not reached.</strong> Gina declined the offer. No contract presented.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2>🔧 Top 2 Coaching Priorities</h2>
+                <ul class="fixes">
+                    <li><strong>[Step 5B] CONSEQUENCE-QUESTION THE COMPETING ALTERNATIVE:</strong> When Gina said she'd hire a property manager and rent instead, Adrian offered a higher price — the wrong response. The correct response is to surface the consequence of staying in landlord mode: <em>"What was it about the rental experience that had you thinking about selling in the first place?"</em> Gina had a prior buyer back out and has been on and off with this property. That history is leverage — but only if you use it. Ask: <em>"How inconvenient would it be if you had to deal with another property manager cycle? Do you think it's worth the risk?"</em> You won't save this deal, but you establish the consequence pattern that might bring her back later.</li>
+                    <li><strong>[Step 5A] ACCUSATION AUDIT IS MANDATORY:</strong> On a $272.5k offer against a $360k anchor, the seller WILL be disappointed. The accusation audit (disappointed tone, "you'll probably still be a little disappointed by what they approved") is specifically designed to defuse that reaction before it lands. Skipping it on a high-gap offer means the rejection hits harder, the emotional stakes rise faster, and you lose control of the conversation at the exact moment you need it most. Three seconds of delivery. Never skip it on a low offer.</li>
+                </ul>
+            </div>
+
+            <div class="strengths-section">
+                <h2>✅ Top 2 — Replicate This</h2>
+                <ul>
+                    <li><strong>[Step 5A] Complete pre-offer setup in 13 minutes:</strong> FO number, bad comps context, positive factors (2 acres, potential), value stack — all hit cleanly in a short call. This is how you frame a low offer on a tight timeline. The structure was right even if two elements were missing.</li>
+                    <li><strong>[Step 5A] Balanced comps presentation [00:01:37–00:02:00]:</strong> Adrian didn't just dump bad news — he balanced bad comps with real positives (acreage, potential). This prevents the offer from feeling like a lowball attack and preserves rapport even when the number doesn't land. Good instinct.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            FHCO Sales Audit Report &bull; Generated by Sage AI &bull; May 26, 2026 &bull; Adrian Huerta / Gina Kubicz — Naples, FL
+        </div>
+    </div>
+
+    <script>
+        // Auto-expand steps scoring 50% or below
+        document.querySelectorAll('.score-0,.score-10,.score-20,.score-30,.score-40,.score-50').forEach(badge => {
+            badge.closest('.score-item').classList.add('expanded');
+        });
+    </script>
+</body>
+</html>
