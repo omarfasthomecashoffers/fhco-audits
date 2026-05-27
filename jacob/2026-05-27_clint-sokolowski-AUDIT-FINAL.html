@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Jacob Adams / Clint Sokolowski</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .alert-box { background: #fee2e2; border-left: 4px solid #ef4444; padding: 20px; margin-bottom: 20px; border-radius: 4px; }
+        .alert-box h3 { color: #991b1b; font-size: 16px; margin-bottom: 6px; }
+        .alert-box p { color: #7f1d1d; font-size: 14px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 15px; color: #78350f; line-height: 1.6; margin-bottom: 8px; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 52px; border-radius: 50%; font-weight: bold; font-size: 13px; margin-left: 15px; }
+        .score-100 { background: #10b981; color: white; }
+        .score-80  { background: #6ee7b7; color: #065f46; }
+        .score-70  { background: #fcd34d; color: #78350f; }
+        .score-60  { background: #fbbf24; color: #78350f; }
+        .score-50  { background: #f59e0b; color: white; }
+        .score-40  { background: #f97316; color: white; }
+        .score-20  { background: #ef4444; color: white; }
+        .score-na  { background: #f3f4f6; color: #9ca3af; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .coaching-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 4px; margin-bottom: 15px; }
+        .coaching-box strong { color: #92400e; display: block; margin-bottom: 6px; }
+        .coaching-box p { color: #78350f; font-size: 14px; line-height: 1.6; }
+        .coaching-box .script { background: white; border-left: 3px solid #d97706; padding: 10px 14px; margin-top: 10px; font-style: italic; color: #374151; font-size: 13px; border-radius: 2px; }
+        .hot-action { background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .hot-action h3 { color: #92400e; font-size: 18px; margin-bottom: 10px; }
+        .hot-action p { color: #78350f; font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+        .hot-action .action-item { display: flex; align-items: flex-start; padding: 6px 0; }
+        .hot-action .action-num { background: #f59e0b; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin-right: 10px; flex-shrink: 0; }
+        .hot-action .action-text { color: #78350f; font-size: 14px; }
+        .pattern-warning { background: #fee2e2; border-left: 4px solid #ef4444; padding: 16px 20px; border-radius: 4px; margin-bottom: 20px; }
+        .pattern-warning h3 { color: #991b1b; font-size: 15px; margin-bottom: 6px; }
+        .pattern-warning p { color: #7f1d1d; font-size: 14px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; font-size: 14px; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+        .grade-pill { display: inline-block; background: #f59e0b; color: white; padding: 4px 14px; border-radius: 999px; font-weight: bold; font-size: 15px; margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Jacob Adams<br>
+                <strong>Call Date:</strong> May 22–26, 2026<br>
+                <strong>Seller:</strong> Clint Sokolowski<br>
+                <strong>Property:</strong> Duplex, 4BR/2BA (half rented), needs renovation (downstairs unit) — location not captured in notes<br>
+                <strong>Call Type:</strong> Initial Conversation (Step 1–2A) → Missed Follow-Up Appointment<br>
+                <strong>Seller Anchor:</strong> $150,000 (stated as target price)<br>
+                <strong>Follow-Up Scheduled:</strong> Monday May 25 at 3:00 PM — <strong>NOT HONORED</strong><br>
+                <strong>Stage:</strong> New Lead — 8 outbound calls made, no notes, no offer<br>
+                <strong>Outcome:</strong> 🔴 MISSED FOLLOW-UP — Hot lead cooling. This is Jacob's chronic P/O pattern in action.<br>
+                <div class="grade-pill">Overall Grade: 3.5/10</div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- PATTERN WARNING -->
+            <div class="pattern-warning">
+                <h3>⚠️ Recurring Pattern: P/O Issue — 3rd Documented Instance This Month</h3>
+                <p>Jacob ran a solid initial AI call. The seller (Clint) committed to a Monday 3 PM call. No notes from that call appear in the system — just "no summary found" on calls from May 25 and May 26. This is the same pattern as Vincent Monet (cut call for a meeting) and Croashia Nurse (filed bad reason instead of making offer). Jacob is processing leads but not converting them to the offer stage. P/O this week: 4 conversations, 0 offers.</p>
+            </div>
+
+            <!-- IMMEDIATE ACTION -->
+            <div class="hot-action">
+                <h3>⚡ Action Required — Call Clint Today</h3>
+                <p>Clint is an investor-minded seller. He gave a soft anchor of $150K, scheduled a call with Jacob for Monday May 25 at 3 PM — and Jacob either didn't call or the call got logged as voicemail with no summary. May is currently making calls to this lead (May 26 at 11:41 AM and 11:42 AM). Jacob should be the one making this call, not May.</p>
+                <div class="action-item">
+                    <div class="action-num">1</div>
+                    <div class="action-text"><strong>Jacob calls Clint TODAY</strong> — Acknowledge the missed Monday call: "Clint, I'm sorry I missed our 3 o'clock on Monday. I wanted to make sure I followed up with you — are you still thinking about selling the duplex?"</div>
+                </div>
+                <div class="action-item">
+                    <div class="action-num">2</div>
+                    <div class="action-text"><strong>Complete the process call</strong> — AI call established the property basics. Jacob needs to run Step 2B (roadblocks), 2C (need vs. want on price), and get to an offer. Clint said $150K — that needs to be stress-tested.</div>
+                </div>
+                <div class="action-item">
+                    <div class="action-num">3</div>
+                    <div class="action-text"><strong>Ask the Step 2C question explicitly</strong> — "Clint, I know you mentioned $150K as your target — is that a number you need to net to make this work, or is that just where you'd ideally like to land?" This is the question Jacob chronically skips.</div>
+                </div>
+                <div class="action-item">
+                    <div class="action-num">4</div>
+                    <div class="action-text"><strong>Submit to underwriting on this call</strong> — Even if the math looks tight. Jacob's job is to make the offer, not decide for Clint whether it works. Send the number and let Clint say no.</div>
+                </div>
+            </div>
+
+            <!-- EXECUTIVE SUMMARY -->
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Clint Sokolowski is a motivated seller of a duplex — investor-motivated (wants clean exit, cash deal), open to quick sale, has a stated price of $150K, and agreed to a follow-up call with Jacob. The AI captured a good initial summary. The follow-up was scheduled, the seller was ready — and Jacob did not show up for the Monday 3 PM call (or if he did, he left zero notes and no offer came out of it). This is Jacob's chronic pattern: processes the lead, then stalls before the offer. The 8 outbound call attempts show volume — but without a conversion to offer stage, it's just contact activity, not sales activity.</p>
+                <p><strong>What Went Wrong:</strong> Jacob's note on May 22 says "call back after 6" on another lead. There's no May 25 note from Jacob on Clint at all. The system shows May (not Jacob) making the May 26 calls. At some point between May 22 and May 26, Jacob let Clint slip — and May is now cleaning up the calls.</p>
+                <p><strong>Key Data from AI Summary:</strong> Clint owns a duplex (4BR/2BA), half rented. Downstairs unit needs renovation. He's gathering info about a quick sale. Target: $150K. Follow-up was scheduled for Monday May 25 at 3 PM to discuss options and pricing.</p>
+            </div>
+
+            <!-- FRAMEWORK SCORES -->
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro &amp; Expectations</div>
+                            <div class="score-reason">AI (Sarah) handled initial contact well. Follow-up appointment was successfully set for Monday at 3 PM. Seller was engaged and receptive.</div>
+                        </div>
+                        <div class="score-badge score-80">80%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Lead contacted and engaged</strong> — AI made first contact. Clint engaged, explained his property, stated target price, and agreed to follow-up call.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Follow-up appointment committed</strong> — "A follow-up call was scheduled for Monday, May 25th at 3 PM to discuss options and pricing in more detail." This is a strong buying signal. Clint was cooperative and specific.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Jacob did not honor the appointment</strong> — No Jacob notes or call log entry for Monday May 25 at 3 PM on this lead. May is making the calls. The seller was ready and waiting. This is a trust-breaking moment. <em>Every appointment with a seller is a promise. Breaking it costs you the deal and the relationship.</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Basic property info captured (duplex, condition, target price). Motivation partially established — "gathering info" suggests early-stage. Impact and urgency questions not documented.</div>
+                        </div>
+                        <div class="score-badge score-40">40%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="bracket-header">Situation Questions</div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Property type and condition established</strong> — Duplex, 4BR/2BA, half rented, downstairs unit needs renovation. Confirmed by AI summary.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">🟡</div>
+                            <div class="text"><strong>Reason for selling partially established</strong> — Clint is "gathering information about a quick sale." That's interest, not motivation. The actual reason for selling was not surfaced. <em>Why does he want to exit this duplex? Is the renovation burden too high? Bad tenant? Divorce? Estate? Financial pressure?</em></div>
+                        </div>
+                        <div class="bracket-header">Motivation &amp; Urgency</div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Motivation not deepened</strong> — "Gathering information" is a low-urgency frame. Jacob's job on the Monday call was to DEEPEN this — find out what's really driving the sale. <em>Script: "Clint, you mentioned you're looking to sell quickly — what's the situation with the property? Is there something specific that's pushed you toward wanting to move on it now?"</em></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Timeline not established</strong> — How soon does Clint need to sell? Is there financial pressure on the renovation? Lease situation? None of this was documented.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Impact question not asked</strong> — <em>"Clint, if you hold onto this duplex for another 6 months while you figure out the renovation — what does that look like for you financially?"</em> — This creates urgency and surfaces the real cost of inaction.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C: PRICE -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price Discovery</div>
+                            <div class="score-reason">ANCHOR ESTABLISHED ($150K) but NEED vs. WANT never separated. This is Jacob's #1 recurring weakness.</div>
+                        </div>
+                        <div class="score-badge score-40">40%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Asking price surfaced</strong> — "$150,000" — Clint stated this as his target price. The anchor is known.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>NEED vs. WANT not separated (Jacob's chronic miss)</strong> — $150K is what Clint WANTS. We don't know what he NEEDS. <em>Script: "Clint, you mentioned $150K as your target — is there a number you actually need to walk away with to make this work, separate from your ideal? Like is there a mortgage you're paying off, or is it free and clear?"</em> — If Clint needs $90K to pay off a small mortgage and walk away clean, the math looks very different than if he needs $145K. We never found out.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Mortgage/equity situation not established</strong> — No documentation on what Clint owes, free and clear status, or what he would actually net after fees. This is the information that either confirms or disqualifies the deal at MAO.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: COMMITMENT FOR OFFER -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 4: Commitment for Offer / Follow-Up Execution</div>
+                            <div class="score-reason">CRITICAL FAILURE — Appointment not honored. No offer submitted. This is the P/O bottleneck in action.</div>
+                        </div>
+                        <div class="score-badge score-20">20%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Appointment was secured</strong> — Monday May 25 at 3 PM. Seller committed. Good exit from initial call.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Appointment was not kept by Jacob</strong> — No notes, no call log entry from Jacob on May 25. May is now handling the follow-up calls. When a rep schedules a callback, it belongs to that rep. Handoffs at this stage without communication to the seller create confusion and break trust.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>No offer submitted</strong> — 8 outbound calls total, 0 notes from Jacob, 0 offers. The conversation was good enough to schedule a follow-up. The follow-up should have resulted in an offer. This is the P/O bottleneck: lead goes from "conversation with potential" to "cycling through call attempts" without ever reaching an offer. <em>Jacob's documented chronic issue: self-disqualifies before the offer is even made.</em></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>No documentation from Jacob</strong> — After the AI summary from May 22, there are zero rep notes on this lead. Whatever happened on the Monday call (if Jacob called at all), it was not documented. This is a pipeline visibility problem. If Jacob can't be tracked, he can't be coached.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COACHING NOTES -->
+            <div class="section">
+                <h2>🎓 Coaching Notes for Jacob</h2>
+
+                <div class="coaching-box">
+                    <strong>Issue #1: You scheduled the appointment — you own the appointment</strong>
+                    <p>When a seller commits to a specific time, that is a contract. They cleared their calendar. They're expecting your call. Missing it doesn't just cost you momentum — it signals to the seller that you're not serious. Clint was cooperative, gave you a specific time, and waited. What message did it send when the call went to May instead?</p>
+                    <div class="script">"Clint, this is Jacob — I'm sorry I missed our 3 o'clock on Monday. I had something come up and I should have texted you to reschedule. I want to make sure we still connect — do you have 15 minutes today or tomorrow? I want to walk you through what we can do on the duplex."</div>
+                </div>
+
+                <div class="coaching-box">
+                    <strong>Issue #2: Stop deciding for the seller — make the offer</strong>
+                    <p>Clint said $150K. That sounds high. You might be thinking "the math doesn't work." But you don't know what Clint NEEDS yet. Maybe he owes $60K on it and needs $90K to walk. Maybe he doesn't care about the exact number if you close fast. You have one job: make the offer. Let CLINT say no. Your job is not to pre-decide for him that it doesn't work.</p>
+                    <div class="script">When Clint says $150K: "I hear you on $150K — that's your ideal. Here's my question: is there a number you need to net to make this work, separate from what you're hoping for? Like if we could get you to [X] and close in two weeks, would that change things at all?"</div>
+                </div>
+
+                <div class="coaching-box">
+                    <strong>Issue #3: Notes = accountability = coaching</strong>
+                    <p>There are zero Jacob notes on this lead after the AI summary. That means nobody — including Omar — can tell what happened. Did you call Monday? Did you get voicemail? Did Clint say he changed his mind? Without documentation, the lead just looks like it stalled. Write one line after every call attempt. "LVM" or "talked 5 min, not ready yet, follow up Friday" — anything. If you can't be tracked, you can't improve.</p>
+                </div>
+
+                <div class="coaching-box">
+                    <strong>Issue #4: $150K on a duplex — run the numbers before the call</strong>
+                    <p>A duplex needing downstairs renovation with a target of $150K might actually work. Before your call back with Clint, pull the comps. What do duplexes sell for in that area? What's a realistic ARV? What's the renovation cost on the downstairs unit? If the cash MAO is $110K, you can present $110K confidently knowing your rationale. If you haven't run the numbers, you'll get on the call and freeze when he says $150K because you won't know if you can get close.</p>
+                </div>
+            </div>
+
+            <!-- STRENGTHS -->
+            <div class="strengths-section">
+                <h2>✅ What Jacob Did Well</h2>
+                <ul>
+                    <li><strong>Initial AI call was strong:</strong> The system captured solid property basics, a specific price point, and committed Clint to a callback. That's a good setup.</li>
+                    <li><strong>8 outbound call attempts show persistence:</strong> Jacob (or May) kept trying to reach Clint even after the missed Monday. The effort is there.</li>
+                    <li><strong>Step 1 execution remains consistent:</strong> Per Jacob's patterns file, his Step 1 intro is clean every time. That's a foundation to build on.</li>
+                    <li><strong>Property condition sweep:</strong> When Jacob runs calls fully, his property condition coverage is thorough. The goal is to get to that step more often.</li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="footer">
+            Sage — FHCO AI Sales Manager | Audit generated: May 27, 2026 | Podio Item ID: 3308618990
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-header').forEach(h => {
+            h.addEventListener('click', () => h.parentElement.classList.toggle('expanded'));
+        });
+    </script>
+</body>
+</html>

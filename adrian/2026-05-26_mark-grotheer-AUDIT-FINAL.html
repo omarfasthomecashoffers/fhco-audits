@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHCO Sales Audit Report - Adrian Huerta / Mark Grotheer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #2c3e50; background: #f5f7fa; padding: 20px; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; }
+        .header h1 { font-size: 28px; margin-bottom: 10px; }
+        .header .meta { opacity: 0.9; font-size: 14px; line-height: 1.8; }
+        .header .meta strong { opacity: 1; }
+        .content { padding: 40px; }
+        .alert-box { background: #fee2e2; border-left: 4px solid #ef4444; padding: 20px; margin-bottom: 20px; border-radius: 4px; }
+        .alert-box h3 { color: #991b1b; font-size: 16px; margin-bottom: 6px; }
+        .alert-box p { color: #7f1d1d; font-size: 14px; }
+        .verdict { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; margin-bottom: 30px; border-radius: 4px; }
+        .verdict h2 { font-size: 18px; margin-bottom: 10px; color: #92400e; }
+        .verdict p { font-size: 15px; color: #78350f; line-height: 1.6; margin-bottom: 8px; }
+        .scores { margin-bottom: 40px; }
+        .scores h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; }
+        .score-item { background: #f8f9fa; border-radius: 8px; margin-bottom: 15px; overflow: hidden; }
+        .score-header { display: flex; align-items: center; justify-content: space-between; padding: 15px; cursor: pointer; transition: background 0.2s; }
+        .score-header:hover { background: #e5e7eb; }
+        .score-left { flex: 1; }
+        .score-label { font-weight: 600; color: #2c3e50; font-size: 16px; margin-bottom: 5px; }
+        .score-reason { font-size: 14px; color: #6b7280; line-height: 1.5; }
+        .score-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 52px; border-radius: 50%; font-weight: bold; font-size: 13px; margin-left: 15px; }
+        .score-100 { background: #10b981; color: white; }
+        .score-80  { background: #6ee7b7; color: #065f46; }
+        .score-70  { background: #fcd34d; color: #78350f; }
+        .score-60  { background: #fbbf24; color: #78350f; }
+        .score-50  { background: #f59e0b; color: white; }
+        .score-40  { background: #f97316; color: white; }
+        .score-20  { background: #ef4444; color: white; }
+        .score-na  { background: #f3f4f6; color: #9ca3af; }
+        .checklist { padding: 20px; background: #fafafa; border-top: 1px solid #e5e7eb; display: none; }
+        .score-item.expanded .checklist { display: block; }
+        .checklist h4 { font-size: 14px; font-weight: 600; color: #4b5563; margin-bottom: 10px; text-transform: uppercase; }
+        .checklist-item { display: flex; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid #e5e7eb; }
+        .checklist-item:last-child { border-bottom: none; }
+        .checklist-item .icon { margin-right: 10px; font-size: 18px; flex-shrink: 0; }
+        .checklist-item .text { flex: 1; font-size: 14px; color: #374151; }
+        .checklist-item em { font-style: italic; color: #6b7280; }
+        .bracket-header { font-size: 12px; font-weight: 700; color: #667eea; text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 0 4px 0; margin-top: 8px; border-bottom: 1px solid #e5e7eb; margin-bottom: 4px; }
+        .section { margin-bottom: 40px; }
+        .section h2 { font-size: 22px; margin-bottom: 20px; color: #2c3e50; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px; }
+        .coaching-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 20px; border-radius: 4px; margin-bottom: 15px; }
+        .coaching-box strong { color: #92400e; display: block; margin-bottom: 6px; }
+        .coaching-box p { color: #78350f; font-size: 14px; line-height: 1.6; }
+        .coaching-box .script { background: white; border-left: 3px solid #d97706; padding: 10px 14px; margin-top: 10px; font-style: italic; color: #374151; font-size: 13px; border-radius: 2px; }
+        .hot-action { background: #fee2e2; border: 2px solid #ef4444; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .hot-action h3 { color: #991b1b; font-size: 18px; margin-bottom: 10px; }
+        .hot-action p { color: #7f1d1d; font-size: 14px; line-height: 1.6; margin-bottom: 8px; }
+        .hot-action .action-item { display: flex; align-items: flex-start; padding: 6px 0; }
+        .hot-action .action-num { background: #ef4444; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; margin-right: 10px; flex-shrink: 0; }
+        .hot-action .action-text { color: #7f1d1d; font-size: 14px; }
+        .strengths-section { background: #d1fae5; padding: 30px; border-radius: 8px; margin-top: 40px; }
+        .strengths-section h2 { font-size: 22px; color: #065f46; border-bottom: 2px solid #10b981; padding-bottom: 10px; margin-bottom: 20px; }
+        .strengths-section ul { margin-left: 20px; }
+        .strengths-section li { margin-bottom: 8px; color: #064e3b; font-size: 14px; }
+        .footer { background: #f8f9fa; padding: 20px 40px; text-align: center; color: #6b7280; font-size: 14px; border-top: 1px solid #e5e7eb; }
+        .grade-pill { display: inline-block; background: #f59e0b; color: white; padding: 4px 14px; border-radius: 999px; font-weight: bold; font-size: 15px; margin-top: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 FHCO Sales Audit Report</h1>
+            <div class="meta">
+                <strong>Rep:</strong> Adrian Huerta (Process + Offer calls)<br>
+                <strong>Call Dates:</strong> May 25–26, 2026<br>
+                <strong>Seller:</strong> Mark Grotheer (+ co-owner Amy M. Goetke)<br>
+                <strong>Property:</strong> 1441 SW Jacksonville Avenue, Port St. Lucie, FL 34953 — 4BR/2BA, needs new roof + HVAC + cosmetic repairs; recent kitchen &amp; bath updates; PPC Webform lead<br>
+                <strong>Call Type:</strong> Pass-Off → Process (May 25) → Offer Delivery (May 26)<br>
+                <strong>Seller Anchor:</strong> "Around $320,000" (inbound AI call); Mark mentioned competing verbal offer of $310K<br>
+                <strong>MAO (Novation):</strong> $313,200 | Target: $297,540 | Anchor: $281,880 | As-Is Market Value: $390,000<br>
+                <strong>Competing Offer:</strong> Mark says another buyer offered $310K verbally<br>
+                <strong>Outcome:</strong> 🔴 IN ACTIVE NEGOTIATION — Offer presented at $293–295K cash; Mark REJECTED, insisting on $310K. No signed contract. Co-owner Amy not on call.<br>
+                <div class="grade-pill">Overall Grade: 5.5/10</div>
+            </div>
+        </div>
+
+        <div class="content">
+
+            <!-- HOT ACTION REQUIRED -->
+            <div class="hot-action">
+                <h3>🔥 IMMEDIATE ACTION REQUIRED — Call Back TODAY</h3>
+                <p>Mark is engaged but teetering. He has a competing verbal offer at $310K. Adrian's cash offer of $293–295K is below the MAO of $313,200. There is room to move. The novation/concierge path (net to seller closer to $297–313K) was computed by May but Adrian appears to have presented only the CASH offer. Mark needs the novation offer framing before he takes the $310K from the competition.</p>
+                <div class="action-item">
+                    <div class="action-num">1</div>
+                    <div class="action-text"><strong>Call Mark NOW</strong> — Don't text first. He answered last night at 8:34 PM. Try 10–11 AM and 7–8 PM today.</div>
+                </div>
+                <div class="action-item">
+                    <div class="action-num">2</div>
+                    <div class="action-text"><strong>Lead with the novation/concierge offer</strong> — "Mark, we ran the Concierge Program numbers and we can actually get you up to $297,540 – $313,200 depending on how the market performs. That's significantly different than the straight cash number I gave you yesterday. Can I walk you through how it works?"</div>
+                </div>
+                <div class="action-item">
+                    <div class="action-num">3</div>
+                    <div class="action-text"><strong>Get AMY on the call</strong> — "Mark, if we can get both you and Amy on the phone together this time, I can walk you both through the full picture. When's she available today or tomorrow?"</div>
+                </div>
+                <div class="action-item">
+                    <div class="action-num">4</div>
+                    <div class="action-text"><strong>Anchor on speed + certainty vs. competing offer</strong> — "That $310K offer — do they have proof of funds? Is it in writing? What's their close timeline? We close in 14–21 days, cash, no contingencies. That certainty is worth money."</div>
+                </div>
+                <div class="action-item">
+                    <div class="action-num">5</div>
+                    <div class="action-text"><strong>Use Mark's emotional context</strong> — He shared that his partner has mental health issues affecting their children and he wants stability. This isn't just a real estate transaction for him — he needs certainty and speed. Reference this: "Mark, given everything you've got going on at home, having this off your plate quickly and cleanly — that's worth something too, right?"</div>
+                </div>
+            </div>
+
+            <!-- EXECUTIVE SUMMARY -->
+            <div class="verdict">
+                <h2>Executive Summary</h2>
+                <p><strong>Verdict:</strong> Mark Grotheer is a motivated seller — PPC inbound lead from May 22, hot motivation, personal family situation driving urgency. May ran a solid pass-off call and computed full novation MAO ($313,200). Adrian connected on May 26 with multiple calls, but presented only the wholesale cash offer ($293–295K), not the novation path. Mark rejected and cited a $310K competing offer. The deal is not dead — it's stalled because Adrian offered the wrong product. The Novation/Concierge path has a MAO of $313,200, which beats Mark's competing offer. Adrian also failed to get Amy (co-owner) on the call before presenting the offer — a textbook deal-killer when there are two sellers.</p>
+                <p><strong>Critical Miss:</strong> Adrian offered the cash price ($293–295K) when the Concierge/Novation MAO is $313,200 — well above the $310K competing offer. This was already computed in May's notes from Monday. Adrian did not use this tool.</p>
+                <p><strong>Positive:</strong> Adrian persisted — 4 calls on May 26, texted, stayed engaged. He uncovered significant personal emotional context (partner's mental health, children). He used Mark's own concerns to try to move things forward. The effort was there; the strategy was incomplete.</p>
+                <p><strong>Talking Ratio:</strong> Based on call summaries, Rep/Seller split appears balanced. AI summaries show Mark talking freely — Adrian listening well in the 7:41 PM call.</p>
+            </div>
+
+            <!-- FRAMEWORK SCORES -->
+            <div class="scores">
+                <h2>FHCO Framework Scores (Click to expand)</h2>
+
+                <!-- STEP 1 -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 1: Intro &amp; Expectations</div>
+                            <div class="score-reason">Pass-off call handled cleanly by May. Adrian's first call on May 26 confirmed context and moved into offer discussion — no re-intro issues noted.</div>
+                        </div>
+                        <div class="score-badge score-80">80%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Identity established</strong> — Adrian reached out as the specialist following the inbound AI call and May's pass-off. Context was clear to Mark.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Context set for call purpose</strong> — First call on May 26 was framed around "checking the underwriter response" — functional equivalent of setting expectations.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Amy (co-owner) was not secured before offer delivery</strong> — Amy is on title and was not on ANY of the May 26 calls. The 7:27 PM call shows Adrian asked Mark to "check if Amy is available" — but proceeded to present the offer without her. <em>Framework rule: when two sellers are on title, get them both on the line before delivering. One of them will always be the "no" unless both hear the same presentation at the same time.</em></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2A -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2A: Discovery</div>
+                            <div class="score-reason">Strong discovery — Mark volunteered his complete family situation (partner's mental health issues, children's welfare, urgency to sell). Adrian listened and reflected well.</div>
+                        </div>
+                        <div class="score-badge score-80">80%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="bracket-header">Motivation &amp; Urgency</div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Core motivation surfaced</strong> — Mark shared: partner's mental health issues, concern for children's safety and stability, had evidence of irresponsible behavior, 6 years of trying to help — selling is the decision to protect his children. Volunteered unprompted in the 8:34 PM call.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Timeline urgency established</strong> — Mark said he "intends to sell the house" and "plans to call back to confirm." Original inbound call noted wanting quick, easy investor sale. Urgency is real.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">🟡</div>
+                            <div class="text"><strong>Competing offer explored — partially</strong> — Adrian noted Mark mentioned "$310K from other buyers" but did not probe: Is it in writing? Do they have proof of funds? What's their timeline? What's the catch? These questions would have weakened the competing offer in Mark's mind.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Impact question on timeline not asked</strong> — Should have asked: <em>"Mark, given everything you've told me about the family situation — how important is it that this wraps up in the next few weeks vs. potentially dragging out for months while you negotiate with another buyer?"</em> — This would have anchored speed/certainty as the primary value prop before presenting any number.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2C: PRICE -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 2C: Price Discovery</div>
+                            <div class="score-reason">Seller anchor established ($320K inbound AI call). Adrian learned of competing $310K offer during negotiation. Did NOT separate NEED from WANT before presenting offer.</div>
+                        </div>
+                        <div class="score-badge score-50">50%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Seller asking price established</strong> — "$320K" (inbound AI call). "$310K from other buyers" (7:41 PM call). Both anchors known.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>NEED vs. WANT not separated</strong> — Should have asked before presenting the offer: <em>"Mark, I know you're hoping for around $320K — is there a number you actually NEED to walk away with to make this work for your family, separate from your ideal number?"</em> — This is Jacob's chronic issue pattern, but Adrian missed it here too. If Mark's NET need is $280K to pay off his mortgage and move, the cash offer works. We never found out.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Mortgage payoff / equity not surfaced</strong> — What does Mark owe on the property? What does he NET after fees on the $310K offer? If there's a realtor involved on that $310K verbal, he nets significantly less. Adrian had the math advantage but never established what Mark would actually keep. <em>Framework script: "If you were to accept that $310K offer — after closing costs, fees, commissions — what are you walking away with? And how long would that take?"</em></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Novation MAO was computed</strong> — May's notes show full Novation analysis: As-Is value $390K, MAO $313,200, Target $297,540, Anchor $281,880. This work was done. Adrian just didn't present it.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: PROPERTY -->
+                <div class="score-item">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 3: Property Condition</div>
+                            <div class="score-reason">Established in original AI call and May's process. 4BR/2BA, needs roof + HVAC + cosmetics; kitchen/bath recently updated. Adrian knew the condition going into the offer call.</div>
+                        </div>
+                        <div class="score-badge score-80">80%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Property condition sweep completed</strong> — AI summary + May's notes captured condition. Needs roof, HVAC, cosmetic repairs. Recent kitchen/bath updates. Good neighborhood. 4/2. All known.</div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Zillow/market data pulled</strong> — Comp pulled by May: similar comp at 1473 SW Jacksonville sold for $384,500 in May 2026. As-Is novation value $390,000. Market context established.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5: OFFER DELIVERY -->
+                <div class="score-item expanded">
+                    <div class="score-header" onclick="this.parentElement.classList.toggle('expanded')">
+                        <div class="score-left">
+                            <div class="score-label">Step 5: Offer Delivery &amp; Negotiation</div>
+                            <div class="score-reason">CRITICAL FAILURE — presented cash offer only ($293–295K), not the Novation path ($297–313K). Did not get Amy on the call. Did not establish Net proceeds comparison with competing offer.</div>
+                        </div>
+                        <div class="score-badge score-20">20%</div>
+                    </div>
+                    <div class="checklist">
+                        <h4>Framework Elements</h4>
+                        <div class="bracket-header">Offer Preparation</div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Both decision-makers on the call</strong> — Amy is on title. She was NOT on any May 26 calls. This is a textbook deal-killer. <em>Before presenting numbers: "Mark, I want to make sure this works for both of you — is there a time today or tomorrow we can get Amy on the phone with us? I want to walk you both through what we can do together."</em></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Novation/Concierge offer not presented</strong> — The Novation MAO is $313,200, which BEATS the competing $310K offer. May computed this on Monday. Adrian had this information and presented only the $293–295K cash offer. The Novation program was never offered to Mark. This is the entire reason the deal stalled. <em>Script: "Mark, let me tell you about the other way we can buy — it's called our Concierge program. Instead of a straight cash offer, we list the property, manage everything for you, and split the upside. Based on what it would sell for as-is, we can net you between $297,000 and $313,000. That's actually more than the verbal offer you have. Let me show you how it works."</em></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">❌</div>
+                            <div class="text"><strong>Net proceeds comparison with competing offer</strong> — If the $310K competing offer involves a realtor (6% = $18,600 in commission) + closing costs (~2% = $6,200) = Mark nets ~$285K. FHCO's Novation nets $297–313K with zero commissions. Adrian never made this comparison. <em>Script: "Mark, on that $310K verbal — do you know if there's a realtor involved? Because once commissions come out, you might actually net less than our number. Let me show you the actual comparison."</em></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">🟡</div>
+                            <div class="text"><strong>Objection handling — price gap</strong> — When Mark pushed back on the cash offer, Adrian prepared to "follow up with underwriting based on Mark's decision." This is passive. The active play is to pivot to the novation offer as the bridge, not go back to underwriting. <em>Adrian used the "objection reversal" technique documented in his patterns file — but didn't have the right tool (novation) in hand to complete the reversal.</em></div>
+                        </div>
+                        <div class="checklist-item">
+                            <div class="icon">✅</div>
+                            <div class="text"><strong>Follow-up persistence</strong> — Adrian made 4 separate calls on May 26, texted at 9:06 PM. Did not give up. This is a strength.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COACHING NOTES -->
+            <div class="section">
+                <h2>🎓 Coaching Notes for Adrian</h2>
+
+                <div class="coaching-box">
+                    <strong>Issue #1: You had the winning number — you just didn't use it</strong>
+                    <p>May computed the Novation MAO ($313,200) on Monday. You walked into the Tuesday call with a $293–295K cash offer and a $310K competing offer on the table. The Novation offer WINS. You lost this round not because the numbers were bad — but because you used the wrong number. Before any future offer call where the seller has a competing offer, always check the Novation MAO first. If Novation MAO > competing offer, lead with Novation.</p>
+                </div>
+
+                <div class="coaching-box">
+                    <strong>Issue #2: Get both sellers on before presenting</strong>
+                    <p>Amy is on title. If she wasn't on the call when you presented, she is now hearing a secondhand report from Mark — filtered through his frustration about the price. You never had a chance to sell Amy directly. The rule is simple: if there are two names on title, get them both on the phone before presenting one number.</p>
+                    <div class="script">"Mark, before I walk you through what we can do — I want to make sure this works for Amy too. Is there a time today or tomorrow where we can get you both on together? I promise I'll make it worth 15 minutes of both your time."</div>
+                </div>
+
+                <div class="coaching-box">
+                    <strong>Issue #3: Net Proceeds Comparison is your superpower</strong>
+                    <p>When a seller mentions a competing offer, the instinct is to panic about the number. The right play is to break down what the seller actually NETS. On a $310K sale with 6% commission + closing costs, Mark nets ~$284K. FHCO's Novation nets $297–313K. You WIN on net proceeds — you just have to do the math out loud with Mark.</p>
+                    <div class="script">"Mark, quick question — on that $310K offer, is there a realtor involved? I ask because even if the sale price is higher, what you walk away with is what matters. Let me show you the comparison real quick: if there's a 6% commission on $310K, that's $18,600 off the top. Plus closing costs, that's another $6–8K. So you'd net around $284–285K. On our Concierge program, you'd net $297–313K with zero commission, and we handle everything. That's actually $12–28K MORE in your pocket. Does that change the math for you?"</div>
+                </div>
+
+                <div class="coaching-box">
+                    <strong>Issue #4: Mark's emotional context is your anchor — use it</strong>
+                    <p>Mark told you he's dealing with a serious family situation — his partner's mental health, his children's safety. He wants this DONE. "I'll call you back in 10–15 minutes" after your offer means he's still emotionally engaged. Speed and certainty are your leverage. Frame every follow-up call around what a clean, fast close means for his family — not just the number.</p>
+                    <div class="script">"Mark, I know there's a lot going on right now beyond just the house. That's exactly why I want to make sure you have the cleanest path forward — no contingencies, no waiting on bank approvals, no deal falling through at the last minute. We close in 14–21 days and it's done. Whatever's happening at home, this at least is off your plate. That's worth something, right?"</div>
+                </div>
+            </div>
+
+            <!-- STRENGTHS -->
+            <div class="strengths-section">
+                <h2>✅ What Adrian Did Well</h2>
+                <ul>
+                    <li><strong>Persistence:</strong> 4 calls on May 26 across 3+ hours. Did not quit when Mark pushed back. Kept re-engaging.</li>
+                    <li><strong>Emotional intelligence:</strong> When Mark shared his family situation, Adrian listened and reflected it back. Mark clearly trusts him enough to share personal information — that's rapport.</li>
+                    <li><strong>Follow-up text at 9:06 PM:</strong> "Hey Mark, how's the offer conversation with Amy going?" — perfect touch. Shows engagement without pressure.</li>
+                    <li><strong>Process was complete:</strong> Property condition, MAO, market comps — all work was done by the team. This is a well-prepared deal.</li>
+                    <li><strong>Flexibility expressed:</strong> Adrian indicated willingness to "follow up with underwriting" — signaled that the offer wasn't the final word, keeping the door open.</li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="footer">
+            Sage — FHCO AI Sales Manager | Audit generated: May 27, 2026 | Podio Item ID: 3308639606
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.score-header').forEach(h => {
+            h.addEventListener('click', () => h.parentElement.classList.toggle('expanded'));
+        });
+    </script>
+</body>
+</html>
